@@ -27,7 +27,7 @@ Our app is a coffee review, similar to a social media app. Users are able to lik
 * Show a list of places to visit that are near the user
 * Obtain geographical information from user
 * Show a map of the place with places to visit being displayed
-* Connect to Foursquare API and query based on keywords
+* Connect to Foursquare/Yelp API and query based on keywords
 * Ability for user to create an account
 * Ability for users to save favorite places
 * Ability to like places and write reviews
@@ -46,7 +46,7 @@ Our app is a coffee review, similar to a social media app. Users are able to lik
    * Ability to create an account
 * Feed/Timeline Screen
    * Lists recommended places to visit based on geographical location
-   * Connect to Foursquare API and query based on keywords
+   * Connect to Foursquare/Yelp API and query based on keywords
    * Show similar places based on the currently viewed page
 * Place detail View
     * Displays reviews (could be from Yelp or similar) of the place
@@ -87,10 +87,59 @@ Our app is a coffee review, similar to a social media app. Users are able to lik
 ### [BONUS] Interactive Prototype
 
 ## Schema 
-[This section will be completed in Unit 9]
 ### Models
-[Add table of models]
+
+### User
+| Property | Type | Description |
+| --- | --- | --- |
+| objectId | String | An ID that is unique for each user |
+| username | String | Display name for the app |
+| password | String | Allows users to access account (private) |
+| name | String | User's actual name |
+| picture | File | User's profile picture |
+| bio | String | A short description to get to know the user |
+| reviewCount | Number | Keeps track of activity on the account |
+
+### Review
+| Property | Type | Description |
+| --- | --- | --- |
+| objectId | String | An Id unique to each post |
+| userId | Pointer | User that created the post |
+| placeId | String | A unique Id representing the place (from Foursquare/Yelp API) |
+| rating | Number | Rating for the review |
+| review | String | User's opinions |
+
+### Images
+| Property | Type | Description |
+| --- | --- | --- |
+| objectId | String | Unique ID for an uploaded image |
+| reviewId | String | A reviewID to be fetched when showing a review |
+| image | File | Image file of the image |
+
+### Comments
+| Property | Type | Description |
+| --- | --- | --- |
+| objectId | String | Unique ID for a comment |
+| reviewId | String | A reviewId to be fetched when showing the comment under a review |
+| userId | String | A userId to be fetched when showing user information in a review |
+
 ### Networking
-- [Add list of network requests by screen ]
+- Feed
+    * GET average ratings from user reviews of the place
+    * GET from Yelp API for places
+- Profile
+    * GET username, picture, bio, reviews (text and images), comments
+    * GET user reviews based on descending order of ratings
+- Place Detail
+    * GET place information, reviews (text and images), comments
+    * GET user information for reviews and comments
+    * POST review (text and upload images)
+    * POST comments on reviews
+- Review Detail
+    * GET review (text and images), comments
+    * GET user information
+- Login
+    * POST for option to SignUp
+    * GET user login information for authentication
 - [Create basic snippets for each Parse network request]
 - [OPTIONAL: List endpoints if using existing API such as Yelp]

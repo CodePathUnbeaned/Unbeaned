@@ -6,6 +6,10 @@ android {
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
 
+    buildFeatures {
+        dataBinding true
+    }
+
     defaultConfig {
         applicationId "com.example.unbeaned"
         minSdkVersion 21
@@ -36,4 +40,17 @@ dependencies {
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+
+    // Parse Server
+    implementation "com.github.parse-community.Parse-SDK-Android:parse:1.18.5"
+
+    // Glide
+    implementation 'com.github.bumptech.glide:glide:4.12.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
+
+    // Parcel
+    implementation 'org.parceler:parceler-api:1.1.12'
+    annotationProcessor 'org.parceler:parceler:1.1.12'
+
+    implementation "com.squareup.okhttp3:okhttp:4.9.0"
 }
