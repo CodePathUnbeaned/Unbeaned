@@ -1,8 +1,10 @@
-package com.unbeaned.app;
+package com.unbeaned.app.navigation;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.unbeaned.app.R;
 
 public class MainActivity extends AppCompatActivity {
 
