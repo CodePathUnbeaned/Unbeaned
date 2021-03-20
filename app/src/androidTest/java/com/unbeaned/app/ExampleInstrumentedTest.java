@@ -1,4 +1,4 @@
-package com.example.unbeaned;
+package com.unbeaned.app;
 
 import android.content.Context;
 
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
     public void useAppContext() {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        assertEquals("com.example.unbeaned", appContext.getPackageName());
+        assertEquals("com.unbeaned.app", appContext.getPackageName());
     }
 }

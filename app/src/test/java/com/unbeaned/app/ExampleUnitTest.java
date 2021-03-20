@@ -1,4 +1,4 @@
-package com.example.unbeaned;
+package com.unbeaned.app;
 
 import org.junit.Test;
 
