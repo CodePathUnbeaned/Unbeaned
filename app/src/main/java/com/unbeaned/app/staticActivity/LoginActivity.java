@@ -13,13 +13,13 @@ import com.unbeaned.app.databinding.ActivityLoginBinding;
 public class LoginActivity extends AppCompatActivity {
 
     ActivityLoginBinding binding;
-    TextView textView;
+    TextView tvAppName;
     Button btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login);
-        textView = binding.textView;
+        tvAppName = binding.tvAppName;
     }
 }

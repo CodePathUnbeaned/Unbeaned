@@ -3,21 +3,111 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
-    <RelativeLayout
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:backgroundTint="@color/off_white"
+        android:orientation="vertical"
         tools:context=".staticActivity.LoginActivity">
 
-        <Button
-            android:id="@+id/button"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Button" />
+            android:layout_marginTop="80dp"
+            android:padding="10dp">
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="TextView" />
-    </RelativeLayout>
+            <LinearLayout
+                android:id="@+id/loginLinearLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvAppName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:fontFamily="@font/montserrat_bold"
+                    android:text="Unbeand"
+                    android:textColor="@color/soft_grey"
+                    android:textSize="30sp"
+                    android:textStyle="bold" />
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etEmailLogin"
+                        android:layout_width="300dp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto_medium"
+                        android:hint="@string/login_email_hint"
+                        android:includeFontPadding="false"
+                        android:paddingStart="5dp"
+                        android:paddingLeft="0dp"
+                        android:paddingEnd="5dp"
+                        android:paddingRight="0dp"
+                        android:paddingBottom="5dp"
+                        android:textColor="@color/soft_grey"
+                        app:backgroundTint="@android:color/transparent" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etLoginPass"
+                        android:layout_width="300dp"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="@android:color/transparent"
+                        android:fontFamily="@font/roboto_medium"
+                        android:hint="@string/login_password_hint"
+                        android:paddingStart="5dp"
+                        android:paddingLeft="0dp"
+                        android:paddingEnd="5dp"
+                        android:paddingRight="0dp"
+                        android:paddingBottom="5dp"
+                        android:textColor="@color/soft_grey" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btnLogin"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/loginLinearLayout"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="50dp"
+                android:layout_marginEnd="45dp"
+                android:backgroundTint="@color/med_pink"
+                android:fontFamily="@font/montserrat_bold"
+                android:text="Login"
+                android:textColor="@color/off_white" />
+
+            <Button
+                android:id="@+id/btnRegister"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/loginLinearLayout"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="45dp"
+                android:layout_marginTop="50dp"
+                android:fontFamily="@font/roboto_medium"
+                android:text="Register"
+                android:textColor="@color/soft_grey"
+                app:strokeColor="@color/soft_grey" />
+
+        </RelativeLayout>
+    </LinearLayout>
 </layout>
