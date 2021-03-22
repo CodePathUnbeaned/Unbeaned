@@ -18,6 +18,26 @@
         <item name="editTextStyle">@style/Widget.MaterialComponents.TextInputEditText.FilledBox</item>
     </style>
 
+    <style name="Widget.App.OutlinedButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.App.Button</item>
+        <item name="android:textAppearance">@style/TextAppearance.App.Button</item>
+    </style>
+
+    <style name="ThemeOverlay.App.Button.TextButton" parent="">
+        <item name="colorPrimary">@color/med_pink</item>
+    </style>
+
+    <style name="TextAppearance.App.Button" parent="Base.TextAppearance.AppCompat">
+        <item name="fontFamily">@font/montserrat_family</item>
+        <item name="android:fontFamily">@font/montserrat_family</item>
+        <item name="textAllCaps">true</item>
+    </style>
+
+    <style name="ThemeOverlay.App.Button" parent="">
+        <item name="colorPrimary">@color/med_pink</item>
+        <item name="colorOnPrimary">@color/soft_grey</item>
+    </style>
+
     <style name="Widget.App.TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
         <item name="materialThemeOverlay">@style/ThemeOverlay.App.TextInputLayout</item>
         <item name="hintTextColor">?attr/colorPrimary</item>

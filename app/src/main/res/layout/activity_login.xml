@@ -48,6 +48,7 @@
                         android:fontFamily="@font/roboto_medium"
                         android:hint="@string/login_email_hint"
                         android:includeFontPadding="false"
+                        android:inputType="textEmailAddress"
                         android:paddingStart="5dp"
                         android:paddingLeft="0dp"
                         android:paddingEnd="5dp"
@@ -61,7 +62,8 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="30dp">
+                    android:layout_marginTop="30dp"
+                    app:passwordToggleEnabled="true" >
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/etLoginPass"
@@ -70,6 +72,7 @@
                         android:backgroundTint="@android:color/transparent"
                         android:fontFamily="@font/roboto_medium"
                         android:hint="@string/login_password_hint"
+                        android:inputType="textPassword"
                         android:paddingStart="5dp"
                         android:paddingLeft="0dp"
                         android:paddingEnd="5dp"
@@ -96,7 +99,7 @@
 
             <Button
                 android:id="@+id/btnRegister"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                style="@style/Widget.App.OutlinedButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/loginLinearLayout"
@@ -104,6 +107,7 @@
                 android:layout_marginStart="45dp"
                 android:layout_marginTop="50dp"
                 android:fontFamily="@font/roboto_medium"
+                android:letterSpacing="0.1"
                 android:text="Register"
                 android:textColor="@color/soft_grey"
                 app:strokeColor="@color/soft_grey" />
