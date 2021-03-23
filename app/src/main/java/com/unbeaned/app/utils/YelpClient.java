@@ -1,5 +1,7 @@
 package com.unbeaned.app.utils;
 
+import android.util.Log;
+
 import com.unbeaned.app.BuildConfig;
 
 import java.util.Map;
@@ -13,13 +15,16 @@ public class YelpClient {
 
     private final String CLIENT_ID = BuildConfig.YELP_CLIENT_ID;
     private static final String API_KEY = BuildConfig.YELP_API_KEY;
-    private static final String BUSINESS_URL = "https://api.yelp.com/v3/businesses";
+    private static final String BUSINESS_URL = "api.yelp.com";
 
-    private static HttpUrl buildUrl(String baseUrl, String pathSegment, Map<String, String> params) {
+    private static HttpUrl buildUrl(String baseUrl, String[] pathSegments, Map<String, String> params) {
         // Initialize url builder with "https" scheme and host as baseUrl
         HttpUrl.Builder url = new HttpUrl.Builder().scheme("https")
-                .host(baseUrl)
-                .addPathSegment(pathSegment);
+                .host(baseUrl);
+
+        for (String s : pathSegments) {
+            url.addPathSegment(s);
+        }
 
         // Loop through key-value pair and assign as query parameters
         for (Map.Entry<String, String> entry : params.entrySet()) {
@@ -30,11 +35,14 @@ public class YelpClient {
         return url.build();
     }
 
-    private static HttpUrl buildUrl(String baseUrl, String pathSegment) {
+    private static HttpUrl buildUrl(String baseUrl, String[] pathSegments) {
         // Initialize url builder with "https" scheme and host as baseUrl
         HttpUrl.Builder url = new HttpUrl.Builder().scheme("https")
-                .host(baseUrl)
-                .addPathSegment(pathSegment);
+                .host(baseUrl);
+
+        for (String s : pathSegments) {
+            url.addPathSegment(s);
+        }
 
         // Return built url
         return url.build();
@@ -47,15 +55,24 @@ public class YelpClient {
                 .build();
     }
 
+    // Map<String, String> map = new Map<>();
+    // map.add("location", "NYC");
+    // Call clientCall = YelpClient.getBusinessBySearch(map);
+    // clientCall.execute(new Callback() {@Override onSuccess});
+
     public static Call getBusinessDetails(String businessId) {
-        Request request = getRequest(buildUrl(BUSINESS_URL, businessId));
+        Request request = getRequest(buildUrl(BUSINESS_URL, new String[]{"v3", "businesses", businessId}));
         return new OkHttpClient().newCall(request);
     }
 
     public static Call getBusinessBySearch(Map<String, String> params) {
         // Gets all Businesses around a longitude, latitude or location supplied in the params Map
         // Build request using authorization and url
-        Request request = getRequest(buildUrl(BUSINESS_URL, "search", params));
+        //"/v3/businesses"
+        params.put("categories", "coffee");
+
+        Request request = getRequest(buildUrl(BUSINESS_URL, new String[]{"v3", "businesses", "search"}, params));
+        Log.i("LoginActivity", String.valueOf(request));
         return new OkHttpClient().newCall(request);
     }
 
@@ -65,7 +82,7 @@ public class YelpClient {
         params.put("term", place);
 
         // Build request using authorization and url
-        Request request = getRequest(buildUrl(BUSINESS_URL, "search", params));
+        Request request = getRequest(buildUrl(BUSINESS_URL, new String[]{"v3", "businesses", "search"}, params));
         return new OkHttpClient().newCall(request);
     }
 }

@@ -13,7 +13,6 @@
         </intent>
     </queries>
 
-
     <application
         android:name=".ParseApplication"
         android:allowBackup="true"
