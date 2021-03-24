@@ -22,6 +22,8 @@ public class PlaceFeedAdapter extends RecyclerView.Adapter<PlaceFeedAdapter.View
     Context context;
     List<Place> places;
 
+
+
     public PlaceFeedAdapter(Context context, List<Place> places) {
         this.context = context;
         this.places = places;
@@ -37,14 +39,30 @@ public class PlaceFeedAdapter extends RecyclerView.Adapter<PlaceFeedAdapter.View
         return new ViewHolder(binding);
     }
 
+    //bind values based on the position of the element
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-
+        //get the data at position
+        Place place = places.get(position);
+        //bind the place with the viewholder
+        holder.bind(place);
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return places.size();
+    }
+
+    //Clear all elements of the recycler
+    public void clear(){
+        places.clear();
+        notifyDataSetChanged();
+    }
+
+    //Add a List of items
+    public void addAll(List<Place> placesList){
+        places.addAll(placesList);
+        notifyDataSetChanged();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {

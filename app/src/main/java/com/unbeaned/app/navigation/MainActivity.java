@@ -32,23 +32,23 @@ public class MainActivity extends AppCompatActivity {
                 switch (item.getItemId()) {
                     case R.id.action_search:
                         // do something here
-//                        fragment = new SearchFragment();
+                        fragment = new FeedFragment();
                         break;
                     case R.id.action_feed:
                         // do something here
-//                        fragment = new FeedFragment();
+                        fragment = new FeedFragment();
                         break;
                     case R.id.action_profile:
                     default:
                         // do something here
-//                        fragment = new UserFragment();
+                         fragment = new FeedFragment();
                         break;
                 }
-//                fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit();
+                fragmentManager.beginTransaction().replace(R.id.mainFragmentContainerView, fragment).commit();
                 return true;
             }
         });
         // Set default selection
-//        bottomNavigationView.setSelectedItemId(R.id.action_home);
+        bottomNavigationView.setSelectedItemId(R.id.action_feed);
     }
 }
