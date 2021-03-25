@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.unbeaned.app.R;
 import com.unbeaned.app.adapters.PlaceFeedAdapter;
 import com.unbeaned.app.databinding.ActivityLoginBinding;
+import com.unbeaned.app.databinding.FeedFragmentBinding;
 import com.unbeaned.app.models.Place;
 import com.unbeaned.app.utils.YelpClient;
 
@@ -38,12 +39,15 @@ import java.util.Set;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Headers;
+import okhttp3.OkHttp;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 
 public class FeedFragment extends Fragment {
     public static final String TAG = "FeedFragment";
-    //FeedFragmentBinding binding;
+    FeedFragmentBinding binding;
     private YelpClient client;
     private RecyclerView rvPlaces;
     private EditText etSearch;
@@ -61,17 +65,18 @@ public class FeedFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
        //inflate the layout for this view
-        return inflater.inflate(R.layout.feed_fragment, container, false);
+        //return inflater.inflate(R.layout.feed_fragment, container, false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.feed_fragment, container, false);
+        return binding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        client = new YelpClient();
-        //binding = DataBindingUtil.setContentView(getContext(), R.layout.feed_fragment);
-        rvPlaces = view.findViewById(R.id.rvPlaces);
-        etSearch = view.findViewById(R.id.etSearch);
-        btnSearch = view.findViewById(R.id.btnSearch);
+
+        rvPlaces = binding.rvPlaces;
+        etSearch = binding.etSearch;
+        btnSearch = binding.btnSearch;
         allPlaces = new ArrayList<>();
         adapter = new PlaceFeedAdapter(getContext(), allPlaces);
 
@@ -81,17 +86,20 @@ public class FeedFragment extends Fragment {
         btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                searchBusinesses();
+                searchBusinesses(etSearch.getText().toString());
             }
         });
 
     }
 
-    private void searchBusinesses() {
-        Map<String, String> searchParameters = new HashMap<String, String>();
-        String location = etSearch.getText().toString();
+    private void searchBusinesses(String location) {
+        Map<String, String> searchParameters = new HashMap<>();
         searchParameters.put("location", location);
-        client.getBusinessBySearch(searchParameters).enqueue(new Callback() {
+        Request request = YelpClient.getBusinessBySearch(searchParameters);
+
+        OkHttpClient client = new OkHttpClient();
+
+        client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
                 Log.e(TAG, "Could not fetch data", e);
@@ -108,16 +116,22 @@ public class FeedFragment extends Fragment {
                     JSONObject jsonObject = new JSONObject(jsonData);
                     JSONArray businessJsonArray = jsonObject.getJSONArray("businesses");
                     Log.i(TAG, "JSONArray: "+businessJsonArray.toString());
-                    allPlaces.clear();
-                    allPlaces.addAll(Place.fromJsonArray(businessJsonArray));
-                    adapter.notifyDataSetChanged();
+
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            adapter.clear();
+                            try {
+                                adapter.addAll(Place.fromJsonArray(businessJsonArray));
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
                 } catch (JSONException e) {
                     Log.e(TAG, "JSON exception", e);
                 }
-
             }
         });
     }
-
-
 }

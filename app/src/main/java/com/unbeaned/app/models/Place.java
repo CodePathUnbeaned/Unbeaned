@@ -44,7 +44,10 @@ public class Place {
         place.placeId=jsonObject.getString("id");
         place.name=jsonObject.getString("name");
         place.imageUrl=jsonObject.getString("image_url");
-        place.price = "$";
+
+        if (jsonObject.has("price")) {
+            place.price = "$";
+        }
         //place.price = jsonObject.getString("price");
 
         //update to rating from our data later

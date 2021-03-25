@@ -75,36 +75,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-
-
-        Map<String, String> searchParameters = new HashMap<String, String>();
-        searchParameters.put("location", "NYC");
-        YelpClient client = new YelpClient();
-        client.getBusinessBySearch(searchParameters).enqueue(new Callback() {
-            @Override
-            public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                Log.e(TAG, "Could not fetch data", e);
-            }
-
-            @Override
-            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                Log.i(TAG, "Success");
-                try (ResponseBody responseBody = response.body()) {
-                    if (!response.isSuccessful())
-                        throw new IOException("Unexpected code " + response);
-                    //what do i do here
-                    String jsonData = responseBody.string();
-                    JSONObject jsonObject = new JSONObject(jsonData);
-                    JSONArray jsonArray = jsonObject.getJSONArray("businesses");
-                    Log.i(TAG, "JSONArray: "+jsonArray.toString());
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-            }
-        });
-
     }
 
     private void registerUser(String email, String password) {
@@ -134,7 +104,5 @@ public class LoginActivity extends AppCompatActivity {
     private void goMainActivity() {
         Intent i = new Intent(this, MainActivity.class);
         startActivity(i);
-        finish();
-
     }
 }
