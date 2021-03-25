@@ -15,8 +15,10 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
+import com.parse.SignUpCallback;
 import com.unbeaned.app.R;
 import com.unbeaned.app.databinding.ActivityLoginBinding;
+import com.unbeaned.app.models.User;
 import com.unbeaned.app.navigation.MainActivity;
 import com.unbeaned.app.utils.YelpClient;
 
@@ -79,7 +81,25 @@ public class LoginActivity extends AppCompatActivity {
 
     private void registerUser(String email, String password) {
         Log.i(TAG, "Attempting to register user "+email);
-        //ParseUser.signUp(email, password);
+        User user = new User();
+        user.setEmail(etEmailLogin.getText().toString());
+        //need another edit text field to get Username for sign up
+        user.setUsername("random");
+        user.setPassword(etLoginPass.getText().toString());
+        user.signUpInBackground(new SignUpCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e!=null){
+                    //better error handling with Toasts (username/email already exists)
+                    Log.e(TAG, "Issue with signup", e);
+                    Toast.makeText(LoginActivity.this, "Failed to Register", Toast.LENGTH_SHORT);
+                    return;
+                }
+                //navigate to main activity if the user has signed up properly
+                goMainActivity();
+                Toast.makeText(LoginActivity.this,"Success!", Toast.LENGTH_SHORT);
+            }
+        });
     }
 
     //not sure how to make it use email

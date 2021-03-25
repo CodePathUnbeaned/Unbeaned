@@ -2,6 +2,8 @@ package com.unbeaned.app;
 
 import android.app.Application;
 import com.parse.Parse;
+import com.parse.ParseUser;
+import com.unbeaned.app.models.User;
 
 public class ParseApplication extends Application {
     public void onCreate() {
@@ -13,5 +15,6 @@ public class ParseApplication extends Application {
                 .server("https://parseapi.back4app.com")
                 .build()
         );
+        ParseUser.registerSubclass(User.class);
     }
 }

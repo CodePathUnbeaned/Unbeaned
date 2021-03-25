@@ -20,6 +20,7 @@
             android:id="@+id/ivPlace"
             android:layout_width="match_parent"
             android:layout_height="150dp"
+            android:scaleType="centerCrop"
             app:imageUrl="@{place.imageUrl}"
             tools:srcCompat="@tools:sample/avatars" />
 
@@ -31,6 +32,7 @@
             android:layout_alignParentEnd="true"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="0dp"
+            android:fontFamily="@font/roboto_bold"
             android:text="@{place.name}"
             tools:text="Place Name" />
 

@@ -13,8 +13,8 @@ public class BindingAdapterUtils {
     public static void loadImage(ImageView view, String url) {
         Glide.with(view.getContext())
                 .load(url)
-                .placeholder(R.drawable.ic_launcher_background)
-                .error(R.drawable.ic_launcher_foreground)
+                .placeholder(R.drawable.coffee_beans)
+                .error(R.drawable.coffee_beans)
                 .into(view);
     }
 }
