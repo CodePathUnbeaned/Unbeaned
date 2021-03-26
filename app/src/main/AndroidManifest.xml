@@ -21,7 +21,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Unbeaned">
-        <activity android:name=".navigation.DetailsActivity"></activity>
+        <activity android:name=".navigation.ComposeActivity"></activity>
+        <activity android:name=".navigation.DetailsActivity" />
         <activity android:name=".navigation.MainActivity" />
         <activity
             android:name=".staticActivity.LoginActivity"

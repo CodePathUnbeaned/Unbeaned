@@ -63,8 +63,7 @@ public class Place {
         //update to rating from our data later
         rating= jsonObject.getDouble("rating");
         JSONObject locationJSON = jsonObject.getJSONObject("location");
-        address=locationJSON.getString("display_address");
-        //maybe change to display_phone
+        address = formatDisplayAddress(locationJSON);
         phone =jsonObject.getString("phone");
         displayPhone= jsonObject.getString("display_phone");
     }
@@ -75,5 +74,21 @@ public class Place {
             places.add(new Place(jsonArray.getJSONObject(i)));
         }
         return places;
+    }
+
+    public static String formatDisplayAddress(JSONObject location) throws JSONException {
+        String address1 = location.getString("address1");
+        String address2 = location.getString("address2");
+        String city = location.getString("city");
+        String state = location.getString("state");
+        String zipCode = location.getString("zip_code");
+        String address;
+        if (address2!="null") {
+            address = address1 + " " + address2 + " " + city + ", " + state + " " + zipCode;
+        }
+        else{
+            address = address1 +  " " + city + ", " + state + " " + zipCode;
+        }
+        return address;
     }
 }
