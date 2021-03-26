@@ -12,8 +12,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
+import com.parse.GetCallback;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
 import com.unbeaned.app.R;
@@ -102,7 +105,7 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    //not sure how to make it use email
+    //TODO: not sure how to make it use email
     private void loginUser(String email, String password) {
         Log.i(TAG, "Attempting to login user "+email);
         ParseUser.logInInBackground(email, password, new LogInCallback() {
@@ -119,6 +122,34 @@ public class LoginActivity extends AppCompatActivity {
                 Toast.makeText(LoginActivity.this,"Success!", Toast.LENGTH_SHORT);
             }
         });
+        //trying to log in with email instead
+        /*ParseQuery<ParseUser> query = ParseUser.getQuery();
+        query.whereEqualTo("email", email);
+        query.getFirstInBackground(new GetCallback<ParseUser>() {
+            public void done(ParseUser user, ParseException e) {
+                if (user == null) {
+                    Log.i(TAG, "Not a valid email");
+                    Toast.makeText(LoginActivity.this, "Invalid email", Toast.LENGTH_SHORT);
+                } else {
+                    String actualUsername = user.getString("username");
+                    ParseUser.logInInBackground(actualUsername, password, new LogInCallback() {
+                        @Override
+                        public void done(ParseUser user, ParseException e) {
+                            if (e!=null){
+                                //better error handling with Toasts
+                                Log.e(TAG, "Issue with login", e);
+                                Toast.makeText(LoginActivity.this, "Failed to login", Toast.LENGTH_SHORT);
+                                return;
+                            }
+                            //navigate to main activity if the user has signed in properly
+                            goMainActivity();
+                            Toast.makeText(LoginActivity.this,"Success!", Toast.LENGTH_SHORT);
+                        }
+                    });
+                }
+            }
+        });*/
+
     }
 
     private void goMainActivity() {

@@ -48,7 +48,6 @@ import okhttp3.ResponseBody;
 public class FeedFragment extends Fragment {
     public static final String TAG = "FeedFragment";
     FeedFragmentBinding binding;
-    private YelpClient client;
     private RecyclerView rvPlaces;
     private EditText etSearch;
     private Button btnSearch;
@@ -65,7 +64,6 @@ public class FeedFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
        //inflate the layout for this view
-        //return inflater.inflate(R.layout.feed_fragment, container, false);
         binding = DataBindingUtil.inflate(inflater, R.layout.feed_fragment, container, false);
         return binding.getRoot();
     }

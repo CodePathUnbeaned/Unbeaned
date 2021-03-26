@@ -1,10 +1,12 @@
 package com.unbeaned.app.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -14,6 +16,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.unbeaned.app.R;
 import com.unbeaned.app.databinding.PlaceItemBinding;
 import com.unbeaned.app.models.Place;
+import com.unbeaned.app.navigation.DetailsActivity;
+
+import org.parceler.Parcels;
 
 import java.util.List;
 
@@ -73,6 +78,7 @@ public class PlaceFeedAdapter extends RecyclerView.Adapter<PlaceFeedAdapter.View
         TextView tvRating;
         TextView tvAddress;
         TextView tvPrice;
+        RelativeLayout placeItemLinearContainer;
 
         public ViewHolder(@NonNull PlaceItemBinding binding) {
             super(binding.getRoot());
@@ -83,12 +89,22 @@ public class PlaceFeedAdapter extends RecyclerView.Adapter<PlaceFeedAdapter.View
             tvRating = binding.tvRating;
             tvAddress = binding.tvAddress;
             tvPrice = binding.tvPrice;
+            placeItemLinearContainer = binding.placeItemLinearContainer;
 
         }
 
         public void bind(final Place place) {
             binding.setPlace(place);
             binding.executePendingBindings();
+
+            placeItemLinearContainer.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent(context, DetailsActivity.class);
+                    i.putExtra("place", Parcels.wrap(place));
+                    context.startActivity(i);
+                }
+            });
         }
     }
 }
