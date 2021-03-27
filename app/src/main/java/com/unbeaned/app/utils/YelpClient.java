@@ -1,15 +1,25 @@
 package com.unbeaned.app.utils;
 
+import android.os.Build;
 import android.util.Log;
+
+import androidx.annotation.RequiresApi;
 
 import com.unbeaned.app.BuildConfig;
 
+import org.jetbrains.annotations.NotNull;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 
 import okhttp3.Call;
+import okhttp3.Callback;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.Response;
 
 public class YelpClient {
 
@@ -55,11 +65,6 @@ public class YelpClient {
                 .build();
     }
 
-    // Map<String, String> map = new Map<>();
-    // map.add("location", "NYC");
-    // Call clientCall = YelpClient.getBusinessBySearch(map);
-    // clientCall.execute(new Callback() {@Override onSuccess});
-
     public static Call getBusinessDetails(String businessId) {
         Request request = getRequest(buildUrl(BUSINESS_URL, new String[]{"v3", "businesses", businessId}));
         return new OkHttpClient().newCall(request);
@@ -68,7 +73,6 @@ public class YelpClient {
     public static Call getBusinessBySearch(Map<String, String> params) {
         // Gets all Businesses around a longitude, latitude or location supplied in the params Map
         // Build request using authorization and url
-        //"/v3/businesses"
         params.put("categories", "coffee");
 
         Request request = getRequest(buildUrl(BUSINESS_URL, new String[]{"v3", "businesses", "search"}, params));
