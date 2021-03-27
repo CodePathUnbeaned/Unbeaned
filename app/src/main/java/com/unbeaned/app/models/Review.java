@@ -25,11 +25,11 @@ public class Review extends ParseObject {
         put(KEY_PLACE_ID, placeId);
     }
 
-    public String getDescription(){
+    public String getReview(){
         return getString(KEY_REVIEW);
     }
 
-    public void setDescription(String review){
+    public void setReview(String review){
         put(KEY_REVIEW, review);
     }
 
@@ -37,7 +37,7 @@ public class Review extends ParseObject {
         return getDouble(KEY_RATING);
     }
 
-    public void setDescription(Double rating){
+    public void setRating(Double rating){
         put(KEY_RATING, rating);
     }
 

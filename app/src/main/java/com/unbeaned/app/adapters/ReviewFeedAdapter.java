@@ -14,40 +14,40 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.unbeaned.app.R;
-import com.unbeaned.app.databinding.PlaceItemBinding;
 import com.unbeaned.app.databinding.ReviewItemBinding;
 import com.unbeaned.app.models.Place;
 import com.unbeaned.app.models.Review;
-import com.unbeaned.app.navigation.DetailsActivity;
+import com.unbeaned.app.models.User;
 
-import org.parceler.Parcels;
 
 import java.util.List;
 
 public class ReviewFeedAdapter extends RecyclerView.Adapter<ReviewFeedAdapter.ViewHolder> {
+
     Context context;
     List<Review> reviews;
+    Place place;
 
 
 
-    public ReviewFeedAdapter(Context context, List<Review> reviews) {
+    public ReviewFeedAdapter(Context context, List<Review> reviews, Place place) {
         this.context = context;
         this.reviews = reviews;
+        this.place=place;
     }
 
     @NonNull
     @Override
-    public ReviewFeedAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
 
         ReviewItemBinding binding = DataBindingUtil.inflate(inflater, R.layout.review_item, parent, false);
-
+        binding.setPlace(place);
         return new ViewHolder(binding);
     }
 
-    //bind values based on the position of the element
     @Override
-    public void onBindViewHolder(@NonNull ReviewFeedAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         //get the data at position
         Review review = reviews.get(position);
         //bind the place with the viewholder
@@ -58,7 +58,6 @@ public class ReviewFeedAdapter extends RecyclerView.Adapter<ReviewFeedAdapter.Vi
     public int getItemCount() {
         return reviews.size();
     }
-
     //Clear all elements of the recycler
     public void clear(){
         reviews.clear();
@@ -74,22 +73,30 @@ public class ReviewFeedAdapter extends RecyclerView.Adapter<ReviewFeedAdapter.Vi
     class ViewHolder extends RecyclerView.ViewHolder {
 
         private final ReviewItemBinding binding;
-        TextView tvPlaceName;
+        ImageView ivProfileImage;
+        TextView tvUsername;
+        TextView tvName;
         TextView tvRating;
-        RelativeLayout placeItemLinearContainer;
+        TextView tvPlaceName;
+        TextView tvReview;
+
 
         public ViewHolder(@NonNull ReviewItemBinding binding) {
             super(binding.getRoot());
+
             this.binding = binding;
-            //binding.setPlace();
+            ivProfileImage = binding.ivProfileImage;
+            tvUsername = binding.tvUsername;
+            tvName = binding.tvName;
             tvPlaceName = binding.tvPlaceName;
             tvRating = binding.tvRating;
-            placeItemLinearContainer = binding.reviewItemLinearContainer;
+            tvReview = binding.tvReview;
 
         }
 
         public void bind(final Review review) {
             binding.setReview(review);
+            //binding.setUser((User) review.getUser());
             binding.executePendingBindings();
         }
     }

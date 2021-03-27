@@ -4,9 +4,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,11 +18,20 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseQuery;
 import com.unbeaned.app.R;
+import com.unbeaned.app.adapters.PlaceFeedAdapter;
+import com.unbeaned.app.adapters.ReviewFeedAdapter;
 import com.unbeaned.app.databinding.ActivityDetailsBinding;
 import com.unbeaned.app.models.Place;
+import com.unbeaned.app.models.Review;
 
 import org.parceler.Parcels;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class DetailsActivity extends AppCompatActivity {
     public static final String TAG = "DetailsActivity";
@@ -32,6 +44,10 @@ public class DetailsActivity extends AppCompatActivity {
     private TextView tvPrice;
     private Button btnCall;
     private Button btnCompose;
+    private RecyclerView rvReviews;
+    private ReviewFeedAdapter adapter;
+    private List<Review> allReviews;
+
 
 
     @Override
@@ -47,7 +63,13 @@ public class DetailsActivity extends AppCompatActivity {
         tvPrice = binding.tvPrice;
         btnCall = binding.btnCall;
         btnCompose = binding.btnCompose;
-
+        rvReviews = binding.rvReviews;
+        allReviews= new ArrayList<>();
+        adapter = new ReviewFeedAdapter(this, allReviews, place);
+        rvReviews.setAdapter(adapter);
+        //4. set the layout manager on the recycler view
+        rvReviews.setLayoutManager(new LinearLayoutManager(this));
+        queryReviews();
         btnCompose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -55,6 +77,24 @@ public class DetailsActivity extends AppCompatActivity {
             }
         });
     }
+
+    private void queryReviews() {
+        ParseQuery<Review> query = ParseQuery.getQuery(Review.class);
+        query.whereEqualTo(Review.KEY_PLACE_ID, place.getPlaceId());
+        query.addDescendingOrder(Review.KEY_CREATED);
+        query.findInBackground(new FindCallback<Review>() {
+            @Override
+            public void done(List<Review> reviews, ParseException e) {
+                if (e!=null){
+                    Log.e(TAG, "Issue with getting posts", e);
+                    return;
+                }
+                adapter.clear();
+                adapter.addAll(reviews);
+            }
+        });
+    }
+
     private void goComposeActivity() {
         Intent i = new Intent(this, ComposeActivity.class);
         startActivity(i);

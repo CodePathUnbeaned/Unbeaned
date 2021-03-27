@@ -1,5 +1,11 @@
 package com.unbeaned.app.models;
 
+import android.util.Log;
+
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseQuery;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -24,6 +30,8 @@ public class Place {
     public Place(){
 
     }
+
+    public String getPlaceId(){ return placeId;}
 
     public String getImageUrl() {
         return imageUrl;
@@ -61,7 +69,8 @@ public class Place {
             price=" ";
         }
         //update to rating from our data later
-        rating= jsonObject.getDouble("rating");
+        rating = jsonObject.getDouble("rating");
+        calculateRating(placeId);
         JSONObject locationJSON = jsonObject.getJSONObject("location");
         address = formatDisplayAddress(locationJSON);
         phone =jsonObject.getString("phone");
@@ -91,4 +100,35 @@ public class Place {
         }
         return address;
     }
+
+    public void calculateRating(String placeId){
+        ParseQuery<Review> query = ParseQuery.getQuery(Review.class);
+        query.include(Review.KEY_RATING);
+        query.whereEqualTo(Review.KEY_PLACE_ID, placeId);
+        query.findInBackground(new FindCallback<Review>() {
+            @Override
+            public void done(List<Review> reviews, ParseException e) {
+                if (e!=null){
+                    Log.e("Place", "Issue with averaging rating", e);
+                    return;
+                }
+                for(Review review:reviews){
+                    Log.i(placeId, "Rating: "+review.getRating());
+                }
+                 Log.i("Place", "Average Rating: " +getAverage(reviews));
+            }
+        });
+    }
+
+    private static double getAverage(List<Review> reviews) {
+        double total=0;
+        if (reviews.size()!=0){
+            for (Review review:reviews){
+                total+=review.getRating();
+            }
+            return total/ reviews.size();
+        }
+        return 0.0;
+    }
+
 }
