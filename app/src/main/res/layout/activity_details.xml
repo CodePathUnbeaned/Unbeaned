@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable name="place" type="com.unbeaned.app.models.Place" />
+    </data>
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="3dp"
+        tools:context=".navigation.DetailsActivity">
+
+        <RelativeLayout
+            android:id="@+id/placeContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="0dp">
+
+            <ImageView
+                android:id="@+id/ivPlace"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginBottom="5dp"
+                android:scaleType="centerCrop"
+                app:imageUrl="@{place.imageUrl}"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <TextView
+                android:id="@+id/tvPlaceName"
+                android:layout_width="240dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_toEndOf="@+id/ivPlace"
+                android:fontFamily="@font/roboto_bold"
+                android:text="@{place.name}"
+                android:textSize="24sp"
+                tools:text="Place Name" />
+
+            <ImageView
+                android:id="@+id/ivStarRating"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_below="@+id/btnCall"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_toEndOf="@+id/ivPlace"
+                app:srcCompat="@drawable/ic_star" />
+
+            <TextView
+                android:id="@+id/tvAddress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvPlaceName"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_toEndOf="@+id/ivPlace"
+                android:text="@{place.address}"
+                android:textSize="16sp"
+                tools:text="Address of Place" />
+
+            <TextView
+                android:id="@+id/tvRating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/btnCall"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_toEndOf="@+id/ivStarRating"
+                android:text="@{String.valueOf(place.rating)}"
+                android:textSize="18sp"
+                tools:text="4.7" />
+
+            <TextView
+                android:id="@+id/tvPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/btnCall"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_toEndOf="@+id/tvRating"
+                android:text="@{place.price}"
+                android:textSize="18sp"
+                tools:text="$$$$" />
+
+            <Button
+                android:id="@+id/btnCall"
+                android:layout_width="198dp"
+                android:layout_height="37dp"
+                android:layout_below="@+id/tvAddress"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_toEndOf="@+id/ivPlace"
+                android:text="@{place.displayPhone}"
+                tools:text="(215)-489-1234" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tvReviews"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/placeContainer"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/roboto_bold"
+            android:text="Reviews"
+            android:textSize="24sp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvReviews"
+            android:layout_width="match_parent"
+            android:layout_height="445dp"
+            android:layout_below="@+id/tvReviews"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="0dp"
+            android:layout_marginBottom="0dp" />
+
+        <Button
+            android:id="@+id/btnCompose"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_below="@+id/placeContainer"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_toEndOf="@+id/tvReviews"
+            android:text="Add" />
+
+
+    </RelativeLayout>
+</layout>

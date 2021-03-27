@@ -2,6 +2,7 @@ package com.unbeaned.app.navigation;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
@@ -11,10 +12,12 @@ import android.view.MenuItem;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.unbeaned.app.R;
+import com.unbeaned.app.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
 
     public static final String TAG = "MainActivity";
+    //ActivityMainBinding binding;
     final FragmentManager fragmentManager = getSupportFragmentManager();
     private BottomNavigationView bottomNavigationView;
 
@@ -22,7 +25,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         bottomNavigationView = findViewById(R.id.bottom_navigation);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -32,23 +34,23 @@ public class MainActivity extends AppCompatActivity {
                 switch (item.getItemId()) {
                     case R.id.action_search:
                         // do something here
-//                        fragment = new SearchFragment();
+                        fragment = new FeedFragment();
                         break;
                     case R.id.action_feed:
                         // do something here
-//                        fragment = new FeedFragment();
+                        fragment = new FeedFragment();
                         break;
                     case R.id.action_profile:
                     default:
                         // do something here
-//                        fragment = new UserFragment();
+                         fragment = new FeedFragment();
                         break;
                 }
-//                fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit();
+                fragmentManager.beginTransaction().replace(R.id.mainFragmentContainerView, fragment).commit();
                 return true;
             }
         });
         // Set default selection
-//        bottomNavigationView.setSelectedItemId(R.id.action_home);
+        bottomNavigationView.setSelectedItemId(R.id.action_feed);
     }
 }

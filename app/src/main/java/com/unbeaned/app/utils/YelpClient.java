@@ -70,14 +70,14 @@ public class YelpClient {
         return new OkHttpClient().newCall(request);
     }
 
-    public static Call getBusinessBySearch(Map<String, String> params) {
+    public static Request getBusinessBySearch(Map<String, String> params) {
         // Gets all Businesses around a longitude, latitude or location supplied in the params Map
         // Build request using authorization and url
         params.put("categories", "coffee");
 
         Request request = getRequest(buildUrl(BUSINESS_URL, new String[]{"v3", "businesses", "search"}, params));
         Log.i("LoginActivity", String.valueOf(request));
-        return new OkHttpClient().newCall(request);
+        return request;
     }
 
     public static Call getBusinessBySearch(String place, Map<String, String> params) {
