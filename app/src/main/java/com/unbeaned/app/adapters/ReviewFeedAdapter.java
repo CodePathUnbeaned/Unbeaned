@@ -13,6 +13,9 @@ import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseQuery;
 import com.unbeaned.app.R;
 import com.unbeaned.app.databinding.ReviewItemBinding;
 import com.unbeaned.app.models.Place;
@@ -96,8 +99,22 @@ public class ReviewFeedAdapter extends RecyclerView.Adapter<ReviewFeedAdapter.Vi
 
         public void bind(final Review review) {
             binding.setReview(review);
+            //binding.setUser(user);
             //binding.setUser((User) review.getUser());
             binding.executePendingBindings();
+
+            ParseQuery<User> query = ParseQuery.getQuery(User.class);
+
+            query.whereEqualTo(User.KEY_ID, review.getUser().getObjectId());
+            query.findInBackground(new FindCallback<User>() {
+
+                @Override
+                public void done(List<User> objects, ParseException e) {
+
+                }
+            });
+
+
         }
     }
 }

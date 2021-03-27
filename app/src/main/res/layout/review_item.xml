@@ -25,6 +25,7 @@
             android:layout_alignParentTop="true"
             android:layout_marginStart="5dp"
             android:layout_marginTop="5dp"
+            app:imageFile="@{review.user.getParseFile(user.KEY_PHOTO)}"
             tools:srcCompat="@tools:sample/avatars" />
 
         <TextView
@@ -36,7 +37,7 @@
             android:layout_marginTop="5dp"
             android:layout_toEndOf="@+id/ivProfileImage"
             android:fontFamily="@font/roboto"
-            android:text="@{user.username}"
+            android:text="@{review.user.username}"
             tools:text="\@username" />
 
         <TextView
@@ -49,7 +50,7 @@
             android:layout_toEndOf="@+id/ivProfileImage"
             android:fontFamily="@font/roboto_bold"
             android:textSize="18sp"
-            android:text="@{user.name}"
+            android:text="@{review.user.getString(user.KEY_NAME)}"
             tools:text="First Last" />
 
         <ImageView

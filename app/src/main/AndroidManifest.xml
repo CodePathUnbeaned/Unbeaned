@@ -23,7 +23,7 @@
         android:theme="@style/Theme.Unbeaned">
         <activity android:name=".navigation.ComposeActivity"></activity>
         <activity android:name=".navigation.DetailsActivity" />
-        <activity android:name=".navigation.MainActivity" />
+        <activity android:name=".navigation.MainActivity" android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".staticActivity.LoginActivity"
             android:noHistory="true">

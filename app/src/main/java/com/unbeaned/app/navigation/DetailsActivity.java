@@ -27,6 +27,7 @@ import com.unbeaned.app.adapters.ReviewFeedAdapter;
 import com.unbeaned.app.databinding.ActivityDetailsBinding;
 import com.unbeaned.app.models.Place;
 import com.unbeaned.app.models.Review;
+import com.unbeaned.app.models.User;
 
 import org.parceler.Parcels;
 
@@ -80,6 +81,8 @@ public class DetailsActivity extends AppCompatActivity {
 
     private void queryReviews() {
         ParseQuery<Review> query = ParseQuery.getQuery(Review.class);
+
+        query.include(Review.KEY_USER);
         query.whereEqualTo(Review.KEY_PLACE_ID, place.getPlaceId());
         query.addDescendingOrder(Review.KEY_CREATED);
         query.findInBackground(new FindCallback<Review>() {
@@ -89,6 +92,8 @@ public class DetailsActivity extends AppCompatActivity {
                     Log.e(TAG, "Issue with getting posts", e);
                     return;
                 }
+                Log.i(TAG, "Reviews: " + reviews.get(0).getUser().get(User.KEY_PHOTO));
+
                 adapter.clear();
                 adapter.addAll(reviews);
             }
