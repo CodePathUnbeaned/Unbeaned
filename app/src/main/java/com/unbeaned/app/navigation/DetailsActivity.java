@@ -17,7 +17,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
@@ -51,6 +51,7 @@ public class DetailsActivity extends AppCompatActivity {
 
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,7 +69,6 @@ public class DetailsActivity extends AppCompatActivity {
         allReviews= new ArrayList<>();
         adapter = new ReviewFeedAdapter(this, allReviews, place);
         rvReviews.setAdapter(adapter);
-        //4. set the layout manager on the recycler view
         rvReviews.setLayoutManager(new LinearLayoutManager(this));
         queryReviews();
         btnCompose.setOnClickListener(new View.OnClickListener() {
@@ -77,6 +77,7 @@ public class DetailsActivity extends AppCompatActivity {
                 goComposeActivity();
             }
         });
+
     }
 
     private void queryReviews() {
@@ -106,5 +107,4 @@ public class DetailsActivity extends AppCompatActivity {
     }
     //TODO: when address is clicked navigate to google maps
     //TODO: btn on click listener to launch phone and call
-    //TODO: populate recycler view with reviews for that place
 }

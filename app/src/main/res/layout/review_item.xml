@@ -25,6 +25,7 @@
             android:layout_alignParentTop="true"
             android:layout_marginStart="5dp"
             android:layout_marginTop="5dp"
+            android:scaleType="centerCrop"
             app:imageFile="@{review.user.getParseFile(user.KEY_PHOTO)}"
             tools:srcCompat="@tools:sample/avatars" />
 
@@ -49,8 +50,8 @@
             android:layout_marginTop="5sp"
             android:layout_toEndOf="@+id/ivProfileImage"
             android:fontFamily="@font/roboto_bold"
-            android:textSize="18sp"
             android:text="@{review.user.getString(user.KEY_NAME)}"
+            android:textSize="18sp"
             tools:text="First Last" />
 
         <ImageView
@@ -95,6 +96,19 @@
             android:layout_marginTop="2dp"
             android:text="@{review.review}"
             tools:text="Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. " />
+
+        <com.synnapps.carouselview.CarouselView
+            android:id="@+id/carouselView"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_below="@+id/tvReview"
+            android:layout_marginTop="5dp"
+            app:fillColor="#FFFFFFFF"
+            app:pageColor="#00000000"
+            app:radius="6dp"
+            app:slideInterval="3000"
+            app:strokeColor="#FF777777"
+            app:strokeWidth="1dp" />
 
     </RelativeLayout>
 </layout>

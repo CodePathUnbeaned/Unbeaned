@@ -46,7 +46,7 @@
                         android:layout_width="300dp"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/roboto_medium"
-                        android:hint="@string/login_email_hint"
+                        android:hint="@string/login_username_hint"
                         android:includeFontPadding="false"
                         android:inputType="textEmailAddress"
                         android:paddingStart="5dp"

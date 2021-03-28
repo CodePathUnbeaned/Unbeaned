@@ -69,8 +69,6 @@ public class Place {
         else{
             price=" ";
         }
-        //update to rating from our data later
-        //rating = jsonObject.getDouble("rating");
         calculateRating(placeId);
         JSONObject locationJSON = jsonObject.getJSONObject("location");
         address = formatDisplayAddress(locationJSON);
@@ -114,21 +112,6 @@ public class Place {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-//                (new FindCallback<Review>() {
-//            @Override
-//            public void done(List<Review> reviews, ParseException e) {
-//                if (e!=null){
-//                    Log.e("Place", "Issue with averaging rating", e);
-//                    return;
-//                }
-//                for(Review review:reviews){
-//                    Log.i(placeId, "Rating: "+review.getRating());
-//                }
-//                rating =getAverage(reviews);
-//                Log.i("Place", "Average Rating: " +getAverage(reviews));
-//            }
-//        });
-        //return rating;
     }
 
     private static double getAverage(List<Review> reviews) {

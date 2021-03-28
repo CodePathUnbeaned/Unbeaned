@@ -1,2 +1,3 @@
+include ':carouselview'
 include ':app'
 rootProject.name = "Unbeaned"

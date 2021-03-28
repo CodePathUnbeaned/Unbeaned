@@ -81,12 +81,13 @@ public class LoginActivity extends AppCompatActivity {
         });
 
     }
-
+    //TODO: SignUp should probably launch to its own activity to allow user to add more info
     private void registerUser(String email, String password) {
         Log.i(TAG, "Attempting to register user "+email);
         User user = new User();
         user.setEmail(etEmailLogin.getText().toString());
         //need another edit text field to get Username for sign up
+        user.setKeyReviewCount(0);
         user.setUsername("random");
         user.setPassword(etLoginPass.getText().toString());
         user.signUpInBackground(new SignUpCallback() {
