@@ -109,17 +109,17 @@ public class ReviewFeedAdapter extends RecyclerView.Adapter<ReviewFeedAdapter.Vi
             binding.setReview(review);
             binding.executePendingBindings();
             Log.i("Review", "Review ID: "+review.getObjectId());
-            List<Images> images=queryImages(review);
-            Log.i("Review", "Review images: "+images);
 
-            if(images.size()!=0){
-                carouselView.setPageCount(images.size());
+            Log.i("Review", "Review images: "+review.images);
+
+            if(review.images.size()!=0){
+                carouselView.setPageCount(review.images.size());
 
                 carouselView.setImageListener(new ImageListener() {
                     @Override
                     public void setImageForPosition(int position, ImageView imageView) {
                         Glide.with(context)
-                                .load(images.get(position).getImage().getUrl())
+                                .load(review.images.get(position).getImage().getUrl())
                                 .into(imageView);
                     }
                 });
@@ -128,26 +128,7 @@ public class ReviewFeedAdapter extends RecyclerView.Adapter<ReviewFeedAdapter.Vi
                 //hide carousel view if no images
                 reviewItemLinearContainer.removeView(carouselView);
             }
-
-
-
-
-
             //TODO: Onclick listener for the container
-        }
-        public List<Images> queryImages(Review review){
-            ParseQuery<Images> query = ParseQuery.getQuery(Images.class);
-            List<Images> images =new ArrayList<>();
-            query.whereEqualTo(Images.KEY_REVIEW_ID, review);
-            try {
-                images.clear();
-                images.addAll(query.find());
-                Log.i("Review", "Images: "+images);
-
-            }catch (ParseException e) {
-                e.printStackTrace();
-            }
-            return images;
         }
     }
 

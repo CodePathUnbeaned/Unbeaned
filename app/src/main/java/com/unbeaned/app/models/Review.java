@@ -13,7 +13,7 @@ import java.util.List;
 
 @ParseClassName("Review")
 public class Review extends ParseObject {
-    public static List<Images> images= new ArrayList<>();
+    public List<Images> images= new ArrayList<>();
     public static final String KEY_PLACE_ID = "placeId";
     public static final String KEY_RATING = "rating";
     public static final String KEY_REVIEW= "review";
