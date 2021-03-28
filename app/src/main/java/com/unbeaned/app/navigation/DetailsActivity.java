@@ -93,8 +93,13 @@ public class DetailsActivity extends AppCompatActivity {
                     Log.e(TAG, "Issue with getting posts", e);
                     return;
                 }
-                Log.i(TAG, "Reviews: " + reviews.get(0).getUser().get(User.KEY_PHOTO));
-
+                for (Review review:reviews){
+                    Log.i(TAG,"Review IDs: "+review.getObjectId());
+                    Log.i(TAG, "Reviews: "+review.getReview());
+                    Log.i(TAG,"Place IDs: "+review.getPlaceId());
+                    review.setImages(review);
+                    Log.i(TAG, "Images: "+review.images);
+                }
                 adapter.clear();
                 adapter.addAll(reviews);
             }

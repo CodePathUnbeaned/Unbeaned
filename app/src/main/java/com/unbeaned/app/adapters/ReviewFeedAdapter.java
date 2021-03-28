@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -24,6 +25,7 @@ import com.unbeaned.app.models.Place;
 import com.unbeaned.app.models.Review;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ReviewFeedAdapter extends RecyclerView.Adapter<ReviewFeedAdapter.ViewHolder> {
@@ -31,7 +33,6 @@ public class ReviewFeedAdapter extends RecyclerView.Adapter<ReviewFeedAdapter.Vi
     Context context;
     List<Review> reviews;
     Place place;
-    List<Images> images;
 
 
 
@@ -85,6 +86,7 @@ public class ReviewFeedAdapter extends RecyclerView.Adapter<ReviewFeedAdapter.Vi
         TextView tvPlaceName;
         TextView tvReview;
         CarouselView carouselView;
+        RelativeLayout reviewItemLinearContainer;
         int[] sampleImages = {R.drawable.coffee_beans,R.drawable.coffee_beans, R.drawable.coffee_beans};
 
 
@@ -99,26 +101,18 @@ public class ReviewFeedAdapter extends RecyclerView.Adapter<ReviewFeedAdapter.Vi
             tvRating = binding.tvRating;
             tvReview = binding.tvReview;
             carouselView = binding.carouselView;
+            reviewItemLinearContainer = binding.reviewItemLinearContainer;
 
-
-            carouselView.setPageCount(sampleImages.length);
-
-            carouselView.setImageListener(new ImageListener() {
-                                              @Override
-                                              public void setImageForPosition(int position, ImageView imageView) {
-                                                  Glide.with(context)
-                                                          .load(sampleImages[position])
-                                                          .into(imageView);
-                                              }
-                                          });
         }
 
         public void bind(final Review review) {
             binding.setReview(review);
             binding.executePendingBindings();
-            Log.i("Review", "Review ID: "+review.getReviewId());
-            /*queryReviewPhotos(review);
-            if (images!=null){
+            Log.i("Review", "Review ID: "+review.getObjectId());
+            List<Images> images=queryImages(review);
+            Log.i("Review", "Review images: "+images);
+
+            if(images.size()!=0){
                 carouselView.setPageCount(images.size());
 
                 carouselView.setImageListener(new ImageListener() {
@@ -129,26 +123,34 @@ public class ReviewFeedAdapter extends RecyclerView.Adapter<ReviewFeedAdapter.Vi
                                 .into(imageView);
                     }
                 });
-            }*/
+            }
+            else{
+                //hide carousel view if no images
+                reviewItemLinearContainer.removeView(carouselView);
+            }
+
+
 
 
 
             //TODO: Onclick listener for the container
         }
-    }
+        public List<Images> queryImages(Review review){
+            ParseQuery<Images> query = ParseQuery.getQuery(Images.class);
+            List<Images> images =new ArrayList<>();
+            query.whereEqualTo(Images.KEY_REVIEW_ID, review);
+            try {
+                images.clear();
+                images.addAll(query.find());
+                Log.i("Review", "Images: "+images);
 
-    public void queryReviewPhotos(Review review){
-        ParseQuery<Images> query = ParseQuery.getQuery(Images.class);
-
-        query.whereEqualTo(Images.KEY_REVIEW_ID, "KCGpHQ0kXx");
-        try {
-            images = query.find();
-            Log.i("Review", "Images: "+images);
-
-        }catch (ParseException e) {
-            e.printStackTrace();
+            }catch (ParseException e) {
+                e.printStackTrace();
+            }
+            return images;
         }
-
     }
+
+
 
 }
