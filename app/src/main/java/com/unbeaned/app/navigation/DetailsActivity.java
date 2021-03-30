@@ -52,6 +52,7 @@ public class DetailsActivity extends AppCompatActivity {
 
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,6 +72,7 @@ public class DetailsActivity extends AppCompatActivity {
         rvReviews.setAdapter(adapter);
         rvReviews.setLayoutManager(new LinearLayoutManager(this));
         queryReviews();
+
         btnCompose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -79,6 +81,8 @@ public class DetailsActivity extends AppCompatActivity {
         });
 
     }
+
+
 
     private void queryReviews() {
         ParseQuery<Review> query = ParseQuery.getQuery(Review.class);

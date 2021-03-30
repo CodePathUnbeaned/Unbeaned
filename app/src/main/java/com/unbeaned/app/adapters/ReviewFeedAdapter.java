@@ -1,6 +1,7 @@
 package com.unbeaned.app.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,7 +24,11 @@ import com.unbeaned.app.databinding.ReviewItemBinding;
 import com.unbeaned.app.models.Images;
 import com.unbeaned.app.models.Place;
 import com.unbeaned.app.models.Review;
+import com.unbeaned.app.navigation.DetailsActivity;
+import com.unbeaned.app.navigation.ReviewDetailsActivity;
 
+
+import org.parceler.Parcels;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -87,8 +92,6 @@ public class ReviewFeedAdapter extends RecyclerView.Adapter<ReviewFeedAdapter.Vi
         TextView tvReview;
         CarouselView carouselView;
         RelativeLayout reviewItemLinearContainer;
-        int[] sampleImages = {R.drawable.coffee_beans,R.drawable.coffee_beans, R.drawable.coffee_beans};
-
 
         public ViewHolder(@NonNull ReviewItemBinding binding) {
             super(binding.getRoot());
@@ -129,6 +132,14 @@ public class ReviewFeedAdapter extends RecyclerView.Adapter<ReviewFeedAdapter.Vi
                 reviewItemLinearContainer.removeView(carouselView);
             }
             //TODO: Onclick listener for the container
+            reviewItemLinearContainer.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent(context, ReviewDetailsActivity.class);
+                    i.putExtra("review", review.getObjectId());
+                    context.startActivity(i);
+                }
+            });
         }
     }
 

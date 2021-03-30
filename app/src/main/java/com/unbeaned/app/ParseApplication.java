@@ -4,6 +4,7 @@ import android.app.Application;
 import com.parse.Parse;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
+import com.unbeaned.app.models.Comment;
 import com.unbeaned.app.models.Images;
 import com.unbeaned.app.models.Review;
 import com.unbeaned.app.models.User;
@@ -21,5 +22,6 @@ public class ParseApplication extends Application {
         ParseUser.registerSubclass(User.class);
         ParseObject.registerSubclass(Review.class);
         ParseObject.registerSubclass(Images.class);
+        ParseObject.registerSubclass(Comment.class);
     }
 }

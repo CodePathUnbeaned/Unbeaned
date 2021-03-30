@@ -8,18 +8,27 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
+import org.parceler.Parcel;
+
 import java.util.ArrayList;
 import java.util.List;
+
 
 @ParseClassName("Review")
 public class Review extends ParseObject {
     public List<Images> images= new ArrayList<>();
     public static final String KEY_PLACE_ID = "placeId";
+    public static final String KEY_REVIEW_ID = "objectId";
     public static final String KEY_RATING = "rating";
     public static final String KEY_REVIEW= "review";
     public static final String KEY_USER= "user";
     public static final String KEY_CREATED= "createdAt";
+    public static final String KEY_PLACE_NAME = "placeDisplayName";
 
+
+    public String getPlaceName(){return getString(KEY_PLACE_NAME);}
+
+    public void setPlaceName(String placeName){put(KEY_PLACE_NAME,placeName);}
 
     public String getPlaceId(){
         return getString(KEY_PLACE_ID);

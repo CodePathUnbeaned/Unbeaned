@@ -84,7 +84,7 @@
             android:layout_below="@+id/ivProfileImage"
             android:layout_marginTop="10dp"
             android:fontFamily="@font/montserrat_bold"
-            android:text="@{place.name}"
+            android:text="@{review.placeName}"
             android:textSize="18sp"
             tools:text="Place Name" />
 

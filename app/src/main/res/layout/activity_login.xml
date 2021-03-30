@@ -42,7 +42,7 @@
                     android:layout_marginTop="30dp">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/etEmailLogin"
+                        android:id="@+id/etUsernameLogin"
                         android:layout_width="300dp"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/roboto_medium"

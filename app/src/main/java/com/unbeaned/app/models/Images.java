@@ -10,12 +10,12 @@ public class Images extends ParseObject {
     public static final String KEY_REVIEW_ID = "reviewId";
     public static final String KEY_IMAGE = "image";
 
-    public String getReviewId(){
-        return getString(KEY_REVIEW_ID);
+    public ParseObject getReview(){
+        return getParseObject(KEY_REVIEW_ID);
     }
 
-    public void setReviewId(String placeId){
-        put(KEY_REVIEW_ID, placeId);
+    public void setReview(ParseObject review){
+        put(KEY_REVIEW_ID, review);
     }
 
     public ParseFile getImage(){ return getParseFile(KEY_IMAGE);}
