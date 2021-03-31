@@ -34,7 +34,7 @@ Our app is a coffee review, similar to a social media app. Users are able to lik
 - [x] Ability for user to create an account
 - [ ] Ability for users to save favorite places
 - [ ] Ability to like places and write reviews
-- [ ]Show nearby places in a search view
+- [ ] Show nearby places in a search view
 
 **Optional Nice-to-have Stories**
 
