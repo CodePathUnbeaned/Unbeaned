@@ -52,9 +52,9 @@ Here's a walkthrough of implemented user stories:
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 Plan for Next week:
-Noah: Works on profile page and edit/logout profile page
-Claudia: Compose activity reviews/comments, launch phone to call, launch google maps for directions, and work on implementing badges system
-Timothy: Work on polishing UI/branding. autocomplete search, and possibly "explore page" 
+* Noah: Works on profile page and edit/logout profile page
+* Claudia: Compose activity reviews/comments, launch phone to call, launch google maps for directions, and work on implementing badges system
+* Timothy: Work on polishing UI/branding. autocomplete search, and possibly "explore page" 
 
 ### 2. Screen Archetypes
 
