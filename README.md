@@ -38,7 +38,7 @@ Our app is a coffee review, similar to a social media app. Users are able to lik
 
 **Optional Nice-to-have Stories**
 
-- [ ] Award users badges 
+- [ ] Award users badges based off review count
 - [ ] Ability to have recommendations based on previously liked or recommended places.
 - [ ] Recommender system that learns from previous choices
 - [ ] Cache common requests reduce API calls
