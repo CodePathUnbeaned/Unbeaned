@@ -21,9 +21,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Unbeaned">
-        <activity android:name=".navigation.ComposeActivity"></activity>
+        <activity android:name=".navigation.ReviewDetailsActivity"></activity>
+        <activity android:name=".navigation.ComposeActivity" />
         <activity android:name=".navigation.DetailsActivity" />
-        <activity android:name=".navigation.MainActivity" android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".navigation.MainActivity"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".staticActivity.LoginActivity"
             android:noHistory="true">

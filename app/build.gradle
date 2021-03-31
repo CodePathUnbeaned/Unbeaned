@@ -69,4 +69,7 @@ dependencies {
     // Navigation
     implementation "androidx.navigation:navigation-fragment:2.3.4"
     implementation "androidx.navigation:navigation-ui:2.3.4"
+
+    //photo carousel
+    implementation 'com.synnapps:carouselview:0.1.5'
 }
