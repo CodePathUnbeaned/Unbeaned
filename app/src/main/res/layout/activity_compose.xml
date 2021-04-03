@@ -10,7 +10,7 @@
     <RelativeLayout
         android:id="@+id/relativeLayout"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:padding="3dp"
         tools:context=".navigation.ComposeActivity">
 
@@ -85,43 +85,28 @@
             android:inputType="textLongMessage|textMultiLine"
             tools:text="Tell us about your brew." />
 
+        <TextureView
+            android:id="@+id/textureView"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_below="@+id/etReview"
+            android:layout_marginTop="0dp" />
+
         <Button
             android:id="@+id/btnCamera"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/etReview"
-            android:layout_marginTop="5dp"
+            android:layout_below="@+id/textureView"
+            android:layout_marginTop="0dp"
             android:text="Take photo" />
-
-        <com.synnapps.carouselview.CarouselView
-            android:id="@+id/carouselView"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_below="@+id/btnCamera"
-            android:layout_marginTop="5dp"
-            app:fillColor="#FFFFFFFF"
-            app:pageColor="#00000000"
-            app:radius="6dp"
-            app:slideInterval="3000"
-            app:strokeColor="#FF777777"
-            app:strokeWidth="1dp" />
 
         <Button
             android:id="@+id/btnSubmit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/carouselView"
-            android:layout_marginTop="5dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="5dp"
             android:text="Submit" />
-
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/btnSubmit"
-            android:layout_marginTop="0dp"
-            android:scaleType="centerCrop"
-            app:srcCompat="@drawable/coffee_beans" />
 
     </RelativeLayout>
 </layout>
