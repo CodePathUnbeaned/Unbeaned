@@ -42,7 +42,7 @@
                 android:layout_marginTop="5dp"
                 android:layout_toEndOf="@+id/ivProfileImage"
                 android:fontFamily="@font/roboto"
-                android:text="@{review.user.username}"
+                android:text="@{@string/usernameFormat(review.user.username)}"
                 tools:text="\@username" />
 
             <TextView
@@ -125,14 +125,14 @@
             android:layout_height="40dp"
             android:layout_below="@+id/reviewItemLinearContainer"
             android:layout_alignParentEnd="true"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="2dp"
             android:layout_marginEnd="5dp"
             android:text="add" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvComments"
-            android:layout_width="396dp"
-            android:layout_height="317dp"
+            android:layout_width="386dp"
+            android:layout_height="200dp"
             android:layout_below="@+id/btnComment"
             android:layout_marginTop="0dp" />
 
@@ -142,7 +142,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/reviewItemLinearContainer"
             android:layout_marginStart="5dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:fontFamily="@font/roboto_bold"
             android:text="Comments"
             android:textSize="20sp" />

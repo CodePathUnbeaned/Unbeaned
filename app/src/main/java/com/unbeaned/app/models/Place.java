@@ -26,6 +26,9 @@ public class Place {
     String displayPhone;
     String phone;
     String imageUrl;
+    String longitude;
+    String latitude;
+    String address1;
 
     //need by Parceler library
     public Place(){
@@ -58,6 +61,12 @@ public class Place {
 
     public String getPhone() {return phone; }
 
+    public String getLongitude() {return longitude;}
+
+    public String getLatitude() {return latitude;}
+
+    public String getAddress1(){return address1;}
+
 
     public Place(JSONObject jsonObject) throws JSONException {
        placeId=jsonObject.getString("id");
@@ -71,7 +80,11 @@ public class Place {
         }
         calculateRating(placeId);
         JSONObject locationJSON = jsonObject.getJSONObject("location");
+        address1=locationJSON.getString("address1");
         address = formatDisplayAddress(locationJSON);
+        JSONObject coordinates = jsonObject.getJSONObject("coordinates");
+        longitude = coordinates.getString("longitude");
+        latitude = coordinates.getString("latitude");
         phone =jsonObject.getString("phone");
         displayPhone= jsonObject.getString("display_phone");
     }
@@ -96,7 +109,7 @@ public class Place {
             address = String.format("%s %s %s, %s %s", address1, address2, city, state, zipCode);
         }
         else{
-            address = address1 +  " " + city + ", " + state + " " + zipCode;
+            address = String.format("%s %s, %s %s", address1, city, state, zipCode);
         }
         return address;
     }
