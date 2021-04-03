@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tool="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/feedFragment">
+    <fragment
+        android:id="@+id/feedFragment"
+        android:name="com.unbeaned.app.navigation.FeedFragment"
+        android:label="FeedFragment"
+        tool:layout="@layout/feed_fragment"/>
+    <fragment
+        android:id="@+id/userFragment2"
+        android:name="com.unbeaned.app.navigation.UserFragment"
+        android:label="UserFragment"
+        tool:layout="@layout/user_fragment"/>
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="com.unbeaned.app.navigation.SplashFragment"
+        android:label="SplashFragment"
+        tool:layout="@layout/start_fragment">
+        <action
+            android:id="@+id/splashFragmentToLoginFragment"
+            app:destination="@id/fragment_login"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit"
+            app:popEnterAnim="@anim/fragment_fade_enter"
+            app:popExitAnim="@anim/fragment_fade_exit"
+            app:popUpToInclusive="false" />
+        <action
+            android:id="@+id/splashFragmentToRegisterFragment"
+            app:destination="@id/fragment_register"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit"
+            app:popEnterAnim="@anim/fragment_fade_enter"
+            app:popExitAnim="@anim/fragment_fade_exit"
+            app:popUpToInclusive="false" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragment_login"
+        android:name="com.unbeaned.app.navigation.splash.LoginFragment"
+        android:label="LoginFragment"
+        tool:layout="@layout/fragment_login"/>
+    <fragment
+        android:id="@+id/fragment_register"
+        android:name="com.unbeaned.app.navigation.splash.RegisterFragment"
+        android:label="RegisterFragment"
+        tool:layout="@layout/fragment_register"/>
+</navigation>

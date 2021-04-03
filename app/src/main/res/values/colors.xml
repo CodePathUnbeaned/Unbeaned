@@ -14,4 +14,6 @@
     <color name="hard_purple">#3C1874</color>
     <color name="soft_grey">#283747</color>
     <color name="off_white">#F3F3F3</color>
+    <color name="pink_red_accent">#E0696C</color>
+    <color name="accent_purple">#3B2966</color>
 </resources>
