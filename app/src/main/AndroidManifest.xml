@@ -8,9 +8,11 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-feature android:name="android.hardware.location.gps" />
-    <uses-feature android:name="android.hardware.camera2" android:required="false" />
 
+    <uses-feature android:name="android.hardware.location.gps" />
+    <uses-feature
+        android:name="android.hardware.camera2"
+        android:required="false" />
 
     <queries>
 
@@ -18,8 +20,6 @@
         <intent>
             <action android:name="android.media.action.IMAGE_CAPTURE" />
         </intent>
-
-
     </queries>
 
     <application
@@ -30,11 +30,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Unbeaned">
-        <activity android:name=".navigation.ReviewDetailsActivity"></activity>
+        <activity android:name=".navigation.CameraActivity"></activity>
+        <activity android:name=".navigation.ReviewDetailsActivity" />
         <activity android:name=".navigation.ComposeActivity" />
-        <activity android:name=".navigation.DetailsActivity"/>
-
-
+        <activity android:name=".navigation.DetailsActivity" />
         <activity
             android:name=".navigation.MainActivity"
             android:windowSoftInputMode="adjustPan" />

@@ -4,5 +4,5 @@
     <string name="login_username_hint">Username</string>
     <string name="login_password_hint">Password</string>
     <string name="search_hint">Search</string>
-    <string name="before_username"> \@</string>
+    <string name="usernameFormat">\@%1$s</string>
 </resources>

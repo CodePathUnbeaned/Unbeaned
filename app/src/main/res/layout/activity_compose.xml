@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
     <data>
-        <variable name="place" type="com.unbeaned.app.models.Review" />
+        <variable name="place" type="com.unbeaned.app.models.Place" />
     </data>
 
     <RelativeLayout
@@ -25,7 +25,7 @@
             android:layout_marginTop="8dp"
             android:fontFamily="@font/roboto_bold"
             android:textSize="25sp"
-            tools:text="Place Name" />
+            tools:text="@{place.name}" />
 
         <ImageView
             android:id="@+id/ivStarRating"
@@ -85,18 +85,11 @@
             android:inputType="textLongMessage|textMultiLine"
             tools:text="Tell us about your brew." />
 
-        <TextureView
-            android:id="@+id/textureView"
-            android:layout_width="match_parent"
-            android:layout_height="300dp"
-            android:layout_below="@+id/etReview"
-            android:layout_marginTop="0dp" />
-
         <Button
             android:id="@+id/btnCamera"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/textureView"
+            android:layout_below="@+id/etReview"
             android:layout_marginTop="0dp"
             android:text="Take photo" />
 

@@ -162,8 +162,8 @@ public class DetailsActivity extends AppCompatActivity {
 
     private void goComposeActivity() {
         Intent i = new Intent(this, ComposeActivity.class);
+        i.putExtra("place", Parcels.wrap(place));
         startActivity(i);
     }
-    //TODO: when address is clicked navigate to google maps
-    //TODO: btn on click listener to launch phone and call
+
 }
