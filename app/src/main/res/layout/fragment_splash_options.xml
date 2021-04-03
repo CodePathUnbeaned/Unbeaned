@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        tools:context=".navigation.splash.SplashOptionsFragment">
+
+        <Button
+            android:id="@+id/btnSignUpSplash"
+            style="@style/Widget.App.OutlinedButton"
+            android:layout_width="220dp"
+            android:layout_height="55dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="121dp"
+            android:text="Sign Up"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:cornerRadius="100dp"
+            app:strokeWidth="3dp" />
+
+        <Button
+            android:id="@+id/btnLoginSplash"
+            android:layout_width="220dp"
+            android:layout_height="55dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="59dp"
+            android:backgroundTint="@color/med_pink"
+            android:fontFamily="@font/montserrat_bold"
+            android:text="Login"
+            android:textColorLink="@color/pink_red_accent"
+            android:textSize="18sp"
+            app:cornerRadius="100dp" />
+
+    </RelativeLayout>
+</layout>

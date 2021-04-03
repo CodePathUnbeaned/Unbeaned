@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/splash_graph"
+    app:startDestination="@id/splashOptionsFragment">
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.unbeaned.app.navigation.splash.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" />
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="com.unbeaned.app.navigation.splash.RegisterFragment"
+        android:label="fragment_register"
+        tools:layout="@layout/fragment_register" />
+    <fragment
+        android:id="@+id/splashOptionsFragment"
+        android:name="com.unbeaned.app.navigation.splash.SplashOptionsFragment"
+        android:label="SplashOptionsFragment"
+        tools:layout="@layout/fragment_splash_options">
+        <action
+            android:id="@+id/splashOptionsToLoginFragment"
+            app:destination="@id/loginFragment"
+            app:enterAnim="@anim/fragment_fade_enter"
+            app:exitAnim="@anim/fragment_fade_exit"
+            app:popUpTo="@id/splashOptionsFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/splashOptionsToRegisterFragment"
+            app:destination="@id/registerFragment"
+            app:enterAnim="@anim/fragment_fade_enter"
+            app:exitAnim="@anim/fragment_fade_exit"
+            app:popUpTo="@id/splashOptionsFragment"
+            app:popUpToInclusive="true"
+            app:popExitAnim="@anim/fragment_close_exit" />
+    </fragment>
+</navigation>

@@ -35,10 +35,10 @@
         <activity android:name=".navigation.ComposeActivity" />
         <activity android:name=".navigation.DetailsActivity" />
         <activity
-            android:name=".navigation.MainActivity"
+            android:name=".staticActivity.LoginActivity"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".staticActivity.LoginActivity"
+            android:name=".navigation.MainActivity"
             android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

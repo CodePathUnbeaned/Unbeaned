@@ -34,4 +34,22 @@ public class BindingAdapterUtils {
                     .into(view);
         }
     }
+
+    @BindingAdapter({"bind:profileImage"})
+    public static void loadProfileImage(ImageView view, ParseFile file) {
+        if (file == null) {
+            Glide.with(view.getContext())
+                    .load(R.drawable.coffee_beans)
+                    .circleCrop()
+                    .into(view);
+        }
+        else {
+            Glide.with(view.getContext())
+                    .load(file.getUrl())
+                    .circleCrop()
+                    .placeholder(R.drawable.coffee_beans)
+                    .error(R.drawable.coffee_beans)
+                    .into(view);
+        }
+    }
 }
