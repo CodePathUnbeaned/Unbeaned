@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.action_profile:
                     default:
                         // do something here
-                         fragment = new FeedFragment();
+                         fragment = new UserFragment();
                         break;
                 }
                 fragmentManager.beginTransaction().replace(R.id.mainFragmentContainerView, fragment).commit();

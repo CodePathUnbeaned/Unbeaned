@@ -13,14 +13,17 @@ import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
+import com.parse.ParseUser;
 import com.unbeaned.app.R;
 import com.unbeaned.app.databinding.ActivityDetailsBinding;
+import com.unbeaned.app.databinding.UserFragmentBinding;
+import com.unbeaned.app.models.User;
 
 public class UserFragment extends Fragment {
 
     public static final String TAG = "UserFragment";
 
-    ActivityDetailsBinding binding;
+    UserFragmentBinding binding;
 
     private ImageView ivUserProfileImg;
     private TextView tvUserFullname;
@@ -43,6 +46,8 @@ public class UserFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        binding.setUserKeys(new User());
+        binding.setUser(ParseUser.getCurrentUser());
 
         ivUserProfileImg = binding.ivUserProfileImg;
         tvUserFullname = binding.tvUserFullname;
