@@ -10,7 +10,7 @@
         android:label="FeedFragment"
         tool:layout="@layout/feed_fragment"/>
     <fragment
-        android:id="@+id/userFragment2"
+        android:id="@+id/userFragment"
         android:name="com.unbeaned.app.navigation.UserFragment"
         android:label="UserFragment"
         tool:layout="@layout/user_fragment"/>
@@ -40,7 +40,15 @@
         android:id="@+id/fragment_login"
         android:name="com.unbeaned.app.navigation.splash.LoginFragment"
         android:label="LoginFragment"
-        tool:layout="@layout/fragment_login"/>
+        tool:layout="@layout/fragment_login">
+        <action
+            android:id="@+id/action_fragment_login_to_splashFragment"
+            app:destination="@id/splashFragment"
+            app:enterAnim="@anim/fragment_fade_enter"
+            app:exitAnim="@anim/fragment_fade_exit"
+            app:popUpTo="@id/fragment_login"
+            app:popUpToInclusive="true" />
+    </fragment>
     <fragment
         android:id="@+id/fragment_register"
         android:name="com.unbeaned.app.navigation.splash.RegisterFragment"
