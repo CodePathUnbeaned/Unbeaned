@@ -4,13 +4,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center_horizontal"
         android:orientation="vertical">
-
 
         <ImageView
             android:id="@+id/ivSplashLoginLogo"
@@ -20,6 +18,7 @@
             app:srcCompat="@drawable/ic_logo" />
 
         <LinearLayout
+            android:id="@+id/linearLayoutRegisterContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
@@ -39,6 +38,29 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/roboto_medium"
                     android:hint="Name"
+                    android:includeFontPadding="false"
+                    android:inputType="textPersonName"
+                    android:paddingStart="5dp"
+                    android:paddingLeft="0dp"
+                    android:paddingEnd="5dp"
+                    android:paddingRight="0dp"
+                    android:paddingBottom="5dp"
+                    android:textColor="@color/soft_grey"
+                    app:backgroundTint="@android:color/transparent" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etEmailRegister"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto_medium"
+                    android:hint="Email"
                     android:includeFontPadding="false"
                     android:inputType="textEmailAddress"
                     android:paddingStart="5dp"
@@ -105,7 +127,7 @@
                 android:paddingRight="10dp">
 
                 <Button
-                    android:id="@+id/btnSplashLoginEnter"
+                    android:id="@+id/btnSplashRegisterEnter"
                     style="@style/Widget.MaterialComponents.Button"
                     android:layout_width="120dp"
                     android:layout_height="wrap_content"
@@ -119,13 +141,12 @@
                     app:cornerRadius="10dp" />
 
                 <Button
-                    android:id="@+id/button2"
+                    android:id="@+id/btnSplashRegisterBack"
                     style="@style/Widget.App.OutlinedButton"
                     android:layout_width="110dp"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/montserrat_bold"
                     android:text="Back" />
-
 
             </RelativeLayout>
 

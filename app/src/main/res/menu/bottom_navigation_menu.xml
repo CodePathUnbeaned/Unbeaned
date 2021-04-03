@@ -6,6 +6,7 @@
         android:id="@+id/action_search"
         android:title=""
         android:enabled="true"
+        android:icon="@drawable/user_menu_selector"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_feed"

@@ -90,7 +90,7 @@ public class LoginActivity extends AppCompatActivity {
         user.setKeyReviewCount(0);
         //user.setUsername("random");
         user.setPassword(etLoginPass.getText().toString());
-        user.getCurrentUser().signUpInBackground(new SignUpCallback() {
+        user.signUpInBackground(new SignUpCallback() {
             @Override
             public void done(ParseException e) {
                 if (e!=null){

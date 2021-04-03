@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
         navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
             @Override
             public void onDestinationChanged(@NonNull NavController controller, @NonNull NavDestination destination, @Nullable Bundle arguments) {
-                if (destination.getId() == R.id.splashFragment) {
+                if (destination.getId() == R.id.splashFragment || destination.getId() == R.id.fragment_login || destination.getId() == R.id.fragment_register) {
                     bottomNavigationView.setVisibility(View.GONE);
                 }
                 else {
