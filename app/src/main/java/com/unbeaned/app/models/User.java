@@ -2,6 +2,7 @@ package com.unbeaned.app.models;
 
 import com.parse.ParseClassName;
 import com.parse.ParseFile;
+import com.parse.ParseObject;
 import com.parse.ParseUser;
 
 @ParseClassName("User")
@@ -72,5 +73,6 @@ public class User extends ParseUser {
         put(KEY_PHOTO, parseFile);
     }
 
+    public ParseUser getUser() { return ParseUser.getCurrentUser(); }
 
 }

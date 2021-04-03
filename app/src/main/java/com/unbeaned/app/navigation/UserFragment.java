@@ -1,4 +1,59 @@
 package com.unbeaned.app.navigation;
 
-public class UserFragment {
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
+
+import com.parse.ParseUser;
+import com.unbeaned.app.R;
+import com.unbeaned.app.databinding.ActivityDetailsBinding;
+import com.unbeaned.app.databinding.UserFragmentBinding;
+import com.unbeaned.app.models.User;
+
+public class UserFragment extends Fragment {
+
+    public static final String TAG = "UserFragment";
+
+    UserFragmentBinding binding;
+
+    private ImageView ivUserProfileImg;
+    private TextView tvUserFullname;
+    private TextView tvUserHandle;
+    private Button btnLogout;
+    private TextView tvBiography;
+
+    public UserFragment () {
+        // Constructor
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        //inflate the layout for this view
+        binding = DataBindingUtil.inflate(inflater, R.layout.user_fragment, container, false);
+        return binding.getRoot();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        ivUserProfileImg = binding.ivUserProfileImg;
+        tvUserFullname = binding.tvUserFullname;
+        
+
+//        User user = (User) ParseUser.getCurrentUser();
+
+//        binding.setUser((User) ParseUser.getCurrentUser());
+
+    }
 }

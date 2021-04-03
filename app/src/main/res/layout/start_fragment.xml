@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <RelativeLayout
+        android:id="@+id/rlContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:backgroundTint="@color/white">
+
+        <LinearLayout
+            android:id="@+id/linearLayoutSplash"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:paddingTop="60dp">
+
+            <ImageView
+                android:id="@+id/ivSplashIcon"
+                android:layout_width="250dp"
+                android:layout_height="200dp"
+                app:srcCompat="@drawable/ic_splash" />
+
+            <ImageView
+                android:id="@+id/ivSplashLogo"
+                android:layout_width="250dp"
+                android:layout_height="80dp"
+                android:layout_marginTop="10dp"
+                app:srcCompat="@drawable/ic_logo" />
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:id="@+id/btnSignUpSplash"
+                style="@style/Widget.App.OutlinedButton"
+                android:layout_width="220dp"
+                android:layout_height="55dp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="121dp"
+                android:text="Sign Up"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:cornerRadius="100dp"
+                app:strokeWidth="3dp" />
+
+            <Button
+                android:id="@+id/btnLoginSplash"
+                android:layout_width="220dp"
+                android:layout_height="55dp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="59dp"
+                android:backgroundTint="@color/med_pink"
+                android:fontFamily="@font/montserrat_bold"
+                android:text="Login"
+                android:textColorLink="@color/pink_red_accent"
+                android:textSize="18sp"
+                app:cornerRadius="100dp" />
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+</layout>
