@@ -1,6 +1,7 @@
 package com.unbeaned.app.navigation;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.databinding.DataBindingUtil;
@@ -81,6 +82,7 @@ public class DetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 goComposeActivity();
+
             }
         });
         btnCall.setOnClickListener(new View.OnClickListener() {
@@ -110,6 +112,7 @@ public class DetailsActivity extends AppCompatActivity {
                 startActivity(mapIntent);
             }
         });
+
 
     }
 
@@ -163,7 +166,14 @@ public class DetailsActivity extends AppCompatActivity {
     private void goComposeActivity() {
         Intent i = new Intent(this, ComposeActivity.class);
         i.putExtra("place", Parcels.wrap(place));
-        startActivity(i);
+        startActivityForResult(i, 100);
+
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        queryReviews();
+        place.calculateRating(place.getPlaceId());
+    }
 }

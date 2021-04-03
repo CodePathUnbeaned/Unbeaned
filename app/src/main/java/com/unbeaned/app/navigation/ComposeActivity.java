@@ -29,6 +29,7 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Parcelable;
+import android.os.SystemClock;
 import android.util.Log;
 import android.util.Size;
 import android.util.SparseIntArray;
@@ -37,13 +38,17 @@ import android.view.TextureView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.material.slider.Slider;
+import com.parse.ParseException;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 import com.unbeaned.app.R;
 import com.unbeaned.app.databinding.ActivityComposeBinding;
 import com.unbeaned.app.models.Place;
+import com.unbeaned.app.models.Review;
 
 import org.parceler.Parcels;
 
@@ -81,7 +86,7 @@ public class ComposeActivity extends AppCompatActivity {
         btnCamera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                goToCamera();
+                //goToCamera();
             }
         });
 
@@ -98,16 +103,75 @@ public class ComposeActivity extends AppCompatActivity {
                 String placeId = place.getPlaceId();
 
                 saveReview(review, rating, currentUser, placeName,placeId);
+
             }
         });
 
     }
 
     private void saveReview(String review, double rating, ParseUser currentUser, String placeName, String placeId) {
+        Review reviewItem = new Review();
+        reviewItem.setReview(review);
+        reviewItem.setRating(rating);
+        reviewItem.setUser(currentUser);
+
+        reviewItem.setPlaceId(placeId);
+        reviewItem.setPlaceName(placeName);
+        ProgressBar progressBar = binding.progressBar;
+        progressBar.setVisibility(ProgressBar.VISIBLE);
+        Runnable prgRun = new Runnable() {
+
+            @Override
+            public void run() {
+                for (int i = 0; i < 100; i++) {
+                    waitPrg();
+                    final int prg = i;
+                    progressBar.post(new Runnable() {
+
+                        @Override
+                        public void run() {
+                            progressBar.setProgress(prg);
+                        }
+                    });
+                }
+            }
+        };
+        Thread prgThread = new Thread(prgRun);
+        prgThread.start();
+
+        reviewItem.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e!=null){
+                    Log.e(TAG, "Error while svaing", e);
+                    return;
+                }
+                Log.i(TAG, "Post was saved successfully");
+
+            }
+        });
+        int reviewCount = currentUser.getInt("reviewCount");
+        currentUser.put("reviewCount", reviewCount+1);
+        currentUser.saveInBackground();
+        prgThread.interrupt();
+        progressBar.setProgress(progressBar.getMax());
+        progressBar.setVisibility(View.INVISIBLE);
+        Log.i(TAG, "Success!");
+        etReview.setText("");
+        //Intent i = new Intent();
+        setResult(100);
+        //startActivity(i);
+        finish();
     }
+
+
 
     private void goToCamera() {
         Intent i = new Intent(this, CameraActivity.class);
         startActivity(i);
+    }
+
+    private void waitPrg() {
+        SystemClock.sleep(10);
     }
 }
