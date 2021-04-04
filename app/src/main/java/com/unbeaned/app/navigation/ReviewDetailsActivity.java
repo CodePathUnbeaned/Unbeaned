@@ -7,7 +7,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -16,6 +18,8 @@ import com.bumptech.glide.Glide;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
+import com.parse.SaveCallback;
 import com.synnapps.carouselview.CarouselView;
 import com.synnapps.carouselview.ImageListener;
 import com.unbeaned.app.R;
@@ -38,10 +42,12 @@ public class ReviewDetailsActivity extends AppCompatActivity {
     private TextView tvUsername;
     private TextView tvName;
     private TextView tvRating;
-    private TextView tvPlaceName;
+    //private TextView tvPlaceName;
+    private TextView tvReviewTitle;
     private TextView tvReview;
     private CarouselView carouselView;
     private Button btnComment;
+    private EditText etComment;
     private RecyclerView rvComments;
     private RelativeLayout reviewItemLinearContainer;
     private CommentFeedAdapter adapter;
@@ -71,13 +77,15 @@ public class ReviewDetailsActivity extends AppCompatActivity {
         ivProfileImage = binding.ivProfileImage;
         tvUsername = binding.tvUsername;
         tvName = binding.tvName;
-        tvPlaceName = binding.tvPlaceName;
+        //tvPlaceName = binding.tvPlaceName;
+        tvReviewTitle = binding.tvReviewTitle;
         tvRating = binding.tvRating;
         tvReview = binding.tvReview;
         btnComment = binding.btnComment;
         carouselView = binding.carouselView;
         reviewItemLinearContainer = binding.reviewItemLinearContainer;
         rvComments = binding.rvComments;
+        etComment = binding.etComment;
         allComments= new ArrayList<>();
         adapter = new CommentFeedAdapter(this, allComments);
         rvComments.setAdapter(adapter);
@@ -101,6 +109,37 @@ public class ReviewDetailsActivity extends AppCompatActivity {
             //hide carousel view if no images
             reviewItemLinearContainer.removeView(carouselView);
         }
+        btnComment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String comment = etComment.getText().toString();
+                if(comment.isEmpty()){
+                    return;
+                }
+                ParseUser currentUser = ParseUser.getCurrentUser();
+                saveComment(comment, currentUser, currentReview);
+                queryComments();
+            }
+        });
+    }
+
+    private void saveComment(String comment, ParseUser currentUser, Review currentReview) {
+        Comment commentItem = new Comment();
+        commentItem.setComment(comment);
+        commentItem.setReview(currentReview);
+        commentItem.setUser(currentUser);
+        commentItem.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e!=null){
+                    Log.e(TAG, "Error while saving", e);
+                    return;
+                }
+                Log.i(TAG, "Comment was saved successfully");
+            }
+        });
+        etComment.setText("");
+
     }
 
     private void queryReview(String reviewId) {

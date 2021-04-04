@@ -77,6 +77,9 @@ public class BindingAdapterUtils {
         else {
             view.setText(String.valueOf(round));
         }
+        if (rating==0){
+            view.setText("N/A");
+        }
 
     }
 }

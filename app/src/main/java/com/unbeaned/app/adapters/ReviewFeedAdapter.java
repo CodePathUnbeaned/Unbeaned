@@ -88,7 +88,7 @@ public class ReviewFeedAdapter extends RecyclerView.Adapter<ReviewFeedAdapter.Vi
         TextView tvUsername;
         TextView tvName;
         TextView tvRating;
-        TextView tvPlaceName;
+        TextView tvReviewTitle;
         TextView tvReview;
         CarouselView carouselView;
         RelativeLayout reviewItemLinearContainer;
@@ -100,7 +100,7 @@ public class ReviewFeedAdapter extends RecyclerView.Adapter<ReviewFeedAdapter.Vi
             ivProfileImage = binding.ivProfileImage;
             tvUsername = binding.tvUsername;
             tvName = binding.tvName;
-            tvPlaceName = binding.tvPlaceName;
+            tvReviewTitle = binding.tvReviewTitle;
             tvRating = binding.tvRating;
             tvReview = binding.tvReview;
             carouselView = binding.carouselView;

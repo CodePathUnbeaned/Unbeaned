@@ -16,7 +16,7 @@
 
 
         <TextView
-            android:id="@+id/tvPlaceName"
+            android:id="@+id/tvReviewTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
@@ -31,7 +31,7 @@
             android:id="@+id/ivStarRating"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:layout_below="@+id/tvPlaceName"
+            android:layout_below="@+id/tvReviewTitle"
             android:layout_marginStart="2dp"
             android:layout_marginTop="12dp"
             android:layout_marginEnd="5dp"
@@ -42,7 +42,7 @@
             android:id="@+id/tvRatingLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tvPlaceName"
+            android:layout_below="@+id/tvReviewTitle"
             android:layout_marginTop="12dp"
             android:layout_marginEnd="2dp"
             android:layout_toStartOf="@+id/ivStarRating"
@@ -54,7 +54,7 @@
             android:id="@+id/slider"
             android:layout_width="278dp"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tvPlaceName"
+            android:layout_below="@+id/tvReviewTitle"
             android:layout_alignParentEnd="true"
             android:layout_marginTop="3dp"
             android:layout_marginEnd="8dp"

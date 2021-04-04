@@ -44,7 +44,7 @@ public class DetailsActivity extends AppCompatActivity {
     ActivityDetailsBinding binding;
     private Place place;
     private ImageView ivPlace;
-    private TextView tvPlaceName;
+    private TextView tvPlacename;
     private TextView tvAddress;
     private TextView tvRating;
     private TextView tvPrice;
@@ -65,7 +65,7 @@ public class DetailsActivity extends AppCompatActivity {
         place = Parcels.unwrap(getIntent().getParcelableExtra("place"));
         binding.setPlace(place);
         ivPlace = binding.ivPlace;
-        tvPlaceName = binding.tvPlaceName;
+        tvPlacename = binding.tvPlaceName;
         tvAddress = binding.tvAddress;
         tvRating = binding.tvRating;
         tvPrice = binding.tvPrice;

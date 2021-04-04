@@ -62,7 +62,7 @@
             android:layout_marginStart="5dp"
             android:layout_marginTop="8dp"
             android:layout_toEndOf="@+id/ivStarRating"
-            android:text="@{String.valueOf(place.rating)}"
+            app:averageRating="@{place.rating}"
             tools:text="4.7" />
 
         <TextView

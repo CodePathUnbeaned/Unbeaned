@@ -143,7 +143,7 @@ public class ComposeActivity extends AppCompatActivity {
             @Override
             public void done(ParseException e) {
                 if (e!=null){
-                    Log.e(TAG, "Error while svaing", e);
+                    Log.e(TAG, "Error while saving", e);
                     return;
                 }
                 Log.i(TAG, "Post was saved successfully");
