@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
         NavigationUI.setupWithNavController(bottomNavigationView, navController);
 
-        ParseUser.logOut();
+//        ParseUser.logOut();
 
 //        navController.navigate(R.id.userFragment);
 
@@ -56,30 +56,5 @@ public class MainActivity extends AppCompatActivity {
             navController.navigate(R.id.splashFragment);
         }
 
-//        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-//            @Override
-//            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-//                Fragment fragment;
-//                switch (item.getItemId()) {
-//                    case R.id.action_search:
-//                        // do something here
-//                        fragment = new FeedFragment();
-//                        break;
-//                    case R.id.action_feed:
-//                        // do something here
-//                        fragment = new FeedFragment();
-//                        break;
-//                    case R.id.action_profile:
-//                    default:
-//                        // do something here
-//                         fragment = new FeedFragment();
-//                        break;
-//                }
-//                fragmentManager.beginTransaction().replace(R.id.mainFragmentContainerView, fragment).commit();
-//                return true;
-//            }
-//        });
-//        // Set default selection
-//        bottomNavigationView.setSelectedItemId(R.id.action_feed);
     }
 }

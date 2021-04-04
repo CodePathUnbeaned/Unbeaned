@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -8,116 +8,239 @@
         <variable name="userData" type="com.unbeaned.app.models.User" />
     </data>
 
-    <RelativeLayout
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="8dp">
+        android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/ivUserProfileImg"
-            android:layout_width="75dp"
-            android:layout_height="75dp"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginStart="0dp"
-            android:layout_marginTop="0dp"
-            app:imageFile='@{user.getParseFile(userData.KEY_PHOTO)}'
-            tools:srcCompat="@tools:sample/avatars" />
-
-        <TextView
-            android:id="@+id/tvUserFullname"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="0dp"
-            android:layout_toEndOf="@+id/ivUserProfileImg"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:text="@{user.getString(userData.KEY_NAME)}"
-            tools:text="Noah Synowiec" />
-
-        <TextView
-            android:id="@+id/tvUserHandle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tvUserFullname"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="6dp"
-            android:layout_toEndOf="@+id/ivUserProfileImg"
-            android:textSize="18sp"
-            android:text="@{user.getString(userData.KEY_USERNAME)}"
-            tools:text="\@NoahSyn" />
-
-        <View
+        <LinearLayout
+            android:id="@+id/linearLayoutUserContainer"
             android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:layout_below="@+id/tvUserHandle"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:layout_toEndOf="@+id/ivUserProfileImg"
-            android:background="@android:color/darker_gray" />
-
-        <Button
-            android:id="@+id/btnLogout"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tvUserHandle"
-            android:layout_alignParentEnd="true"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="14dp"
-            android:layout_marginEnd="24dp"
-            android:layout_toEndOf="@+id/ivUserProfileImg"
-            android:backgroundTint="#EF8462"
-            android:text="Logout" />
+            android:orientation="vertical"
+            android:background="@color/pink_red_accent"
+            android:gravity="center_horizontal">
 
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/btnLogout"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="0dp"
-            android:layout_marginTop="16dp"
-            android:text="Biography"
-            android:textSize="16dp"
-            android:textStyle="bold" />
+            <LinearLayout
+                android:id="@+id/linearBeanBadgeContainer"
+                android:layout_width="230dp"
+                android:layout_height="230dp"
+                android:background="@drawable/badge_container"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:layout_marginTop="60dp">
 
-        <TextView
-            android:id="@+id/tvBiography"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/textView4"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="0dp"
-            android:layout_marginTop="4dp"
-            android:textSize="14dp"
-            tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat." />
+                <ImageView
+                    android:layout_width="130dp"
+                    android:layout_height="130dp"
+                    app:beanBadge="@{userData.reviewCount}"
+                    tools:src="@drawable/ic_bean_master" />
 
-        <TextView
-            android:id="@+id/textView6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tvBiography"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="0dp"
-            android:layout_marginTop="16dp"
-            android:text="Your Favorites"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/textView6"
-            android:layout_marginTop="8dp">
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical" />
-        </ScrollView>
+                android:layout_height="match_parent"
+                android:layout_marginTop="60dp"
+                android:background="@drawable/user_container"
+                android:orientation="vertical"
+                android:paddingStart="30dp"
+                android:paddingTop="30dp"
+                android:paddingEnd="30dp"
+                android:paddingBottom="30dp">
 
-    </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="65dp">
+
+                    <ImageView
+                        android:id="@+id/ivProfilePicture"
+                        android:layout_width="60dp"
+                        android:layout_height="match_parent"
+                        app:profileImage="@{user.getParseFile(userData.KEY_PHOTO)}"
+                        tools:src="@drawable/ic_bean_master" />
+
+                    <TextView
+                        android:id="@+id/tvProfileName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_toEndOf="@+id/ivProfilePicture"
+                        android:fontFamily="@font/montserrat_bold"
+                        android:includeFontPadding="false"
+                        android:text="@{user.getString(userData.KEY_NAME)}"
+                        android:textAllCaps="true"
+                        android:textColor="@color/pink_red_accent"
+                        android:textSize="32sp"
+                        tools:text="First Name" />
+
+                    <TextView
+                        android:id="@+id/tvUserHandle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tvProfileName"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="0dp"
+                        android:layout_toEndOf="@+id/ivProfilePicture"
+                        android:fontFamily="@font/roboto_medium"
+                        android:includeFontPadding="false"
+                        android:text="@{@string/usernameFormat(user.getString(userData.KEY_USERNAME))}"
+                        android:textColor="@color/accent_purple"
+                        android:textSize="19sp"
+                        tools:text="\@userHandle" />
+
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/tvUserBio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:includeFontPadding="false"
+                    android:text="@{user.getString(userData.KEY_BIO)}"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    tools:text="Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="@font/montserrat_bold"
+                    android:includeFontPadding="false"
+                    android:text="@string/profile_favorites_header"
+                    android:textAllCaps="true"
+                    android:textColor="@color/accent_purple"
+                    android:textSize="28sp" />
+
+                <com.synnapps.carouselview.CarouselView
+                    android:id="@+id/carouselProfileReview"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
+                    app:autoPlay="false"
+                    app:fillColor="@color/accent_purple"
+                    app:indicatorGravity="bottom"
+                    app:indicatorOrientation="horizontal"
+                    app:indicatorVisibility="gone"
+                    app:radius="6dp"
+                    app:snap="true" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+
+<!--    <RelativeLayout-->
+<!--        xmlns:app="http://schemas.android.com/apk/res-auto"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:padding="8dp">-->
+
+<!--        <ImageView-->
+<!--            android:id="@+id/ivUserProfileImg"-->
+<!--            android:layout_width="75dp"-->
+<!--            android:layout_height="75dp"-->
+<!--            android:layout_alignParentStart="true"-->
+<!--            android:layout_alignParentTop="true"-->
+<!--            android:layout_marginStart="0dp"-->
+<!--            android:layout_marginTop="0dp"-->
+<!--            app:imageFile='@{user.getParseFile(userData.KEY_PHOTO)}'-->
+<!--            tools:srcCompat="@tools:sample/avatars" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/tvUserFullname"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_alignParentTop="true"-->
+<!--            android:layout_marginStart="16dp"-->
+<!--            android:layout_marginTop="0dp"-->
+<!--            android:layout_toEndOf="@+id/ivUserProfileImg"-->
+<!--            android:textSize="24sp"-->
+<!--            android:textStyle="bold"-->
+<!--            android:text="@{user.getString(userData.KEY_NAME)}"-->
+<!--            tools:text="Noah Synowiec" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/tvUserHandle"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_below="@+id/tvUserFullname"-->
+<!--            android:layout_marginStart="16dp"-->
+<!--            android:layout_marginTop="6dp"-->
+<!--            android:layout_toEndOf="@+id/ivUserProfileImg"-->
+<!--            android:textSize="18sp"-->
+<!--            android:text="@{user.getString(userData.KEY_USERNAME)}"-->
+<!--            tools:text="\@NoahSyn" />-->
+
+<!--        <View-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="2dp"-->
+<!--            android:layout_below="@+id/tvUserHandle"-->
+<!--            android:layout_marginStart="16dp"-->
+<!--            android:layout_marginTop="8dp"-->
+<!--            android:layout_toEndOf="@+id/ivUserProfileImg"-->
+<!--            android:background="@android:color/darker_gray" />-->
+
+<!--        <Button-->
+<!--            android:id="@+id/btnLogout"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_below="@+id/tvUserHandle"-->
+<!--            android:layout_alignParentEnd="true"-->
+<!--            android:layout_marginStart="24dp"-->
+<!--            android:layout_marginTop="14dp"-->
+<!--            android:layout_marginEnd="24dp"-->
+<!--            android:layout_toEndOf="@+id/ivUserProfileImg"-->
+<!--            android:backgroundTint="#EF8462"-->
+<!--            android:text="Logout" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/textView4"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_below="@+id/btnLogout"-->
+<!--            android:layout_alignParentStart="true"-->
+<!--            android:layout_marginStart="0dp"-->
+<!--            android:layout_marginTop="16dp"-->
+<!--            android:text="Biography"-->
+<!--            android:textSize="16dp"-->
+<!--            android:textStyle="bold" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/tvBiography"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_below="@+id/textView4"-->
+<!--            android:layout_alignParentStart="true"-->
+<!--            android:layout_marginStart="0dp"-->
+<!--            android:layout_marginTop="4dp"-->
+<!--            android:textSize="14dp"-->
+<!--            tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat." />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/textView6"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_below="@+id/tvBiography"-->
+<!--            android:layout_alignParentStart="true"-->
+<!--            android:layout_marginStart="0dp"-->
+<!--            android:layout_marginTop="16dp"-->
+<!--            android:text="Your Favorites"-->
+<!--            android:textSize="16sp"-->
+<!--            android:textStyle="bold" />-->
+
+<!--        <ScrollView-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_below="@+id/textView6"-->
+<!--            android:layout_marginTop="8dp">-->
+
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:orientation="vertical" />-->
+<!--        </ScrollView>-->
+
+<!--    </RelativeLayout>-->
 </layout>

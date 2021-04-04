@@ -77,7 +77,7 @@
                 android:layout_marginStart="5dp"
                 android:layout_marginTop="10dp"
                 android:layout_toEndOf="@+id/ivStarRating"
-                android:text="@{String.valueOf(place.rating)}"
+                app:averageRating="@{place.rating}"
                 android:textSize="18sp"
                 tools:text="4.7" />
 
