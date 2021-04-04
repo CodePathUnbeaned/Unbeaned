@@ -2,8 +2,8 @@
     <!-- Base application theme. -->
     <style name="Theme.Unbeaned" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-<!--        <item name="colorPrimary">@color/med_pink</item>-->
-        <item name="colorPrimary">@color/purple_500</item>
+        <!--        <item name="colorPrimary">@color/med_pink</item>-->
+        <item name="colorPrimary">@color/pink_red_accent</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
@@ -15,7 +15,8 @@
         <!-- Customize your theme here. -->
         <item name="colorAccent">@color/med_pink</item>
         <item name="textInputStyle">@style/Widget.App.TextInputLayout</item>
-        <item name="editTextStyle">@style/Widget.MaterialComponents.TextInputEditText.FilledBox</item>
+        <item name="editTextStyle">@style/Widget.MaterialComponents.TextInputEditText.FilledBox
+        </item>
     </style>
 
     <style name="Widget.App.OutlinedButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
@@ -48,4 +49,13 @@
         <item name="colorOnSurface">@color/soft_grey</item>
         <item name="colorError">@color/soft_maroon</item>
     </style>
+
+    <style name="Theme.Unbeaned.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.Unbeaned.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.Unbeaned.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

@@ -8,12 +8,12 @@
         android:id="@+id/feedFragment"
         android:name="com.unbeaned.app.navigation.FeedFragment"
         android:label="FeedFragment"
-        tool:layout="@layout/feed_fragment"/>
+        tool:layout="@layout/feed_fragment" />
     <fragment
         android:id="@+id/userFragment"
         android:name="com.unbeaned.app.navigation.UserFragment"
         android:label="UserFragment"
-        tool:layout="@layout/user_fragment"/>
+        tool:layout="@layout/user_fragment" />
     <fragment
         android:id="@+id/splashFragment"
         android:name="com.unbeaned.app.navigation.SplashFragment"

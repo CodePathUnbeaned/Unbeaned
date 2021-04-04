@@ -118,6 +118,7 @@ public class DetailsActivity extends AppCompatActivity {
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         switch (requestCode) {
             case 100: {
                 // If request is cancelled, the result arrays are empty.
@@ -175,5 +176,6 @@ public class DetailsActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         queryReviews();
         place.calculateRating(place.getPlaceId());
+        tvRating.setText(String.valueOf((Math.round(place.getRating()) * 100) / 100));
     }
 }

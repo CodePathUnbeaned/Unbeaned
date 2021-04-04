@@ -30,7 +30,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Unbeaned">
-        <activity android:name=".navigation.CameraActivity"></activity>
+        <activity
+            android:name=".navigation.MainActivity1"
+            android:label="@string/title_activity_main1"
+            android:theme="@style/Theme.Unbeaned.NoActionBar"></activity>
+        <activity android:name=".navigation.CameraActivity" />
         <activity android:name=".navigation.ReviewDetailsActivity" />
         <activity android:name=".navigation.ComposeActivity" />
         <activity android:name=".navigation.DetailsActivity" />

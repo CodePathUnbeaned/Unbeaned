@@ -52,4 +52,31 @@ public class BindingAdapterUtils {
                     .into(view);
         }
     }
+
+    @BindingAdapter({"bind:beanBadge"})
+    public static void loadProfileBadge(ImageView view, int reviewCount) {
+        if (reviewCount > 0) {
+            Glide.with(view.getContext())
+                    .load(R.drawable.ic_bean_amateur)
+                    .into(view);
+        }
+        else {
+            Glide.with(view.getContext())
+                    .load(R.drawable.ic_bean_start)
+                    .into(view);
+        }
+    }
+
+    @BindingAdapter({"bind:averageRating"})
+    public static void getAverageRating(TextView view, double rating) {
+        double round = (double) Math.round(rating * 100) / 100;
+
+        if (Math.round(round) == rating) {
+            view.setText(String.valueOf(rating));
+        }
+        else {
+            view.setText(String.valueOf(round));
+        }
+
+    }
 }
