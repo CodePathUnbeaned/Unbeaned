@@ -55,16 +55,35 @@ public class BindingAdapterUtils {
 
     @BindingAdapter({"bind:beanBadge"})
     public static void loadProfileBadge(ImageView view, int reviewCount) {
-        if (reviewCount > 0) {
-            Glide.with(view.getContext())
-                    .load(R.drawable.ic_bean_amateur)
-                    .into(view);
+        // 0 < b < 5
+        // 5 < b < 10
+        // 10 < b < 20
+        // 20 < b < 30
+        // 30 < b < 40
+        // b > 40
+
+        int beanID = R.drawable.ic_bean_start;
+
+        if (reviewCount > 40) {
+            beanID = R.drawable.ic_final_bean;
         }
-        else {
-            Glide.with(view.getContext())
-                    .load(R.drawable.ic_bean_start)
-                    .into(view);
+        else if (reviewCount > 30) {
+            beanID = R.drawable.ic_bean_master;
         }
+        else if (reviewCount > 20) {
+            beanID = R.drawable.ic_regular_bean;
+        }
+        else if (reviewCount > 10) {
+            beanID = R.drawable.ic_bean_amateur;
+        }
+        else if (reviewCount > 5) {
+            beanID = R.drawable.ic_just_beand;
+        }
+
+        Glide.with(view.getContext())
+                .load(beanID)
+                .into(view);
+
     }
 
     @BindingAdapter({"bind:averageRating"})

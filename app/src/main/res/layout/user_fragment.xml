@@ -32,7 +32,7 @@
                 <ImageView
                     android:layout_width="130dp"
                     android:layout_height="130dp"
-                    app:beanBadge="@{userData.reviewCount}"
+                    app:beanBadge="@{user.getInt(userData.KEY_REVIEW_COUNT)}"
                     tools:src="@drawable/ic_bean_master" />
 
             </LinearLayout>
@@ -119,128 +119,14 @@
                     android:layout_marginTop="20dp"
                     android:layout_marginBottom="20dp"
                     app:autoPlay="false"
-                    app:fillColor="@color/accent_purple"
-                    app:indicatorGravity="bottom"
+                    app:fillColor="@color/pink_red_accent"
+                    app:indicatorGravity="bottom|center_horizontal"
                     app:indicatorOrientation="horizontal"
-                    app:indicatorVisibility="gone"
                     app:radius="6dp"
+                    app:strokeColor="@color/accent_purple"
                     app:snap="true" />
 
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
-
-
-<!--    <RelativeLayout-->
-<!--        xmlns:app="http://schemas.android.com/apk/res-auto"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"-->
-<!--        android:padding="8dp">-->
-
-<!--        <ImageView-->
-<!--            android:id="@+id/ivUserProfileImg"-->
-<!--            android:layout_width="75dp"-->
-<!--            android:layout_height="75dp"-->
-<!--            android:layout_alignParentStart="true"-->
-<!--            android:layout_alignParentTop="true"-->
-<!--            android:layout_marginStart="0dp"-->
-<!--            android:layout_marginTop="0dp"-->
-<!--            app:imageFile='@{user.getParseFile(userData.KEY_PHOTO)}'-->
-<!--            tools:srcCompat="@tools:sample/avatars" />-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/tvUserFullname"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_alignParentTop="true"-->
-<!--            android:layout_marginStart="16dp"-->
-<!--            android:layout_marginTop="0dp"-->
-<!--            android:layout_toEndOf="@+id/ivUserProfileImg"-->
-<!--            android:textSize="24sp"-->
-<!--            android:textStyle="bold"-->
-<!--            android:text="@{user.getString(userData.KEY_NAME)}"-->
-<!--            tools:text="Noah Synowiec" />-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/tvUserHandle"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_below="@+id/tvUserFullname"-->
-<!--            android:layout_marginStart="16dp"-->
-<!--            android:layout_marginTop="6dp"-->
-<!--            android:layout_toEndOf="@+id/ivUserProfileImg"-->
-<!--            android:textSize="18sp"-->
-<!--            android:text="@{user.getString(userData.KEY_USERNAME)}"-->
-<!--            tools:text="\@NoahSyn" />-->
-
-<!--        <View-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="2dp"-->
-<!--            android:layout_below="@+id/tvUserHandle"-->
-<!--            android:layout_marginStart="16dp"-->
-<!--            android:layout_marginTop="8dp"-->
-<!--            android:layout_toEndOf="@+id/ivUserProfileImg"-->
-<!--            android:background="@android:color/darker_gray" />-->
-
-<!--        <Button-->
-<!--            android:id="@+id/btnLogout"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_below="@+id/tvUserHandle"-->
-<!--            android:layout_alignParentEnd="true"-->
-<!--            android:layout_marginStart="24dp"-->
-<!--            android:layout_marginTop="14dp"-->
-<!--            android:layout_marginEnd="24dp"-->
-<!--            android:layout_toEndOf="@+id/ivUserProfileImg"-->
-<!--            android:backgroundTint="#EF8462"-->
-<!--            android:text="Logout" />-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/textView4"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_below="@+id/btnLogout"-->
-<!--            android:layout_alignParentStart="true"-->
-<!--            android:layout_marginStart="0dp"-->
-<!--            android:layout_marginTop="16dp"-->
-<!--            android:text="Biography"-->
-<!--            android:textSize="16dp"-->
-<!--            android:textStyle="bold" />-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/tvBiography"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_below="@+id/textView4"-->
-<!--            android:layout_alignParentStart="true"-->
-<!--            android:layout_marginStart="0dp"-->
-<!--            android:layout_marginTop="4dp"-->
-<!--            android:textSize="14dp"-->
-<!--            tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat." />-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/textView6"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_below="@+id/tvBiography"-->
-<!--            android:layout_alignParentStart="true"-->
-<!--            android:layout_marginStart="0dp"-->
-<!--            android:layout_marginTop="16dp"-->
-<!--            android:text="Your Favorites"-->
-<!--            android:textSize="16sp"-->
-<!--            android:textStyle="bold" />-->
-
-<!--        <ScrollView-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:layout_below="@+id/textView6"-->
-<!--            android:layout_marginTop="8dp">-->
-
-<!--            <LinearLayout-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:orientation="vertical" />-->
-<!--        </ScrollView>-->
-
-<!--    </RelativeLayout>-->
 </layout>

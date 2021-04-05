@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
 
 import com.bumptech.glide.Glide;
 import com.parse.FindCallback;
@@ -50,6 +51,12 @@ public class UserFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         //inflate the layout for this view
         binding = DataBindingUtil.inflate(inflater, R.layout.user_fragment, container, false);
+
+        try {
+            ParseUser.getCurrentUser().fetch();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
         binding.setUser(ParseUser.getCurrentUser());
         binding.setUserData(new User());
