@@ -17,6 +17,7 @@ import java.util.List;
 @ParseClassName("Review")
 public class Review extends ParseObject {
     public List<Images> images= new ArrayList<>();
+    public static final String KEY_TITLE = "title";
     public static final String KEY_PLACE_ID = "placeId";
     public static final String KEY_REVIEW_ID = "objectId";
     public static final String KEY_RATING = "rating";
@@ -25,6 +26,9 @@ public class Review extends ParseObject {
     public static final String KEY_CREATED= "createdAt";
     public static final String KEY_PLACE_NAME = "placeDisplayName";
 
+    public String getTitle(){ return getString(KEY_TITLE);}
+
+    public void setTitle(String title){ put(KEY_TITLE,title);}
 
     public String getPlaceName(){return getString(KEY_PLACE_NAME);}
 

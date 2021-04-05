@@ -82,29 +82,18 @@
                 tools:text="4.7" />
 
             <TextView
-                android:id="@+id/tvPlaceName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/ivProfileImage"
-                android:layout_marginTop="10dp"
-                android:fontFamily="@font/montserrat_bold"
-                android:text="@{review.placeName}"
-                android:textSize="18sp"
-                tools:text="Place Name" />
-
-            <TextView
                 android:id="@+id/tvReview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/tvPlaceName"
-                android:layout_marginTop="2dp"
+                android:layout_below="@+id/tvReviewTitle"
+                android:layout_marginTop="3dp"
                 android:text="@{review.review}"
                 tools:text="Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. " />
 
             <com.synnapps.carouselview.CarouselView
                 android:id="@+id/carouselView"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="190dp"
                 android:layout_below="@+id/tvReview"
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="0dp"
@@ -117,23 +106,27 @@
 
             </com.synnapps.carouselview.CarouselView>
 
-        </RelativeLayout>
+            <TextView
+                android:id="@+id/tvReviewTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/ivProfileImage"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="11dp"
+                android:fontFamily="@font/roboto_bold"
+                android:textSize="20sp"
+                android:text="@{review.title}"
+                tools:text="Review Title" />
 
-        <Button
-            android:id="@+id/btnComment"
-            android:layout_width="80dp"
-            android:layout_height="40dp"
-            android:layout_below="@+id/reviewItemLinearContainer"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="2dp"
-            android:layout_marginEnd="5dp"
-            android:text="add" />
+        </RelativeLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvComments"
             android:layout_width="386dp"
-            android:layout_height="200dp"
-            android:layout_below="@+id/btnComment"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/commentLinearContainer"
+            android:layout_below="@+id/tvComments"
             android:layout_marginTop="0dp" />
 
         <TextView
@@ -147,6 +140,37 @@
             android:text="Comments"
             android:textSize="20sp" />
 
+        <RelativeLayout
+            android:id="@+id/commentLinearContainer"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="5dp"
+            android:background="#FDFCFC"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/etComment"
+                android:layout_width="246dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="5dp"
+                android:layout_marginBottom="7dp"
+                android:ems="10"
+                android:inputType="text"
+                tools:text="Comment" />
+
+            <Button
+                android:id="@+id/btnComment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="10dp"
+                android:text="comment" />
+        </RelativeLayout>
 
     </RelativeLayout>
 </layout>

@@ -78,13 +78,13 @@
             tools:text="4.7" />
 
         <TextView
-            android:id="@+id/tvPlaceName"
+            android:id="@+id/tvReviewTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/ivProfileImage"
             android:layout_marginTop="10dp"
             android:fontFamily="@font/montserrat_bold"
-            android:text="@{review.placeName}"
+            android:text="@{review.title}"
             android:textSize="18sp"
             tools:text="Place Name" />
 
@@ -92,7 +92,7 @@
             android:id="@+id/tvReview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tvPlaceName"
+            android:layout_below="@+id/tvReviewTitle"
             android:layout_marginTop="2dp"
             android:text="@{review.review}"
             tools:text="Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. " />
