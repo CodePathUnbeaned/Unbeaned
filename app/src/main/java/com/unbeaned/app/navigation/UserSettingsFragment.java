@@ -114,6 +114,7 @@ public class UserSettingsFragment extends Fragment {
                 Toast.makeText(getContext(), "Changes Saved!", Toast.LENGTH_LONG).show();
                 returnToUserFragment();
             }
+
         });
     }
 }
