@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable name="user" type="com.parse.ParseUser" />
+        <variable name="userData" type="com.unbeaned.app.models.User" />
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/linearLayoutSettingsContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/ivProfilePicture"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:layout_centerInParent="true"
+                    app:profileImage="@{user.getParseFile(userData.KEY_PHOTO)}"
+                    tools:src="@drawable/ic_bean_master" />
+
+                <Button
+                    android:id="@+id/btnSave"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginTop="0dp"
+                    android:text="@string/save" />
+
+                <Button
+                    android:id="@+id/btnCancel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginEnd="0dp"
+                    android:backgroundTint="#8F8F8F"
+                    android:text="@android:string/cancel" />
+
+            </RelativeLayout>
+
+            <EditText
+                android:id="@+id/etUserName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:hint="@string/your_name"
+                android:includeFontPadding="false"
+                android:text="@{user.getString(userData.KEY_NAME)}"
+                android:textAllCaps="true"
+                android:textSize="24sp"
+                tools:text="First Name" />
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="60dp">
+
+                <EditText
+                    android:id="@+id/etUserHandle"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginTop="0dp"
+                    android:layout_toEndOf="@+id/textView"
+                    android:hint="@string/your_user_handle"
+                    android:includeFontPadding="false"
+                    android:text="@{user.getString(userData.KEY_USERNAME)}"
+                    android:textColor="@color/accent_purple"
+                    android:textSize="24sp"
+                    tools:text="userHandle" />
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginStart="100dp"
+                    android:layout_marginTop="23dp"
+                    android:includeFontPadding="false"
+                    android:text="@string/at_symbol"
+                    android:textColor="@color/accent_purple"
+                    android:textSize="24sp" />
+
+            </RelativeLayout>
+
+            <EditText
+                android:id="@+id/etUserBio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:hint="@string/tell_the_world_about_yourself"
+                android:includeFontPadding="false"
+                android:text="@{user.getString(userData.KEY_BIO)}"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/montserrat_bold"
+                android:includeFontPadding="false"
+                android:text="@string/profile_favorites_header"
+                android:textAllCaps="true"
+                android:textColor="@color/accent_purple"
+                android:textSize="28sp" />
+
+            <com.synnapps.carouselview.CarouselView
+                android:id="@+id/carouselProfileReview"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                app:autoPlay="false"
+                app:fillColor="@color/pink_red_accent"
+                app:indicatorGravity="bottom|center_horizontal"
+                app:indicatorOrientation="horizontal"
+                app:radius="6dp"
+                app:snap="true"
+                app:strokeColor="@color/accent_purple" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btnLogout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginEnd="0dp"
+                    android:backgroundTint="#FF0000"
+                    android:text="Logout" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+</layout>

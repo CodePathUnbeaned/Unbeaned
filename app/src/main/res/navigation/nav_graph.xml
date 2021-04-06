@@ -74,4 +74,8 @@
         android:name="com.unbeaned.app.navigation.place.PlaceDetailFragment"
         android:label="PlaceDetailFragment"
         tool:layout="@layout/fragment_place_detail"/>
+    <fragment
+        android:id="@+id/userSettingsFragment"
+        android:name="com.unbeaned.app.navigation.UserSettingsFragment"
+        android:label="UserSettingsFragment" />
 </navigation>

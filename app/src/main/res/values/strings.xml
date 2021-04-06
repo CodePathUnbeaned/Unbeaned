@@ -17,4 +17,11 @@
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="tell_the_world_about_yourself">Tell the world about yourself!</string>
+    <string name="your_name">Your Name</string>
+    <string name="your_user_handle">Your User Handle</string>
+    <string name="at_symbol">\@</string>
+    <string name="save_changes">Save Changes</string>
+    <string name="save">save</string>
 </resources>

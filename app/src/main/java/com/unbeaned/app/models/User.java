@@ -17,7 +17,11 @@ public class User extends ParseUser {
     public static final String KEY_BIO = "bio";
     public static final String KEY_REVIEW_COUNT = "reviewCount";
 
-    public String getId (){return getString(KEY_ID);}
+    public User() {
+
+    }
+
+    public String getId (){ return getString(KEY_ID); }
 
     public String getUsername(){
         return getString(KEY_USERNAME);
