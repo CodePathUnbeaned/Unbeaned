@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable name="review" type="com.unbeaned.app.models.Review" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp">
+
+        <RelativeLayout
+            android:id="@+id/reviewProfileContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/review_profile_container"
+            android:paddingStart="20dp"
+            android:paddingTop="20dp"
+            android:paddingEnd="20dp"
+            android:paddingBottom="20dp">
+
+
+            <TextView
+                android:id="@+id/tvProfileReviewHeader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/btnDeleteReview"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginEnd="15dp"
+                android:layout_toStartOf="@+id/ivProfileReviewStar"
+                android:fontFamily="@font/montserrat_bold"
+                android:text="@{review.placeName}"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                tools:text="Review Header" />
+
+            <TextView
+                android:id="@+id/tvProfileReviewRating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/btnDeleteReview"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="7dp"
+                android:layout_marginEnd="10dp"
+                android:fontFamily="@font/montserrat_bold"
+                android:includeFontPadding="false"
+                android:text="@{String.valueOf(review.rating)}"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                tools:text="4.7" />
+
+            <ImageView
+                android:id="@+id/ivProfileReviewStar"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_below="@+id/btnDeleteReview"
+                android:layout_marginTop="2dp"
+                android:layout_marginEnd="8dp"
+                android:layout_toStartOf="@+id/tvProfileReviewRating"
+                app:srcCompat="@drawable/ic_star" />
+
+            <TextView
+                android:id="@+id/tvProfileReviewPlace"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvProfileReviewHeader"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/roboto_medium"
+                android:text="@{review.placeName}"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                tools:text="Place Name" />
+
+            <TextView
+                android:id="@+id/tvProfileReviewDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvProfileReviewPlace"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/roboto"
+                android:includeFontPadding="false"
+                android:text="@{review.review}"
+                android:textColor="@color/black"
+                android:textSize="12sp"
+                tools:text="Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. " />
+
+            <Button
+                android:id="@+id/btnDeleteReview"
+                style="@android:style/Widget.DeviceDefault.Light.Button.Borderless.Small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="-10dp"
+                android:layout_marginEnd="-10dp"
+                android:drawableLeft="@drawable/ic_baseline_delete_forever_24" />
+
+        </RelativeLayout>
+    </LinearLayout>
+</layout>

@@ -21,6 +21,7 @@ import com.synnapps.carouselview.ViewListener;
 import com.unbeaned.app.R;
 import com.unbeaned.app.databinding.ReviewProfileItemBinding;
 import com.unbeaned.app.databinding.UserFragmentBinding;
+import com.unbeaned.app.databinding.UserReviewPlaceholderBinding;
 import com.unbeaned.app.models.Review;
 import com.unbeaned.app.models.User;
 
@@ -56,12 +57,16 @@ public class UserFragment extends Fragment {
         binding.setUser(ParseUser.getCurrentUser());
         binding.setUserData(new User());
 
-        carouselProfileReview = binding.carouselProfileReview;
+        carouselProfileReview = binding.carouselProfileReviews;
         allReviews = new ArrayList<>();
 
-        getUserReviews();
+        getUserReviews(allReviews);
 
-        carouselProfileReview.setPageCount(allReviews.size());
+        if(allReviews.size() != 0) {
+            carouselProfileReview.setPageCount(allReviews.size());
+        } else {
+            carouselProfileReview.setPageCount(1);
+        }
 
         binding.btnSettings.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,6 +78,11 @@ public class UserFragment extends Fragment {
         carouselProfileReview.setViewListener(new ViewListener() {
             @Override
             public View setViewForPosition(int position) {
+                if (allReviews.size() == 0) {
+                    UserReviewPlaceholderBinding binding = DataBindingUtil.inflate(inflater, R.layout.user_review_placeholder, container, false);
+                    return binding.getRoot();
+                }
+
                 ReviewProfileItemBinding reviewBinding = DataBindingUtil.inflate(inflater, R.layout.review_profile_item, container, false);
 
                 reviewBinding.setReview(allReviews.get(position));
@@ -94,8 +104,7 @@ public class UserFragment extends Fragment {
 
     }
 
-
-    private void getUserReviews() {
+    protected void getUserReviews(List<Review> reviewList) {
         ParseQuery<Review> query = ParseQuery.getQuery(Review.class);
 
         query.include(Review.KEY_USER);
@@ -104,13 +113,17 @@ public class UserFragment extends Fragment {
         query.setLimit(5);
 
         try {
-            allReviews.addAll(query.find());
+            reviewList.addAll(query.find());
         } catch(ParseException e) {
             e.printStackTrace();
         }
 
         Log.i(TAG, "Setting custom view");
+    }
 
+    protected void updateUserReviews(List<Review> reviewList) {
+        reviewList.clear();
+        getUserReviews(reviewList);
     }
 
     private void openUserSettings() {
