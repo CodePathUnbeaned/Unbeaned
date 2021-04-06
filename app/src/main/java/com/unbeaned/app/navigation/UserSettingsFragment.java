@@ -1,6 +1,8 @@
 package com.unbeaned.app.navigation;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -64,6 +66,13 @@ public class UserSettingsFragment extends UserFragment {
         binding.setUser(ParseUser.getCurrentUser());
         binding.setUserData(new User());
 
+        binding.ivProfilePicture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getActivity(), "Change Profile Picture?!", Toast.LENGTH_LONG).show();
+            }
+        });
+
         binding.btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -109,7 +118,16 @@ public class UserSettingsFragment extends UserFragment {
                 editReviewBinding.btnDeleteReview.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        deleteReview(userReviews.get(position));
+                        new AlertDialog.Builder(getContext())
+                                .setTitle("Delete Review?")
+                                .setMessage("This action cannot be reversed!")
+                                .setIcon(android.R.drawable.ic_dialog_alert)
+                                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+
+                                    public void onClick(DialogInterface dialog, int whichButton) {
+                                        deleteReview(userReviews.get(position));
+                                    }})
+                                .setNegativeButton(android.R.string.cancel, null).show();
                     }
                 });
 
