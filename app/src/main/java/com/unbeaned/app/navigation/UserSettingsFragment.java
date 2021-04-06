@@ -69,7 +69,7 @@ public class UserSettingsFragment extends UserFragment {
         binding.ivProfilePicture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(), "Change Profile Picture?!", Toast.LENGTH_LONG).show();
+                editProfilePicture();
             }
         });
 
@@ -136,6 +136,10 @@ public class UserSettingsFragment extends UserFragment {
         });
 
         return binding.getRoot();
+    }
+
+    private void editProfilePicture() {
+        Toast.makeText(getActivity(), "Change Profile Picture?!", Toast.LENGTH_LONG).show();
     }
 
     private void deleteReview(Review review) {
