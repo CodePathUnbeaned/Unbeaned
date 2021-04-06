@@ -39,8 +39,6 @@ public class ReviewFeedAdapter extends RecyclerView.Adapter<ReviewFeedAdapter.Vi
     List<Review> reviews;
     Place place;
 
-
-
     public ReviewFeedAdapter(Context context, List<Review> reviews, Place place) {
         this.context = context;
         this.reviews = reviews;

@@ -23,20 +23,25 @@ import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 import com.synnapps.carouselview.CarouselView;
+import com.synnapps.carouselview.ViewListener;
 import com.unbeaned.app.R;
+import com.unbeaned.app.databinding.EditReviewItemBinding;
+import com.unbeaned.app.databinding.ReviewProfileItemBinding;
 import com.unbeaned.app.databinding.UserFragmentBinding;
 import com.unbeaned.app.databinding.UserSettingsFragmentBinding;
 import com.unbeaned.app.databinding.UserSettingsFragmentBindingImpl;
 import com.unbeaned.app.models.Review;
 import com.unbeaned.app.models.User;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class UserSettingsFragment extends Fragment {
+public class UserSettingsFragment extends UserFragment {
+
+    public static final String TAG = "UserSettingsFragment";
 
     UserSettingsFragmentBinding binding;
-    CarouselView carouselProfileReview;
-    List<Review> allReviews;
+    List<Review> userReviews;
     NavController navController;
 
     public UserSettingsFragment() {
@@ -47,6 +52,7 @@ public class UserSettingsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.user_settings_fragment, container, false);
         navController = Navigation.findNavController(getActivity(), R.id.navHostContainer);
+        userReviews = new ArrayList<>();
 
         try {
             ParseUser.getCurrentUser().fetch();
@@ -78,7 +84,27 @@ public class UserSettingsFragment extends Fragment {
             }
         });
 
+        getUserReviews(userReviews);
+        binding.caroselEditReviews.setPageCount(userReviews.size());
+        Log.i(TAG, userReviews.toString());
+
+        binding.caroselEditReviews.setViewListener(new ViewListener() {
+            @Override
+            public View setViewForPosition(int position) {
+                EditReviewItemBinding editReviewBinding = DataBindingUtil.inflate(inflater, R.layout.edit_review_item, container, false);
+
+                editReviewBinding.setReview(userReviews.get(position));
+                Log.i(TAG, "Setting custom view in userSettings");
+                return editReviewBinding.getRoot();
+            }
+        });
+
         return binding.getRoot();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
     }
 
     private void logOut() {

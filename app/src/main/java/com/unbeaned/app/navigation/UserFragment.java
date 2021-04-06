@@ -56,10 +56,10 @@ public class UserFragment extends Fragment {
         binding.setUser(ParseUser.getCurrentUser());
         binding.setUserData(new User());
 
-        carouselProfileReview = binding.carouselProfileReview;
+        carouselProfileReview = binding.carouselProfileReviews;
         allReviews = new ArrayList<>();
 
-        getUserReviews();
+        getUserReviews(allReviews);
 
         carouselProfileReview.setPageCount(allReviews.size());
 
@@ -95,7 +95,7 @@ public class UserFragment extends Fragment {
     }
 
 
-    private void getUserReviews() {
+    protected void getUserReviews(List<Review> reviewList) {
         ParseQuery<Review> query = ParseQuery.getQuery(Review.class);
 
         query.include(Review.KEY_USER);
@@ -104,13 +104,12 @@ public class UserFragment extends Fragment {
         query.setLimit(5);
 
         try {
-            allReviews.addAll(query.find());
+            reviewList.addAll(query.find());
         } catch(ParseException e) {
             e.printStackTrace();
         }
 
         Log.i(TAG, "Setting custom view");
-
     }
 
     private void openUserSettings() {
