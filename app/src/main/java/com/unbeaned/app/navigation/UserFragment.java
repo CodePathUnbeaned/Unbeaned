@@ -21,6 +21,7 @@ import com.synnapps.carouselview.ViewListener;
 import com.unbeaned.app.R;
 import com.unbeaned.app.databinding.ReviewProfileItemBinding;
 import com.unbeaned.app.databinding.UserFragmentBinding;
+import com.unbeaned.app.databinding.UserReviewPlaceholderBinding;
 import com.unbeaned.app.models.Review;
 import com.unbeaned.app.models.User;
 
@@ -61,7 +62,11 @@ public class UserFragment extends Fragment {
 
         getUserReviews(allReviews);
 
-        carouselProfileReview.setPageCount(allReviews.size());
+        if(allReviews.size() != 0) {
+            carouselProfileReview.setPageCount(allReviews.size());
+        } else {
+            carouselProfileReview.setPageCount(1);
+        }
 
         binding.btnSettings.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,6 +78,11 @@ public class UserFragment extends Fragment {
         carouselProfileReview.setViewListener(new ViewListener() {
             @Override
             public View setViewForPosition(int position) {
+                if (allReviews.size() == 0) {
+                    UserReviewPlaceholderBinding binding = DataBindingUtil.inflate(inflater, R.layout.user_review_placeholder, container, false);
+                    return binding.getRoot();
+                }
+
                 ReviewProfileItemBinding reviewBinding = DataBindingUtil.inflate(inflater, R.layout.review_profile_item, container, false);
 
                 reviewBinding.setReview(allReviews.get(position));
@@ -93,7 +103,6 @@ public class UserFragment extends Fragment {
 //        binding.setUser((User) ParseUser.getCurrentUser());
 
     }
-
 
     protected void getUserReviews(List<Review> reviewList) {
         ParseQuery<Review> query = ParseQuery.getQuery(Review.class);

@@ -24,4 +24,5 @@
     <string name="at_symbol">\@</string>
     <string name="save_changes">Save Changes</string>
     <string name="save">save</string>
+    <string name="empty_reviewList_placeholder_text">Make a review to see your contributions here!</string>
 </resources>

@@ -28,6 +28,7 @@ import com.unbeaned.app.R;
 import com.unbeaned.app.databinding.EditReviewItemBinding;
 import com.unbeaned.app.databinding.ReviewProfileItemBinding;
 import com.unbeaned.app.databinding.UserFragmentBinding;
+import com.unbeaned.app.databinding.UserReviewPlaceholderBinding;
 import com.unbeaned.app.databinding.UserSettingsFragmentBinding;
 import com.unbeaned.app.databinding.UserSettingsFragmentBindingImpl;
 import com.unbeaned.app.models.Review;
@@ -84,13 +85,22 @@ public class UserSettingsFragment extends UserFragment {
             }
         });
 
-        getUserReviews(userReviews);
-        binding.caroselEditReviews.setPageCount(userReviews.size());
+        updateUserReviews(userReviews);
+        if(userReviews.size() != 0) {
+            binding.caroselEditReviews.setPageCount(allReviews.size());
+        } else {
+            binding.caroselEditReviews.setPageCount(1);
+        }
         Log.i(TAG, userReviews.toString());
 
         binding.caroselEditReviews.setViewListener(new ViewListener() {
             @Override
             public View setViewForPosition(int position) {
+                if (userReviews.size() == 0) {
+                    UserReviewPlaceholderBinding binding = DataBindingUtil.inflate(inflater, R.layout.user_review_placeholder, container, false);
+                    return binding.getRoot();
+                }
+
                 EditReviewItemBinding editReviewBinding = DataBindingUtil.inflate(inflater, R.layout.edit_review_item, container, false);
 
                 editReviewBinding.setReview(userReviews.get(position));
