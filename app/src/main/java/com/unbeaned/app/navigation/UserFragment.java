@@ -112,6 +112,11 @@ public class UserFragment extends Fragment {
         Log.i(TAG, "Setting custom view");
     }
 
+    protected void updateUserReviews(List<Review> reviewList) {
+        reviewList.clear();
+        getUserReviews(reviewList);
+    }
+
     private void openUserSettings() {
         navController.navigate(R.id.userSettingsFragment);
     }

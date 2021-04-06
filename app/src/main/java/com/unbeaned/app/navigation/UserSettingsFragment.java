@@ -95,11 +95,31 @@ public class UserSettingsFragment extends UserFragment {
 
                 editReviewBinding.setReview(userReviews.get(position));
                 Log.i(TAG, "Setting custom view in userSettings");
+
+                editReviewBinding.btnDeleteReview.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        deleteReview(userReviews.get(position));
+                    }
+                });
+
                 return editReviewBinding.getRoot();
             }
         });
 
         return binding.getRoot();
+    }
+
+    private void deleteReview(Review review) {
+        try {
+            review.delete();
+            Toast.makeText(getContext(), "Review Deleted!", Toast.LENGTH_LONG).show();
+        } catch (ParseException e) {
+            e.printStackTrace();
+            Toast.makeText(getContext(), "Error deleting review.", Toast.LENGTH_LONG).show();
+        }
+        updateUserReviews(userReviews);
+        binding.caroselEditReviews.setPageCount(userReviews.size());
     }
 
     @Override
