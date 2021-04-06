@@ -87,7 +87,7 @@ public class UserSettingsFragment extends UserFragment {
 
         updateUserReviews(userReviews);
         if(userReviews.size() != 0) {
-            binding.caroselEditReviews.setPageCount(allReviews.size());
+            binding.caroselEditReviews.setPageCount(userReviews.size());
         } else {
             binding.caroselEditReviews.setPageCount(1);
         }
