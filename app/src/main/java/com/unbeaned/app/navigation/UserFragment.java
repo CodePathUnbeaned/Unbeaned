@@ -5,27 +5,20 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.viewpager.widget.ViewPager;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
-import com.bumptech.glide.Glide;
-import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.synnapps.carouselview.CarouselView;
-import com.synnapps.carouselview.ImageListener;
 import com.synnapps.carouselview.ViewListener;
 import com.unbeaned.app.R;
-import com.unbeaned.app.databinding.ActivityDetailsBinding;
 import com.unbeaned.app.databinding.ReviewProfileItemBinding;
 import com.unbeaned.app.databinding.UserFragmentBinding;
 import com.unbeaned.app.models.Review;
@@ -41,6 +34,7 @@ public class UserFragment extends Fragment {
     UserFragmentBinding binding;
     CarouselView carouselProfileReview;
     List<Review> allReviews;
+    NavController navController;
 
     public UserFragment () {
         // Constructor
@@ -51,6 +45,7 @@ public class UserFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         //inflate the layout for this view
         binding = DataBindingUtil.inflate(inflater, R.layout.user_fragment, container, false);
+        navController = Navigation.findNavController(getActivity(), R.id.navHostContainer);
 
         try {
             ParseUser.getCurrentUser().fetch();
@@ -67,6 +62,13 @@ public class UserFragment extends Fragment {
         getUserReviews();
 
         carouselProfileReview.setPageCount(allReviews.size());
+
+        binding.btnSettings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openUserSettings();
+            }
+        });
 
         carouselProfileReview.setViewListener(new ViewListener() {
             @Override
@@ -109,5 +111,9 @@ public class UserFragment extends Fragment {
 
         Log.i(TAG, "Setting custom view");
 
+    }
+
+    private void openUserSettings() {
+        navController.navigate(R.id.userSettingsFragment);
     }
 }
