@@ -46,6 +46,7 @@ public class DynamicScrollView extends ScrollView {
 
         View targetView = getRootView().findViewById(watchID);
 
+
         Log.i("ScrollView", "Hero: " + targetView);
 //        Log.i("ScrollView", "Hero: " + rootGroup.getChildAt(1).getId());
 

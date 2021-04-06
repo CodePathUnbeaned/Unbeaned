@@ -75,7 +75,7 @@
                         tools:text="First Name" />
 
                     <TextView
-                        android:id="@+id/etUserHandle"
+                        android:id="@+id/tvUserHandle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/tvProfileName"
