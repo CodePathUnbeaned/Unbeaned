@@ -24,6 +24,22 @@
         <item name="android:textAppearance">@style/TextAppearance.App.Button</item>
     </style>
 
+    <style name="Widget.App.ButtonIcon" parent="Widget.MaterialComponents.Button">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.App.ButtonIcon</item>
+    </style>
+
+    <style name="Widget.App.ButtonRoundIcon" parent="Widget.MaterialComponents.ExtendedFloatingActionButton">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.App.ButtonRoundIcon</item>
+    </style>
+
+    <style name="ThemeOverlay.App.ButtonRoundIcon" parent="">
+        <item name="colorPrimary">#d3d3d3</item>
+    </style>
+
+    <style name="ThemeOverlay.App.ButtonIcon" parent="">
+        <item name="colorPrimary">@color/white</item>
+    </style>
+
     <style name="ThemeOverlay.App.Button.TextButton" parent="">
         <item name="colorPrimary">@color/med_pink</item>
     </style>
@@ -58,4 +74,5 @@
     <style name="Theme.Unbeaned.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.Unbeaned.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
 </resources>

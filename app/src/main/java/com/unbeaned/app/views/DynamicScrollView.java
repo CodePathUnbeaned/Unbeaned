@@ -41,10 +41,9 @@ public class DynamicScrollView extends ScrollView {
 
     @Override
     protected void onScrollChanged(int l, int t, int oldl, int oldt) {
-        // RelativeLayout ignored since it groups views
-        ViewGroup rootGroup = (ViewGroup) getChildAt(0);
-
+        // Get View specified by watchID attribute
         View targetView = getRootView().findViewById(watchID);
+
 
 
         Log.i("ScrollView", "Hero: " + targetView);

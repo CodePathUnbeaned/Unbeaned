@@ -5,18 +5,13 @@
     <string name="login_password_hint">Password</string>
     <string name="search_hint">Search</string>
     <string name="usernameFormat">\@%1$s</string>
+    <string name="place_detail_price">\u2022 %1$s</string>
     <string name="profile_favorites_header">Your Favorites</string>
     <string name="title_activity_main1">MainActivity1</string>
     <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
 
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="edit_profile">Edit Profile</string>
     <string name="tell_the_world_about_yourself">Tell the world about yourself!</string>
     <string name="your_name">Your Name</string>

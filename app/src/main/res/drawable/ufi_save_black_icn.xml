@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:drawable="@drawable/ic_ufi_save_black"
+        android:height="@dimen/ufi_white_height"
+        android:width="@dimen/ufi_white_width" />
+</layer-list>

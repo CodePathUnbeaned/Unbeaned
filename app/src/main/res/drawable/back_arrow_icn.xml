@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+<item
+    android:drawable="@drawable/ic_back_arrow"
+    android:height="@dimen/arrow_height"
+    android:width="@dimen/arrow_width" />
+
+</layer-list>
