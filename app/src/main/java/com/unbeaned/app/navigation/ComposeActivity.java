@@ -90,7 +90,7 @@ public class ComposeActivity extends AppCompatActivity {
         btnCamera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //goToCamera();
+                goToCamera();
             }
         });
 
@@ -170,9 +170,7 @@ public class ComposeActivity extends AppCompatActivity {
         progressBar.setVisibility(View.INVISIBLE);
         Log.i(TAG, "Success!");
         etReview.setText("");
-        //Intent i = new Intent();
         setResult(100);
-        //startActivity(i);
         finish();
     }
 
@@ -226,7 +224,7 @@ public class ComposeActivity extends AppCompatActivity {
 
     private void goToCamera() {
         Intent i = new Intent(this, CameraActivity.class);
-        startActivity(i);
+        startActivityForResult(i,200);
     }
 
     private void waitPrg() {
