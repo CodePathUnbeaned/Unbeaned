@@ -28,17 +28,17 @@ Our app is a coffee review, similar to a social media app. Users are able to lik
 - [x] Obtain reviews and comments based off place
 - [x] Display review images in Carousel view
 - [ ] Obtain geographical information from user
-- [ ] Show user profile with user info and their favorite places
+- [x] Show user profile with user info and their favorite places
 - [ ] Show a map of the place with places to visit being displayed
 - [x] Connect to Foursquare/Yelp API and query based on keywords
 - [x] Ability for user to create an account
 - [ ] Ability for users to save favorite places
-- [ ] Ability to like places and write reviews
+- [x] Ability compose write reviews
 - [ ] Show nearby places in a search view
 
 **Optional Nice-to-have Stories**
 
-- [ ] Award users badges based off review count
+- [x] Award users badges based off review count
 - [ ] Ability to have recommendations based on previously liked or recommended places.
 - [ ] Recommender system that learns from previous choices
 - [ ] Cache common requests reduce API calls
@@ -51,10 +51,10 @@ Here's a walkthrough of implemented user stories:
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
-Plan for Next week:
-* Noah: Works on profile page and edit/logout profile page
-* Claudia: Compose activity reviews/comments, launch phone to call, launch google maps for directions, and work on implementing badges system
-* Timothy: Work on polishing UI/branding. autocomplete search, and possibly "explore page" 
+
+<img src='unbeaned2.gif' width=250><br>
+
+GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 ### 2. Screen Archetypes
 
