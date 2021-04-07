@@ -6,7 +6,9 @@ import androidx.core.app.ActivityCompat;
 import androidx.databinding.DataBindingUtil;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Camera;
@@ -69,6 +71,7 @@ public class ComposeActivity extends AppCompatActivity {
     private Place place;
     private Slider slider;
     private EditText etReview;
+    private EditText etReviewTitle;
     private Button btnCamera;
     private Button btnSubmit;
 
@@ -82,11 +85,12 @@ public class ComposeActivity extends AppCompatActivity {
         etReview = binding.etReview;
         btnCamera = binding.btnCamera;
         btnSubmit = binding.btnSubmit;
+        etReviewTitle = binding.etReviewTitle;
 
         btnCamera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //goToCamera();
+                goToCamera();
             }
         });
 
@@ -97,20 +101,25 @@ public class ComposeActivity extends AppCompatActivity {
                 if(review.isEmpty()){
                     return;
                 }
+                String reviewTitle = etReviewTitle.getText().toString();
+                if(reviewTitle.isEmpty()){
+                    return;
+                }
                 double rating = slider.getValue();
                 ParseUser currentUser = ParseUser.getCurrentUser();
                 String placeName = place.getName();
                 String placeId = place.getPlaceId();
 
-                saveReview(review, rating, currentUser, placeName,placeId);
+                saveReview(review, reviewTitle, rating, currentUser, placeName,placeId);
 
             }
         });
 
     }
 
-    private void saveReview(String review, double rating, ParseUser currentUser, String placeName, String placeId) {
+    private void saveReview(String review, String reviewTitle, double rating, ParseUser currentUser, String placeName, String placeId) {
         Review reviewItem = new Review();
+        reviewItem.setTitle(reviewTitle);
         reviewItem.setReview(review);
         reviewItem.setRating(rating);
         reviewItem.setUser(currentUser);
@@ -152,23 +161,70 @@ public class ComposeActivity extends AppCompatActivity {
         });
         int reviewCount = currentUser.getInt("reviewCount");
         currentUser.put("reviewCount", reviewCount+1);
+        if(reviewCount+1 == 5 || reviewCount+1 == 10 || reviewCount+1 ==20 || reviewCount+1 == 30 || reviewCount+1 == 40){
+            displayDialog(reviewCount+1);
+        }
         currentUser.saveInBackground();
         prgThread.interrupt();
         progressBar.setProgress(progressBar.getMax());
         progressBar.setVisibility(View.INVISIBLE);
         Log.i(TAG, "Success!");
         etReview.setText("");
-        //Intent i = new Intent();
         setResult(100);
-        //startActivity(i);
         finish();
+    }
+
+    private void displayDialog(int reviewCount){
+        int beanID = R.drawable.ic_bean_start;
+        String title="";
+        String message="";
+        if(reviewCount==40){
+           beanID = R.drawable.ic_final_bean;
+           title= "Bean Master";
+           message= "Congrats on 40 reviews!";
+        }
+        else if (reviewCount==30){
+            beanID = R.drawable.ic_bean_master;
+            title="Bean Machine";
+            message="Congrats on 30 reviews!";
+        }
+        else if(reviewCount==20){
+            beanID = R.drawable.ic_regular_bean;
+            title="Coffee Grinder";
+            message= "Congrats on 20 reviews!";
+        }else if(reviewCount==10){
+            beanID= R.drawable.ic_bean_amateur;
+            title="Cool Bean";
+            message = "Congrats on 10 reviews!";
+        }else if (reviewCount==5){
+            beanID =R.drawable.ic_just_beand;
+            title = "Just Beand";
+            message = "Congrats on 5 reviews!";
+        }
+        //TODO: replace this with getContext once converted to fragement
+        AlertDialog.Builder builder=new AlertDialog.Builder(this);
+        builder.setCancelable(true);
+        builder.setIcon(beanID);
+        builder.setTitle(title);
+        builder.setMessage(message);
+        builder.setInverseBackgroundForced(true);
+        builder.setPositiveButton("Yay!",new DialogInterface.OnClickListener(){
+
+            @Override
+            public void onClick(DialogInterface dialog, int which){
+                dialog.dismiss();
+            }
+        });
+
+        AlertDialog alert=builder.create();
+        alert.show();
     }
 
 
 
     private void goToCamera() {
         Intent i = new Intent(this, CameraActivity.class);
-        startActivity(i);
+        startActivityForResult(i,200);
     }
 
     private void waitPrg() {

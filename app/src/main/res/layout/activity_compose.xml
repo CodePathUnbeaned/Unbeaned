@@ -66,10 +66,10 @@
             android:id="@+id/tvReviewLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/slider"
+            android:layout_below="@+id/reviewTitle"
             android:layout_alignParentStart="true"
             android:layout_marginStart="5dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="10dp"
             android:fontFamily="@font/roboto"
             android:text="Review"
             android:textSize="18sp" />
@@ -109,6 +109,31 @@
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="5dp"
             android:visibility="invisible" />
+
+        <TextView
+            android:id="@+id/reviewTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/slider"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="15dp"
+            android:fontFamily="@font/roboto_bold"
+            android:text="Review Title:"
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/etReviewTitle"
+            android:layout_width="277dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/slider"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="0dp"
+            android:layout_toEndOf="@+id/reviewTitle"
+            android:ems="10"
+            android:inputType="text"
+            android:text="Review Title"
+            android:textSize="18sp" />
 
     </RelativeLayout>
 </layout>

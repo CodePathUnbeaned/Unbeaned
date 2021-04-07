@@ -15,18 +15,18 @@
         tools:context=".navigation.ComposeActivity">
 
 
-
-        <TextureView
-            android:id="@+id/textureView"
+        <androidx.camera.view.PreviewView
+            android:id="@+id/previewView"
             android:layout_width="match_parent"
             android:layout_height="600dp"
-            android:layout_marginTop="0dp" />
+            android:layout_marginTop="0dp"/>
+
 
         <Button
             android:id="@+id/btnCamera"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/textureView"
+            android:layout_below="@+id/previewView"
             android:layout_marginTop="0dp"
             android:text="Take photo" />
 
