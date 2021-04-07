@@ -179,19 +179,17 @@ public class CameraActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 SimpleDateFormat mDateFormat = new SimpleDateFormat("yyyyMMddHHmmss", Locale.US);
-                File imageFile = new File(getBatchDirectoryName(),mDateFormat.format(new Date())+".jpeg");
-                Log.i(TAG, "Image File: "+imageFile.getAbsolutePath());
                 ContentValues contentValues = new ContentValues();
-                contentValues.put(MediaStore.MediaColumns.DISPLAY_NAME, "NEW_IMAGE");
+                contentValues.put(MediaStore.MediaColumns.DISPLAY_NAME, mDateFormat.format(new Date()));
                 contentValues.put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg");
                 contentValues.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_PICTURES);
-                //ImageCapture.OutputFileOptions outputFileOptions = new ImageCapture.OutputFileOptions.Builder(imageFile).build();
                 ImageCapture.OutputFileOptions outputFileOptions = new ImageCapture.OutputFileOptions.Builder(getContentResolver(), MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues).build();
                 imageCapture.takePicture(outputFileOptions, executor,
                         new ImageCapture.OnImageSavedCallback() {
                             @Override
                             public void onImageSaved(ImageCapture.OutputFileResults outputFileResults) {
                                 Log.i(TAG, "Output file results: "+outputFileResults.getSavedUri());
+
                                 //Toast.makeText(CameraActivity.this, "Image Saved successfully", Toast.LENGTH_SHORT).show();
 
                             }
