@@ -1,6 +1,7 @@
 package com.unbeaned.app.navigation;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.databinding.DataBindingUtil;
@@ -74,6 +75,8 @@ public class ComposeActivity extends AppCompatActivity {
     private EditText etReviewTitle;
     private Button btnCamera;
     private Button btnSubmit;
+    private Review reviewItem;
+    private ParseUser currentUser;
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +89,28 @@ public class ComposeActivity extends AppCompatActivity {
         btnCamera = binding.btnCamera;
         btnSubmit = binding.btnSubmit;
         etReviewTitle = binding.etReviewTitle;
+        reviewItem = new Review();
+        String placeName = place.getName();
+        String placeId = place.getPlaceId();
+        currentUser = ParseUser.getCurrentUser();
+        reviewItem.setPlaceId(placeId);
+        reviewItem.setPlaceName(placeName);
+        reviewItem.setUser(currentUser);
+        reviewItem.setTitle("title");
+        reviewItem.setReview("review");
+        reviewItem.setRating(0.0);
+
+        reviewItem.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e!=null){
+                    Log.e(TAG, "Error while saving", e);
+                    return;
+                }
+                Log.i(TAG, "Post was saved successfully");
+
+            }
+        });
 
         btnCamera.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,26 +131,21 @@ public class ComposeActivity extends AppCompatActivity {
                     return;
                 }
                 double rating = slider.getValue();
-                ParseUser currentUser = ParseUser.getCurrentUser();
-                String placeName = place.getName();
-                String placeId = place.getPlaceId();
 
-                saveReview(review, reviewTitle, rating, currentUser, placeName,placeId);
+                saveReview(review, reviewTitle, rating);
 
             }
         });
 
     }
 
-    private void saveReview(String review, String reviewTitle, double rating, ParseUser currentUser, String placeName, String placeId) {
-        Review reviewItem = new Review();
+    private void saveReview(String review, String reviewTitle, double rating) {
+
         reviewItem.setTitle(reviewTitle);
         reviewItem.setReview(review);
         reviewItem.setRating(rating);
-        reviewItem.setUser(currentUser);
 
-        reviewItem.setPlaceId(placeId);
-        reviewItem.setPlaceName(placeName);
+
         ProgressBar progressBar = binding.progressBar;
         progressBar.setVisibility(ProgressBar.VISIBLE);
         Runnable prgRun = new Runnable() {
@@ -170,8 +190,6 @@ public class ComposeActivity extends AppCompatActivity {
         progressBar.setVisibility(View.INVISIBLE);
         Log.i(TAG, "Success!");
         etReview.setText("");
-        setResult(100);
-        finish();
     }
 
     private void displayDialog(int reviewCount){
@@ -224,7 +242,17 @@ public class ComposeActivity extends AppCompatActivity {
 
     private void goToCamera() {
         Intent i = new Intent(this, CameraActivity.class);
+        i.putExtra("review", reviewItem.getObjectId());
         startActivityForResult(i,200);
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        //queryPhotos();
+    }
+
+    private void queryPhotos() {
+        //query photos with review id
     }
 
     private void waitPrg() {
