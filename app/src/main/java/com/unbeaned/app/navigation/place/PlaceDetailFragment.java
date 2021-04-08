@@ -66,7 +66,6 @@ public class PlaceDetailFragment extends Fragment {
                     toolbarBottomBorder.setVisibility(View.VISIBLE);
                 }
                 else {
-//                    appBarLayoutPlaceDetail.setElevation((float)0.5);
                     btnBackPlaceDetail.setActivated(false);
                     btnBackPlaceDetail.setTextColor(Color.WHITE);
                     tvPlaceNameToolbar.setVisibility(View.INVISIBLE);

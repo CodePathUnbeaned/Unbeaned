@@ -105,7 +105,7 @@ public class Place {
         String zipCode = location.getString("zip_code");
         String address;
 
-        if (address2!="null") {
+        if (!address2.equals("null")) {
             address = String.format("%s %s %s, %s %s", address1, address2, city, state, zipCode);
         }
         else{
@@ -133,7 +133,7 @@ public class Place {
             for (Review review:reviews){
                 total+=review.getRating();
             }
-            return total/ reviews.size();
+            return total / reviews.size();
         }
         return 0.0;
     }

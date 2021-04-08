@@ -69,7 +69,6 @@ public class Review extends ParseObject {
     public void setImages(Review review){
         ParseQuery<Images> query = ParseQuery.getQuery(Images.class);
 
-
         query.whereEqualTo(Images.KEY_REVIEW_ID, review);
         try {
             images.clear();
