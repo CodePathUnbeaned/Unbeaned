@@ -1,5 +1,6 @@
 package com.unbeaned.app.utils;
 
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -8,6 +9,11 @@ import androidx.databinding.BindingAdapter;
 import com.bumptech.glide.Glide;
 import com.parse.ParseFile;
 import com.unbeaned.app.R;
+
+import java.net.MalformedURLException;
+import java.net.URL;
+
+import static android.provider.ContactsContract.CommonDataKinds.Website.URL;
 
 public class BindingAdapterUtils {
     @BindingAdapter({"bind:imageUrl"})
@@ -44,6 +50,7 @@ public class BindingAdapterUtils {
                     .into(view);
         }
         else {
+            Log.i("BindingAdapter", "File URL: " + file);
             Glide.with(view.getContext())
                     .load(file.getUrl())
                     .circleCrop()
@@ -84,6 +91,12 @@ public class BindingAdapterUtils {
                 .load(beanID)
                 .into(view);
 
+    }
+
+    @BindingAdapter({"bind:averagePlaceRating"})
+    public static void getAveragePlaceRating(TextView view, String placeId) {
+//        double average = Requests.getAverageReviewRating(placeId);
+//        view.setText(String.valueOf(average));
     }
 
     @BindingAdapter({"bind:averageRating"})

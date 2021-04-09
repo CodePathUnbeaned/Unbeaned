@@ -8,7 +8,13 @@
         android:id="@+id/feedFragment"
         android:name="com.unbeaned.app.navigation.FeedFragment"
         android:label="FeedFragment"
-        tool:layout="@layout/feed_fragment" />
+        tool:layout="@layout/feed_fragment" >
+        <action
+            android:id="@+id/action_feedFragment_to_placeDetailFragment"
+            app:destination="@id/placeDetailFragment"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit" />
+    </fragment>
     <fragment
         android:id="@+id/userFragment"
         android:name="com.unbeaned.app.navigation.UserFragment"
@@ -73,7 +79,11 @@
         android:id="@+id/placeDetailFragment"
         android:name="com.unbeaned.app.navigation.place.PlaceDetailFragment"
         android:label="PlaceDetailFragment"
-        tool:layout="@layout/fragment_place_detail"/>
+        tool:layout="@layout/fragment_place_detail">
+        <argument
+            android:name="place"
+            app:argType="com.unbeaned.app.models.PlaceReg" />
+    </fragment>
     <fragment
         android:id="@+id/userSettingsFragment"
         android:name="com.unbeaned.app.navigation.UserSettingsFragment"

@@ -21,9 +21,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.unbeaned.app.R;
 import com.unbeaned.app.adapters.PlaceFeedAdapter;
+import com.unbeaned.app.adapters.PlaceRegFeedAdapter;
 import com.unbeaned.app.databinding.ActivityLoginBinding;
 import com.unbeaned.app.databinding.FeedFragmentBinding;
 import com.unbeaned.app.models.Place;
+import com.unbeaned.app.models.PlaceReg;
 import com.unbeaned.app.utils.YelpClient;
 
 import org.jetbrains.annotations.NotNull;
@@ -54,8 +56,8 @@ public class FeedFragment extends Fragment {
     private RecyclerView rvPlaces;
     private EditText etSearch;
     private Button btnSearch;
-    private PlaceFeedAdapter adapter;
-    private List<Place> allPlaces;
+    private PlaceRegFeedAdapter adapter;
+    private List<PlaceReg> allPlaces;
     //Grab from twitter app
     //EndlessRecyclerViewScrollListener scrollListener;
 
@@ -69,13 +71,6 @@ public class FeedFragment extends Fragment {
        //inflate the layout for this view
         binding = DataBindingUtil.inflate(inflater, R.layout.feed_fragment, container, false);
 
-        NavHostFragment.findNavController(this).addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
-            @Override
-            public void onDestinationChanged(@NonNull NavController controller, @NonNull NavDestination destination, @Nullable Bundle arguments) {
-                Log.i(TAG, "Destination ID: " + allPlaces);
-            }
-        });
-
         return binding.getRoot();
     }
 
@@ -87,7 +82,7 @@ public class FeedFragment extends Fragment {
         etSearch = binding.etSearch;
         btnSearch = binding.btnSearch;
         allPlaces = new ArrayList<>();
-        adapter = new PlaceFeedAdapter(getContext(), allPlaces);
+        adapter = new PlaceRegFeedAdapter(getContext(), allPlaces, this);
 
         rvPlaces.setAdapter(adapter);
         rvPlaces.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -96,6 +91,13 @@ public class FeedFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 searchBusinesses(etSearch.getText().toString());
+            }
+        });
+
+        NavHostFragment.findNavController(this).addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
+            @Override
+            public void onDestinationChanged(@NonNull NavController controller, @NonNull NavDestination destination, @Nullable Bundle arguments) {
+                Log.i(TAG, "Destination ID: " + allPlaces);
             }
         });
 
@@ -131,7 +133,7 @@ public class FeedFragment extends Fragment {
                         public void run() {
                             adapter.clear();
                             try {
-                                adapter.addAll(Place.fromJsonArray(businessJsonArray));
+                                adapter.addAll(PlaceReg.fromJsonArray(businessJsonArray));
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }

@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-@ParseClassName("Review")
+@ParseClassName("Reviews")
 public class Review extends ParseObject {
     public List<Images> images= new ArrayList<>();
     public static final String KEY_TITLE = "title";

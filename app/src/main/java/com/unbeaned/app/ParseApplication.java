@@ -14,9 +14,11 @@ public class ParseApplication extends Application {
         super.onCreate();
 
         Parse.initialize(new Parse.Configuration.Builder(this)
-                .applicationId("NhtrxOnE0JorwCP3TxQFBMWLHwJdm0vCp3hHtNgU")
-                .clientKey("NKWFJGN3VmskzrypGOtnVPXXoqRXK288hVo8FOhY")
-                .server("https://parseapi.back4app.com")
+                .applicationId("unbeand")
+//                .applicationId("NhtrxOnE0JorwCP3TxQFBMWLHwJdm0vCp3hHtNgU")
+//                .clientKey("NKWFJGN3VmskzrypGOtnVPXXoqRXK288hVo8FOhY")
+//                .server("https://parseapi.back4app.com")
+                .server("https://unbeand.herokuapp.com/parse/")
                 .build()
         );
         ParseUser.registerSubclass(User.class);

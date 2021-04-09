@@ -26,6 +26,7 @@ import android.widget.TextView;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
+import com.unbeaned.app.BR;
 import com.unbeaned.app.R;
 import com.unbeaned.app.adapters.PlaceFeedAdapter;
 import com.unbeaned.app.adapters.ReviewFeedAdapter;
@@ -33,11 +34,20 @@ import com.unbeaned.app.databinding.ActivityDetailsBinding;
 import com.unbeaned.app.models.Place;
 import com.unbeaned.app.models.Review;
 import com.unbeaned.app.models.User;
+import com.unbeaned.app.utils.Requests;
 
+import org.jetbrains.annotations.NotNull;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.parceler.Parcels;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 public class DetailsActivity extends AppCompatActivity {
     public static final String TAG = "DetailsActivity";
@@ -138,8 +148,6 @@ public class DetailsActivity extends AppCompatActivity {
         }
     }
 
-
-
     private void queryReviews() {
         ParseQuery<Review> query = ParseQuery.getQuery(Review.class);
 
@@ -153,6 +161,7 @@ public class DetailsActivity extends AppCompatActivity {
                     Log.e(TAG, "Issue with getting posts", e);
                     return;
                 }
+                Log.i(TAG, "Querying Reviews: " + reviews);
                 for (Review review:reviews){
                     review.setImages(review);
                 }
@@ -173,7 +182,7 @@ public class DetailsActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         queryReviews();
-        place.calculateRating(place.getPlaceId());
+//        place.calculateRating(place.getPlaceId());
         tvRating.setText(String.valueOf((Math.round(place.getRating()) * 100) / 100));
     }
 }
