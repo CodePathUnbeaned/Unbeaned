@@ -1,10 +1,10 @@
 package com.unbeaned.app.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Log;
 
-import com.parse.FindCallback;
 import com.parse.ParseException;
-import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.unbeaned.app.utils.Requests;
 
@@ -12,7 +12,6 @@ import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.parceler.Parcel;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -22,8 +21,8 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
-@Parcel
-public class Place {
+//@Parcel
+public class PlaceReg implements Parcelable {
 
     String placeId;
     String name;
@@ -38,9 +37,35 @@ public class Place {
     String address1;
 
     //need by Parceler library
-    public Place(){
+    public PlaceReg(){
 
     }
+
+    protected PlaceReg(Parcel in) {
+        placeId = in.readString();
+        name = in.readString();
+        rating = in.readDouble();
+        address = in.readString();
+        price = in.readString();
+        displayPhone = in.readString();
+        phone = in.readString();
+        imageUrl = in.readString();
+        longitude = in.readString();
+        latitude = in.readString();
+        address1 = in.readString();
+    }
+
+    public static final Creator<PlaceReg> CREATOR = new Creator<PlaceReg>() {
+        @Override
+        public PlaceReg createFromParcel(Parcel in) {
+            return new PlaceReg(in);
+        }
+
+        @Override
+        public PlaceReg[] newArray(int size) {
+            return new PlaceReg[size];
+        }
+    };
 
     public String getPlaceId(){ return placeId;}
 
@@ -75,7 +100,7 @@ public class Place {
     public String getAddress1(){return address1;}
 
 
-    public Place(JSONObject jsonObject) throws JSONException {
+    public PlaceReg(JSONObject jsonObject) throws JSONException {
        placeId=jsonObject.getString("id");
        name=jsonObject.getString("name");
        imageUrl=jsonObject.getString("image_url");
@@ -97,10 +122,10 @@ public class Place {
         displayPhone= jsonObject.getString("display_phone");
     }
 
-    public static List<Place> fromJsonArray(JSONArray jsonArray) throws JSONException {
-        List<Place> places = new ArrayList<>();
+    public static List<PlaceReg> fromJsonArray(JSONArray jsonArray) throws JSONException {
+        List<PlaceReg> places = new ArrayList<>();
         for(int i=0; i<jsonArray.length(); i++){
-            places.add(new Place(jsonArray.getJSONObject(i)));
+            places.add(new PlaceReg(jsonArray.getJSONObject(i)));
         }
         return places;
     }
@@ -197,4 +222,24 @@ public class Place {
         return 0.0;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+
+        dest.writeString(placeId);
+        dest.writeString(name);
+        dest.writeDouble(rating);
+        dest.writeString(address);
+        dest.writeString(price);
+        dest.writeString(displayPhone);
+        dest.writeString(phone);
+        dest.writeString(imageUrl);
+        dest.writeString(longitude);
+        dest.writeString(latitude);
+        dest.writeString(address1);
+    }
 }

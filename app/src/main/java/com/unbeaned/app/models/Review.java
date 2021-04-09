@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-@ParseClassName("Review")
+@ParseClassName("Reviews")
 public class Review extends ParseObject {
     public List<Images> images= new ArrayList<>();
     public static final String KEY_TITLE = "title";
@@ -68,7 +68,6 @@ public class Review extends ParseObject {
 
     public void setImages(Review review){
         ParseQuery<Images> query = ParseQuery.getQuery(Images.class);
-
 
         query.whereEqualTo(Images.KEY_REVIEW_ID, review);
         try {

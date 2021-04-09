@@ -9,6 +9,8 @@ import androidx.core.widget.NestedScrollView;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
+import android.os.Parcel;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +21,10 @@ import android.widget.TextView;
 import com.google.android.material.appbar.AppBarLayout;
 import com.unbeaned.app.R;
 import com.unbeaned.app.databinding.FragmentPlaceDetailBinding;
+import com.unbeaned.app.models.Place;
+import com.unbeaned.app.models.PlaceReg;
+
+import org.parceler.Parcels;
 
 public class PlaceDetailFragment extends Fragment {
 
@@ -30,7 +36,7 @@ public class PlaceDetailFragment extends Fragment {
     NestedScrollView nestedScrollViewDetails;
     ImageView ivPlaceDisplayImage;
     View toolbarBottomBorder;
-
+    private PlaceReg place;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -43,6 +49,11 @@ public class PlaceDetailFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        if (getArguments() != null) {
+            Log.i("PlaceDetail", " " + getArguments());
+            place = getArguments().getParcelable("place");
+        }
 
         ivPlaceDisplayImage = binding.ivPlaceDisplayImage;
         btnBackPlaceDetail = binding.btnBackPlaceDetail;
@@ -66,7 +77,6 @@ public class PlaceDetailFragment extends Fragment {
                     toolbarBottomBorder.setVisibility(View.VISIBLE);
                 }
                 else {
-//                    appBarLayoutPlaceDetail.setElevation((float)0.5);
                     btnBackPlaceDetail.setActivated(false);
                     btnBackPlaceDetail.setTextColor(Color.WHITE);
                     tvPlaceNameToolbar.setVisibility(View.INVISIBLE);
@@ -76,7 +86,6 @@ public class PlaceDetailFragment extends Fragment {
             }
         });
 
-
         btnBackPlaceDetail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -84,6 +93,7 @@ public class PlaceDetailFragment extends Fragment {
             }
         });
 
+        binding.setPlace(place);
 
     }
 }

@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools">
     <data>
         <variable name="place" type="com.unbeaned.app.models.Place" />
+        <variable name="placeRating" type="String" />
     </data>
 
     <RelativeLayout

@@ -1,7 +1,6 @@
 package com.unbeaned.app.adapters;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,22 +17,20 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.unbeaned.app.R;
 import com.unbeaned.app.databinding.PlaceItemBinding;
 import com.unbeaned.app.models.Place;
-import com.unbeaned.app.navigation.DetailsActivity;
+import com.unbeaned.app.models.PlaceReg;
 import com.unbeaned.app.navigation.FeedFragment;
 import com.unbeaned.app.navigation.FeedFragmentDirections;
 
-import org.parceler.Parcels;
-
 import java.util.List;
 
-public class PlaceFeedAdapter extends RecyclerView.Adapter<PlaceFeedAdapter.ViewHolder> {
+public class PlaceRegFeedAdapter extends RecyclerView.Adapter<PlaceRegFeedAdapter.ViewHolder> {
 
     Context context;
-    List<Place> places;
+    List<PlaceReg> places;
     FeedFragment fragmentContext;
 
 
-    public PlaceFeedAdapter(Context context, List<Place> places, FeedFragment fragmentContext) {
+    public PlaceRegFeedAdapter(Context context, List<PlaceReg> places, FeedFragment fragmentContext) {
         this.context = context;
         this.places = places;
         this.fragmentContext = fragmentContext;
@@ -53,7 +50,7 @@ public class PlaceFeedAdapter extends RecyclerView.Adapter<PlaceFeedAdapter.View
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         //get the data at position
-        Place place = places.get(position);
+        PlaceReg place = places.get(position);
         //bind the place with the viewholder
         holder.bind(place);
     }
@@ -70,7 +67,7 @@ public class PlaceFeedAdapter extends RecyclerView.Adapter<PlaceFeedAdapter.View
     }
 
     //Add a List of items
-    public void addAll(List<Place> placesList){
+    public void addAll(List<PlaceReg> placesList){
         places.addAll(placesList);
         notifyDataSetChanged();
     }
@@ -98,16 +95,15 @@ public class PlaceFeedAdapter extends RecyclerView.Adapter<PlaceFeedAdapter.View
 
         }
 
-        public void bind(final Place place) {
-//            binding.setPlace(place);
-//            binding.executePendingBindings();
+        public void bind(final PlaceReg place) {
+            binding.setPlace(place);
+            binding.executePendingBindings();
 
             placeItemLinearContainer.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Bundle bundle = new Bundle();
-//                    bundle.putParcelable("place", Parcels.wrap(place));
-//                    NavHostFragment.findNavController(fragmentContext).navigate(action);
+                    FeedFragmentDirections.ActionFeedFragmentToPlaceDetailFragment action = FeedFragmentDirections.actionFeedFragmentToPlaceDetailFragment(place);
+                    NavHostFragment.findNavController(fragmentContext).navigate(action);
 //                    Intent i = new Intent(context, DetailsActivity.class);
 //                    i.putExtra("place", Parcels.wrap(place));
 //                    context.startActivity(i);

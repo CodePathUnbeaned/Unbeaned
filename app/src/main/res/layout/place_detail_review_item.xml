@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable name="review" type="com.unbeaned.app.models.Review" />
+        <variable name="user" type="com.unbeaned.app.models.User" />
+        <variable name="place" type="com.unbeaned.app.models.Place" />
+    </data>
+
+    <RelativeLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/placeDetailReviewContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingStart="20dp"
+        android:paddingTop="20dp"
+        android:paddingEnd="20dp"
+        android:paddingBottom="15dp">
+
+        <ImageView
+            android:id="@+id/ivPlaceDetailReviewItemProfile"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            app:profileImage="@{review.user.getParseFile(user.KEY_PHOTO)}"
+            tools:srcCompat="@tools:sample/avatars" />
+
+        <TextView
+            android:id="@+id/tvPlaceDetailReviewProfileName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="0dp"
+            android:layout_toEndOf="@+id/ivPlaceDetailReviewItemProfile"
+            android:fontFamily="@font/montserrat_bold"
+            android:includeFontPadding="true"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:text="@{review.user.getString(user.KEY_NAME)}"
+            tools:text="User Name" />
+
+        <LinearLayout
+            android:id="@+id/ratingGroupContainer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvPlaceDetailReviewProfileName"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="0dp"
+            android:layout_toEndOf="@+id/ivPlaceDetailReviewItemProfile"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/ivPlaceDetailReviewStar"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/ic_star" />
+
+            <TextView
+                android:id="@+id/tvPlaceDetailReviewRating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/montserrat_bold"
+                android:includeFontPadding="false"
+                app:averageRating="@{review.rating}"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvPlaceDetailReviewItemContent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ratingGroupContainer"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="0dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/roboto"
+            android:maxLines="7"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:text="@{review.review}"
+            app:lineHeight="19sp"
+            tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." />
+
+        <com.synnapps.carouselview.CarouselView
+            android:id="@+id/carouselPlaceDetailReviewItem"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            app:autoPlay="false"
+            app:fillColor="@color/pink_red_accent"
+            app:indicatorGravity="bottom|center_horizontal"
+            app:indicatorOrientation="horizontal"
+            app:radius="6dp"
+            app:strokeColor="@color/accent_purple"
+            app:snap="true" />
+
+    </RelativeLayout>
+</layout>

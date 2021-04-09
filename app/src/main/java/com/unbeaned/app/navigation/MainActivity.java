@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
 //        navController.navigate(R.id.userFragment);
 
         if (ParseUser.getCurrentUser() != null) {
-            navController.navigate(R.id.placeDetailFragment);
+            navController.navigate(R.id.feedFragment);
         }
         else {
             navController.navigate(R.id.splashFragment);
