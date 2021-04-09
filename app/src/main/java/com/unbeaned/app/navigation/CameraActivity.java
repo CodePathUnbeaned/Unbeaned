@@ -1,5 +1,6 @@
 package com.unbeaned.app.navigation;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.WorkerThread;
@@ -192,18 +193,6 @@ public class CameraActivity extends AppCompatActivity {
         }
     }
 
-    public String getBatchDirectoryName() {
-
-        String app_folder_path = "";
-        app_folder_path = this.getExternalFilesDir(Environment.DIRECTORY_PICTURES).getAbsolutePath().toString() + "/images";
-        File dir = new File(app_folder_path);
-        if (!dir.exists() && !dir.mkdirs()) {
-
-        }
-
-        return app_folder_path;
-    }
-
 
     private void bindPreview(ProcessCameraProvider cameraProvider){
         Preview preview = new Preview.Builder().build();
@@ -232,32 +221,19 @@ public class CameraActivity extends AppCompatActivity {
         btnCamera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SimpleDateFormat mDateFormat = new SimpleDateFormat("yyyyMMddHHmmss", Locale.US);
-                ContentValues contentValues = new ContentValues();
-                contentValues.put(MediaStore.MediaColumns.DISPLAY_NAME, mDateFormat.format(new Date()));
-                contentValues.put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg");
-                contentValues.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_PICTURES);
-                ImageCapture.OutputFileOptions outputFileOptions = new ImageCapture.OutputFileOptions.Builder(getContentResolver(), MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues).build();
+//
                 imageCapture.takePicture(executor, new ImageCapture.OnImageCapturedCallback() {
                     @Override
                     public void onCaptureSuccess(@NonNull ImageProxy image) {
-                        super.onCaptureSuccess(image);
                         Log.i(TAG, "Capture success");
-                        saveImage(image);
-//                        Bitmap bitmap = getBitmap(image);
-//                        imageItem.setImage(conversionBitmapParseFile(bitmap));
-//                        imageItem.saveInBackground(new SaveCallback() {
-//                            @Override
-//                            public void done(ParseException e) {
-//                                if(e!=null){
-//                                    Log.i(TAG, "Image saved successfully");
-//                                    setResult(200);
-//                                    finish();
-//                                }
-//                                Log.e(TAG,"error saving image", e);
-//                            }
-//                        });
-
+                        try {
+                            saveImage(image);
+                            image.close();
+                            //Log.i(TAG,"Successfully unbinded" );
+                            //finishActivity(200);
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
                     }
 
                     @Override
@@ -266,62 +242,25 @@ public class CameraActivity extends AppCompatActivity {
                         Log.e(TAG,"Failure to capture", exception);
                     }
                 });
-                /*imageCapture.takePicture(outputFileOptions, executor,
-                        new ImageCapture.OnImageSavedCallback() {
-                            @Override
-                            public void onImageSaved(ImageCapture.OutputFileResults outputFileResults) {
-                                Log.i(TAG, "Output file results: "+outputFileResults.getSavedUri());
-                                Images image = new Images();
-                                image.setReview(currentReview);
-                                Log.i(TAG, "Output file path results: "+outputFileResults.getSavedUri().getPath());
-
-                                File photoFile = new File(outputFileResults.getSavedUri().getPath());
-                                try {
-                                    photoFile.createNewFile();
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }
-                                Log.i(TAG, "Output file FILE path results: "+photoFile);
-                                try {
-                                    byte[] byteImages = readFileToByteArray(photoFile);
-                                    image.setImage(new ParseFile(byteImages));
-                                    image.saveInBackground(new SaveCallback() {
-                                        @Override
-                                        public void done(ParseException e) {
-                                            Log.e(TAG,"error saving image", e);
-                                        }
-                                    });
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                    return;
-                                }
-
-                            }
-                            @Override
-                            public void onError(ImageCaptureException error) {
-                                error.printStackTrace();
-                            }
-                        });*/
 
             }
         });
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                cameraProvider.unbindAll();
+                Log.i(TAG,"Successfully unbinded" );
+                setResult(200);
+                finish();
+            }
+        };
+        this.getOnBackPressedDispatcher().addCallback(callback);
     }
 
-    private void saveImage(ImageProxy image) {
+    private void saveImage(ImageProxy image) throws ParseException {
         Bitmap bitmap = getBitmap(image);
         imageItem.setImage(conversionBitmapParseFile(bitmap));
-        imageItem.saveInBackground(new SaveCallback() {
-            @Override
-            public void done(ParseException e) {
-                if(e!=null){
-                    Log.i(TAG, "Image saved successfully");
-                    //setResult(200);
-                    //finish();
-                }
-                Log.e(TAG,"error saving image", e);
-            }
-        });
-
+        imageItem.save();
     }
 
     private Bitmap getBitmap(ImageProxy image) {
@@ -336,7 +275,8 @@ public class CameraActivity extends AppCompatActivity {
         ByteArrayOutputStream byteArrayOutputStream=new ByteArrayOutputStream();
         imageBitmap.compress(Bitmap.CompressFormat.PNG,100,byteArrayOutputStream);
         byte[] imageByte = byteArrayOutputStream.toByteArray();
-        ParseFile parseFile = new ParseFile("image_file.png",imageByte);
+        SimpleDateFormat mDateFormat = new SimpleDateFormat("yyyyMMddHHmmss", Locale.US);
+        ParseFile parseFile = new ParseFile(mDateFormat.format(new Date())+".png",imageByte);
         return parseFile;
     }
 }

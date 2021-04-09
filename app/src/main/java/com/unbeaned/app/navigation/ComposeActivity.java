@@ -1,5 +1,6 @@
 package com.unbeaned.app.navigation;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -41,15 +42,20 @@ import android.view.TextureView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.slider.Slider;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
+import com.synnapps.carouselview.CarouselView;
+import com.synnapps.carouselview.ImageListener;
 import com.unbeaned.app.R;
 import com.unbeaned.app.databinding.ActivityComposeBinding;
+import com.unbeaned.app.models.Images;
 import com.unbeaned.app.models.Place;
 import com.unbeaned.app.models.Review;
 
@@ -75,6 +81,7 @@ public class ComposeActivity extends AppCompatActivity {
     private EditText etReviewTitle;
     private Button btnCamera;
     private Button btnSubmit;
+    private CarouselView carouselView;
     private Review reviewItem;
     private ParseUser currentUser;
 
@@ -89,6 +96,7 @@ public class ComposeActivity extends AppCompatActivity {
         btnCamera = binding.btnCamera;
         btnSubmit = binding.btnSubmit;
         etReviewTitle = binding.etReviewTitle;
+        carouselView = binding.carouselView;
         reviewItem = new Review();
         String placeName = place.getName();
         String placeId = place.getPlaceId();
@@ -136,7 +144,35 @@ public class ComposeActivity extends AppCompatActivity {
 
             }
         });
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                try {
+                    deleteImages();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    deleteReview();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                finish();
+            }
+        };
+        this.getOnBackPressedDispatcher().addCallback(callback);
 
+    }
+
+    private void deleteReview() throws ParseException {
+        reviewItem.delete();
+    }
+
+    private void deleteImages() throws ParseException {
+        List <Images> listImages = reviewItem.images;
+        for(Images image:listImages){
+            image.delete();
+        }
     }
 
     private void saveReview(String review, String reviewTitle, double rating) {
@@ -248,11 +284,26 @@ public class ComposeActivity extends AppCompatActivity {
 
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        //queryPhotos();
-    }
+        Log.i(TAG, "Result received from camera");
+        reviewItem.setImages(reviewItem);
+        carouselView.setVisibility(View.VISIBLE);
+        if(reviewItem.images.size()!=0){
+            carouselView.setPageCount(reviewItem.images.size());
 
-    private void queryPhotos() {
-        //query photos with review id
+            carouselView.setImageListener(new ImageListener() {
+                @Override
+                public void setImageForPosition(int position, ImageView imageView) {
+                    Glide.with(ComposeActivity.this)
+                            .load(reviewItem.images.get(position).getImage().getUrl())
+                            .into(imageView);
+                }
+            });
+        }
+        else{
+            //hide carousel view if no images
+            carouselView.setVisibility(View.INVISIBLE);
+        }
+
     }
 
     private void waitPrg() {
