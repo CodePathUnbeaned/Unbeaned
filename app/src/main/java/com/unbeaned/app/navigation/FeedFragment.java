@@ -1,6 +1,7 @@
 package com.unbeaned.app.navigation;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
@@ -11,8 +12,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -65,7 +68,7 @@ public class FeedFragment extends Fragment {
     private List<Place> allPlaces;
     private LocationManager locationManager;
     private Snackbar snackbarEnableLocation;
-    private CoordinatorLayout mainCoordinatorLayout;
+    private RelativeLayout feedLayoutContainer;
 
     //Grab from twitter app
     //EndlessRecyclerViewScrollListener scrollListener;
@@ -80,7 +83,7 @@ public class FeedFragment extends Fragment {
         //inflate the layout for this view
         binding = DataBindingUtil.inflate(inflater, R.layout.feed_fragment, container, false);
 
-        mainCoordinatorLayout = getActivity().findViewById(R.id.mainCoordinatorLayout);
+        CoordinatorLayout mainCoordinatorLayout = getActivity().findViewById(R.id.mainCoordinatorLayout);
 
         snackbarEnableLocation = Snackbar.make(mainCoordinatorLayout, "Please enable GPS and Location Services", Snackbar.LENGTH_SHORT);
 
@@ -103,6 +106,8 @@ public class FeedFragment extends Fragment {
         rvPlaces = binding.rvPlaces;
         etSearch = binding.etSearch;
         btnSearch = binding.btnSearch;
+        feedLayoutContainer = binding.feedLayoutContainer;
+
         allPlaces = new ArrayList<>();
         adapter = new PlaceFeedAdapter(getContext(), allPlaces, this);
 
@@ -114,6 +119,9 @@ public class FeedFragment extends Fragment {
         btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(feedLayoutContainer.getWindowToken(), 0);
+
                 if (TextUtils.isEmpty(etSearch.getText())) {
                     getLocation();
                     searchBusinesses("current");
