@@ -46,6 +46,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -154,8 +155,8 @@ public class UserSettingsFragment extends UserFragment {
         startActivityForResult(new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI), GET_FROM_GALLERY);
     }
 
-    private void setProfilePicture(File newImage) {
-        ParseUser.getCurrentUser().put(User.KEY_PHOTO, newImage);
+    private void setProfilePicture(byte[] imgBytes) {
+        ParseUser.getCurrentUser().put(User.KEY_PHOTO, imgBytes);
     }
 
     @Override
@@ -164,8 +165,27 @@ public class UserSettingsFragment extends UserFragment {
 
         // If result of from editProfilePicture()
         if(requestCode==GET_FROM_GALLERY && resultCode == Activity.RESULT_OK) {
-
+            Uri uri = data.getData();
+            try {
+                InputStream inputStream = getActivity().getContentResolver().openInputStream(uri);
+                byte[] imgBytes = getBytes(inputStream);
+                setProfilePicture(imgBytes);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
+    }
+
+    public byte[] getBytes(InputStream inputStream) throws IOException {
+        ByteArrayOutputStream byteBuffer = new ByteArrayOutputStream();
+        int buffersize = 1024;
+        byte[] buffer = new byte[buffersize];
+
+        int len = 0;
+        while ((len = inputStream.read(buffer)) != -1) {
+            byteBuffer.write(buffer, 0, len);
+        }
+        return byteBuffer.toByteArray();
     }
 
     private void deleteReview(Review review) {
@@ -186,8 +206,17 @@ public class UserSettingsFragment extends UserFragment {
     }
 
     private void logOut() {
-        ParseUser.logOut();
-        navController.navigate(R.id.splashFragment);
+        new AlertDialog.Builder(getContext())
+                .setTitle("Logout?")
+                .setMessage("Are you sure you want to logout?")
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        ParseUser.logOut();
+                        navController.navigate(R.id.splashFragment);
+                    }})
+                .setNegativeButton(android.R.string.cancel, null).show();
     }
 
     private void returnToUserFragment() {
@@ -218,7 +247,6 @@ public class UserSettingsFragment extends UserFragment {
                 Toast.makeText(getContext(), "Changes Saved!", Toast.LENGTH_LONG).show();
                 returnToUserFragment();
             }
-
         });
     }
 }
