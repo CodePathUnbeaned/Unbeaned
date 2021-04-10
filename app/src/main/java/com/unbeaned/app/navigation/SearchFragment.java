@@ -113,10 +113,11 @@ public class SearchFragment extends Fragment {
     private void searchBusinesses(String placeName) {
         Map<String, String> searchParameters = new HashMap<>();
         searchParameters.put("term", placeName);
-        Request request = YelpClient.getBusinessBySearch(searchParameters);
-
         searchParameters.put("longitude", String.valueOf(longitude));
         searchParameters.put("latitude", String.valueOf(latitude));
+        Request request = YelpClient.getBusinessBySearch(searchParameters);
+
+
 
         OkHttpClient client = new OkHttpClient();
 
