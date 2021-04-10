@@ -21,8 +21,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.unbeaned.app.R;
-import com.unbeaned.app.adapters.PlaceRegFeedAdapter;
+import com.unbeaned.app.adapters.PlaceFeedAdapter;
 import com.unbeaned.app.databinding.SearchFragmentBinding;
+import com.unbeaned.app.models.Place;
 import com.unbeaned.app.models.PlaceReg;
 import com.unbeaned.app.utils.YelpClient;
 
@@ -50,8 +51,8 @@ public class SearchFragment extends Fragment {
     private RecyclerView rvPlaces;
     private EditText etSearch;
     private Button btnSearch;
-    private PlaceRegFeedAdapter adapter;
-    private List<PlaceReg> allPlaces;
+    private PlaceFeedAdapter adapter;
+    private List<Place> allPlaces;
     private double longitude, latitude;
 
     //Grab from twitter app
@@ -79,7 +80,7 @@ public class SearchFragment extends Fragment {
         etSearch = binding.etSearch;
         btnSearch = binding.btnSearch;
         allPlaces = new ArrayList<>();
-        adapter = new PlaceRegFeedAdapter(getContext(), allPlaces, this);
+        adapter = new PlaceFeedAdapter(getContext(), allPlaces, this);
 
         final LocationListener mLocationListener = new LocationListener() {
             @Override
@@ -142,7 +143,7 @@ public class SearchFragment extends Fragment {
                         public void run() {
                             adapter.clear();
                             try {
-                                adapter.addAll(PlaceReg.fromJsonArray(businessJsonArray));
+                                adapter.addAll(Place.fromJsonArray(businessJsonArray));
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }

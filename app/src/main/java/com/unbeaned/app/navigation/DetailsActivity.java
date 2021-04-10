@@ -120,8 +120,6 @@ public class DetailsActivity extends AppCompatActivity {
                 startActivity(mapIntent);
             }
         });
-
-
     }
 
     @Override
@@ -163,7 +161,7 @@ public class DetailsActivity extends AppCompatActivity {
                 }
                 Log.i(TAG, "Querying Reviews: " + reviews);
                 for (Review review:reviews){
-                    review.setImages(review);
+                    review.setImages();
                 }
                 adapter.clear();
                 adapter.addAll(reviews);

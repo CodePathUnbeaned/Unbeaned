@@ -66,15 +66,15 @@ public class Review extends ParseObject {
         put(KEY_USER, parseUser);
     }
 
-    public void setImages(Review review){
+    public void setImages() {
         ParseQuery<Images> query = ParseQuery.getQuery(Images.class);
 
-        query.whereEqualTo(Images.KEY_REVIEW_ID, review);
+        query.whereEqualTo(Images.KEY_REVIEW_ID, this);
         try {
+            List<Images> imageList = query.find();
+            Log.i("Review", "Images: "+imageList);
             images.clear();
             images.addAll(query.find());
-            Log.i("Review", "Images: "+images);
-
         }catch (ParseException e) {
             e.printStackTrace();
         }

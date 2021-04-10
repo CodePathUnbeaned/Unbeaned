@@ -285,7 +285,7 @@ public class ComposeActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         Log.i(TAG, "Result received from camera");
-        reviewItem.setImages(reviewItem);
+        reviewItem.setImages();
         carouselView.setVisibility(View.VISIBLE);
         if(reviewItem.images.size()!=0){
             carouselView.setPageCount(reviewItem.images.size());

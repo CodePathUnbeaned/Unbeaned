@@ -1,5 +1,7 @@
 package com.unbeaned.app.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Log;
 
 import com.parse.FindCallback;
@@ -12,7 +14,6 @@ import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.parceler.Parcel;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -22,8 +23,8 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
-@Parcel
-public class Place {
+//@Parcel
+public class Place implements Parcelable {
 
     String placeId;
     String name;
@@ -36,11 +37,39 @@ public class Place {
     String longitude;
     String latitude;
     String address1;
+    String website;
 
     //need by Parceler library
     public Place(){
 
     }
+
+    protected Place(Parcel in) {
+        placeId = in.readString();
+        name = in.readString();
+        rating = in.readDouble();
+        address = in.readString();
+        price = in.readString();
+        displayPhone = in.readString();
+        phone = in.readString();
+        imageUrl = in.readString();
+        longitude = in.readString();
+        latitude = in.readString();
+        address1 = in.readString();
+        website = in.readString();
+    }
+
+    public static final Creator<Place> CREATOR = new Creator<Place>() {
+        @Override
+        public Place createFromParcel(Parcel in) {
+            return new Place(in);
+        }
+
+        @Override
+        public Place[] newArray(int size) {
+            return new Place[size];
+        }
+    };
 
     public String getPlaceId(){ return placeId;}
 
@@ -74,6 +103,8 @@ public class Place {
 
     public String getAddress1(){return address1;}
 
+    public String getWebsite() {return website;}
+
 
     public Place(JSONObject jsonObject) throws JSONException {
        placeId=jsonObject.getString("id");
@@ -85,7 +116,6 @@ public class Place {
         else{
             price=" ";
         }
-
         calculateRating(placeId, jsonObject.getDouble("rating"));
         JSONObject locationJSON = jsonObject.getJSONObject("location");
         address1=locationJSON.getString("address1");
@@ -95,6 +125,7 @@ public class Place {
         latitude = coordinates.getString("latitude");
         phone =jsonObject.getString("phone");
         displayPhone= jsonObject.getString("display_phone");
+        website = jsonObject.getString("url");
     }
 
     public static List<Place> fromJsonArray(JSONArray jsonArray) throws JSONException {
@@ -197,4 +228,24 @@ public class Place {
         return 0.0;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(placeId);
+        dest.writeString(name);
+        dest.writeDouble(rating);
+        dest.writeString(address);
+        dest.writeString(price);
+        dest.writeString(displayPhone);
+        dest.writeString(phone);
+        dest.writeString(imageUrl);
+        dest.writeString(longitude);
+        dest.writeString(latitude);
+        dest.writeString(address1);
+        dest.writeString(website);
+    }
 }

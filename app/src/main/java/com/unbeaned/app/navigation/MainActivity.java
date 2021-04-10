@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
         NavigationUI.setupWithNavController(bottomNavigationView, navController);
 
-        ParseUser.logOut();
+//        ParseUser.logOut();
 
 //        navController.navigate(R.id.userFragment);
 

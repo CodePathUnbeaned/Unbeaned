@@ -82,10 +82,23 @@
         tool:layout="@layout/fragment_place_detail">
         <argument
             android:name="place"
-            app:argType="com.unbeaned.app.models.PlaceReg" />
+            app:argType="com.unbeaned.app.models.Place" />
+        <argument
+            android:name="backPath"
+            app:argType="string"
+            android:defaultValue="null" />
+        <action
+            android:id="@+id/action_placeDetailFragment_to_feedFragment"
+            app:destination="@id/feedFragment"
+            app:enterAnim="@anim/from_left"
+            app:exitAnim="@anim/to_right" />
     </fragment>
     <fragment
         android:id="@+id/userSettingsFragment"
         android:name="com.unbeaned.app.navigation.UserSettingsFragment"
         android:label="UserSettingsFragment" />
+    <fragment
+        android:id="@+id/searchFragment2"
+        android:name="com.unbeaned.app.navigation.SearchFragment"
+        android:label="SearchFragment" />
 </navigation>

@@ -109,6 +109,7 @@ public class ReviewFeedAdapter extends RecyclerView.Adapter<ReviewFeedAdapter.Vi
         public void bind(final Review review) {
             binding.setReview(review);
             binding.executePendingBindings();
+
             Log.i("Review", "Review ID: "+review.getObjectId());
 
             Log.i("Review", "Review images: "+review.images);

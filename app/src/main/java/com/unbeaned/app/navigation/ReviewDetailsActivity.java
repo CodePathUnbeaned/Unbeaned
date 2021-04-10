@@ -92,7 +92,7 @@ public class ReviewDetailsActivity extends AppCompatActivity {
         rvComments.setLayoutManager(new LinearLayoutManager(this));
         queryComments();
         //TODO: Populate the Carousel View with images
-        currentReview.setImages(currentReview);
+        currentReview.setImages();
         if(currentReview.images.size()!=0){
             carouselView.setPageCount(currentReview.images.size());
 

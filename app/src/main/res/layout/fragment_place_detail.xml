@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <variable name="place" type="com.unbeaned.app.models.PlaceReg" />
+        <variable name="place" type="com.unbeaned.app.models.Place" />
         <variable name="back_path" type="String" />
     </data>
 
@@ -138,7 +138,7 @@
                         android:orientation="horizontal">
 
                         <Button
-                            android:id="@+id/btnPlaceCallIcon"
+                            android:id="@+id/btnCallIcon"
                             style="@style/Widget.MaterialComponents.Button"
                             android:layout_width="50dp"
                             android:layout_height="50dp"
@@ -153,19 +153,46 @@
                             app:backgroundTint="#d3d3d3"
                             app:iconPadding="0dp" />
 
-                        <Button
-                            android:id="@+id/btnMapIcon"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:layout_alignParentTop="true"
-                            android:layout_marginStart="60dp"
-                            android:layout_marginTop="10dp"
-                            android:layout_toEndOf="@+id/btnPlaceCallIcon"
-                            android:background="@drawable/round_icon_shape"
-                            android:drawableLeft="@drawable/map_place_icn"
-                            android:paddingLeft="12dp"
-                            app:backgroundTint="#d3d3d3"
-                            app:iconPadding="0dp" />
+                        <FrameLayout
+                            android:id="@+id/frameLayoutMapIcon"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="0dp"
+                            android:layout_toStartOf="@+id/btnLinkIcon"
+                            android:layout_toEndOf="@+id/btnCallIcon">
+
+                            <RelativeLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center">
+
+                                <Button
+                                    android:id="@+id/btnMapIcon"
+                                    android:layout_width="50dp"
+                                    android:layout_height="50dp"
+                                    android:layout_alignParentTop="true"
+                                    android:layout_marginTop="10dp"
+                                    android:background="@drawable/round_icon_shape"
+                                    android:drawableLeft="@drawable/map_place_icn"
+                                    android:paddingLeft="12dp"
+                                    app:backgroundTint="#d3d3d3"
+                                    app:iconPadding="0dp" />
+
+                                <TextView
+                                    android:id="@+id/tvMapIconLabel"
+                                    android:layout_width="50dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@+id/btnMapIcon"
+                                    android:layout_marginTop="5dp"
+                                    android:fontFamily="@font/roboto_bold"
+                                    android:text="Map"
+                                    android:textAlignment="center"
+                                    android:textColor="@color/black"
+                                    android:textSize="12sp" />
+
+                            </RelativeLayout>
+
+                        </FrameLayout>
 
                         <Button
                             android:id="@+id/btnLinkIcon"
@@ -186,26 +213,12 @@
                             android:id="@+id/tvCallIconLabel"
                             android:layout_width="50dp"
                             android:layout_height="wrap_content"
-                            android:layout_below="@+id/btnPlaceCallIcon"
+                            android:layout_below="@+id/btnCallIcon"
                             android:layout_alignParentStart="true"
                             android:layout_marginStart="50dp"
                             android:layout_marginTop="5dp"
                             android:fontFamily="@font/roboto_bold"
                             android:text="Call"
-                            android:textAlignment="center"
-                            android:textColor="@color/black"
-                            android:textSize="12sp" />
-
-                        <TextView
-                            android:id="@+id/tvMapIconLabel"
-                            android:layout_width="50dp"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/btnMapIcon"
-                            android:layout_marginStart="60dp"
-                            android:layout_marginTop="5dp"
-                            android:layout_toEndOf="@+id/tvCallIconLabel"
-                            android:fontFamily="@font/roboto_bold"
-                            android:text="Map"
                             android:textAlignment="center"
                             android:textColor="@color/black"
                             android:textSize="12sp" />
@@ -304,14 +317,20 @@
                         android:id="@+id/tvPlaceNameToolbar"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:layout_marginStart="10dp"
+                        android:layout_marginStart="0dp"
                         android:layout_marginEnd="10dp"
                         android:layout_toStartOf="@+id/btnPlaceSavedIcon"
                         android:layout_toEndOf="@+id/btnBackPlaceDetail"
-                        android:ellipsize="none"
+                        android:ellipsize="end"
+                        android:fontFamily="@font/roboto_bold"
                         android:gravity="center_vertical"
-                        android:text="TextView"
-                        android:visibility="invisible" />
+                        android:includeFontPadding="false"
+                        android:maxLines="1"
+                        android:text="@{place.name}"
+                        android:textColor="@color/black"
+                        android:textSize="18sp"
+                        android:visibility="invisible"
+                        tools:text="Place Name" />
 
                     <Button
                         android:id="@+id/btnPlaceSavedIcon"

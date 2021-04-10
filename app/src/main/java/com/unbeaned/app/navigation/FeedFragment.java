@@ -6,15 +6,18 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
@@ -24,10 +27,11 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.unbeaned.app.R;
-import com.unbeaned.app.adapters.PlaceRegFeedAdapter;
+import com.unbeaned.app.adapters.PlaceFeedAdapter;
 import com.unbeaned.app.databinding.FeedFragmentBinding;
-import com.unbeaned.app.models.PlaceReg;
+import com.unbeaned.app.models.Place;
 import com.unbeaned.app.utils.YelpClient;
 
 import org.jetbrains.annotations.NotNull;
@@ -57,21 +61,28 @@ public class FeedFragment extends Fragment {
     private RecyclerView rvPlaces;
     private EditText etSearch;
     private Button btnSearch;
-    private PlaceRegFeedAdapter adapter;
-    private List<PlaceReg> allPlaces;
+    private PlaceFeedAdapter adapter;
+    private List<Place> allPlaces;
+    private LocationManager locationManager;
+    private Snackbar snackbarEnableLocation;
+    private CoordinatorLayout mainCoordinatorLayout;
 
     //Grab from twitter app
     //EndlessRecyclerViewScrollListener scrollListener;
 
-    public FeedFragment(){
+    public FeedFragment() {
         //required empty public constructor
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-       //inflate the layout for this view
+        //inflate the layout for this view
         binding = DataBindingUtil.inflate(inflater, R.layout.feed_fragment, container, false);
+
+        mainCoordinatorLayout = getActivity().findViewById(R.id.mainCoordinatorLayout);
+
+        snackbarEnableLocation = Snackbar.make(mainCoordinatorLayout, "Please enable GPS and Location Services", Snackbar.LENGTH_SHORT);
 
         return binding.getRoot();
     }
@@ -86,23 +97,16 @@ public class FeedFragment extends Fragment {
                 Log.i(TAG, "Location: " + location);
                 longitude = location.getLongitude();
                 latitude = location.getLatitude();
-                searchBusinesses();
+                searchBusinesses("current");
             }
         };
         rvPlaces = binding.rvPlaces;
         etSearch = binding.etSearch;
         btnSearch = binding.btnSearch;
         allPlaces = new ArrayList<>();
-        adapter = new PlaceRegFeedAdapter(getContext(), allPlaces, this);
+        adapter = new PlaceFeedAdapter(getContext(), allPlaces, this);
 
-        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 100);
-        }
-        LocationManager mLocationManager = (LocationManager) getActivity().getSystemService(LOCATION_SERVICE);
-
-        mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 100,
-                30, mLocationListener);
-
+        if (TextUtils.isEmpty(etSearch.getText())) getLocation();
 
         rvPlaces.setAdapter(adapter);
         rvPlaces.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -110,7 +114,13 @@ public class FeedFragment extends Fragment {
         btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                searchBusinesses();
+                if (TextUtils.isEmpty(etSearch.getText())) {
+                    getLocation();
+                    searchBusinesses("current");
+                }
+                else {
+                    searchBusinesses(etSearch.getText().toString());
+                }
             }
         });
 
@@ -123,13 +133,16 @@ public class FeedFragment extends Fragment {
 
     }
 
-
-
-    private void searchBusinesses() {
+    private void searchBusinesses(String location) {
         Map<String, String> searchParameters = new HashMap<>();
-        
-        searchParameters.put("longitude", String.valueOf(longitude));
-        searchParameters.put("latitude", String.valueOf(latitude));
+
+        if (location.equals("current")) {
+            searchParameters.put("longitude", String.valueOf(longitude));
+            searchParameters.put("latitude", String.valueOf(latitude));
+        } else {
+            searchParameters.put("location", location);
+        }
+
         Request request = YelpClient.getBusinessBySearch(searchParameters);
 
         OkHttpClient client = new OkHttpClient();
@@ -150,14 +163,14 @@ public class FeedFragment extends Fragment {
                     String jsonData = responseBody.string();
                     JSONObject jsonObject = new JSONObject(jsonData);
                     JSONArray businessJsonArray = jsonObject.getJSONArray("businesses");
-                    Log.i(TAG, "JSONArray: "+businessJsonArray.toString());
+                    Log.i(TAG, "JSONArray: " + businessJsonArray.toString());
 
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             adapter.clear();
                             try {
-                                adapter.addAll(PlaceReg.fromJsonArray(businessJsonArray));
+                                adapter.addAll(Place.fromJsonArray(businessJsonArray));
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -169,4 +182,30 @@ public class FeedFragment extends Fragment {
             }
         });
     }
+
+    private final LocationListener locationListener = new LocationListener() {
+        @Override
+        public void onLocationChanged(@NonNull Location location) {
+            latitude = location.getLatitude();
+            longitude = location.getLongitude();
+            searchBusinesses("current");
+        }
+
+        @Override
+        public void onProviderDisabled(@NonNull String provider) {
+            snackbarEnableLocation.show();
+        }
+    };
+
+    private void getLocation() {
+        LocationManager mLocationManager = (LocationManager) getActivity().getSystemService(LOCATION_SERVICE);
+
+        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 100);
+        }
+        mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000,
+                30, locationListener);
+
+    }
+
 }

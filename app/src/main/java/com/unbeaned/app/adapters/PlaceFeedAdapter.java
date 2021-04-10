@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -21,6 +22,7 @@ import com.unbeaned.app.models.Place;
 import com.unbeaned.app.navigation.DetailsActivity;
 import com.unbeaned.app.navigation.FeedFragment;
 import com.unbeaned.app.navigation.FeedFragmentDirections;
+import com.unbeaned.app.navigation.SearchFragment;
 
 import org.parceler.Parcels;
 
@@ -30,10 +32,10 @@ public class PlaceFeedAdapter extends RecyclerView.Adapter<PlaceFeedAdapter.View
 
     Context context;
     List<Place> places;
-    FeedFragment fragmentContext;
+    Fragment fragmentContext;
 
 
-    public PlaceFeedAdapter(Context context, List<Place> places, FeedFragment fragmentContext) {
+    public PlaceFeedAdapter(Context context, List<Place> places, Fragment fragmentContext) {
         this.context = context;
         this.places = places;
         this.fragmentContext = fragmentContext;
@@ -99,13 +101,21 @@ public class PlaceFeedAdapter extends RecyclerView.Adapter<PlaceFeedAdapter.View
         }
 
         public void bind(final Place place) {
-//            binding.setPlace(place);
-//            binding.executePendingBindings();
+            binding.setPlace(place);
+            binding.executePendingBindings();
 
             placeItemLinearContainer.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Bundle bundle = new Bundle();
+
+                    if (fragmentContext.getClass() == FeedFragment.class) {
+                        FeedFragmentDirections.ActionFeedFragmentToPlaceDetailFragment action = FeedFragmentDirections.actionFeedFragmentToPlaceDetailFragment(place);
+                        action.setBackPath("feed");
+                        NavHostFragment.findNavController(fragmentContext).navigate(action);
+                    }
+                    else if (fragmentContext.getClass() == SearchFragment.class) {
+
+                    }
 //                    bundle.putParcelable("place", Parcels.wrap(place));
 //                    NavHostFragment.findNavController(fragmentContext).navigate(action);
 //                    Intent i = new Intent(context, DetailsActivity.class);
