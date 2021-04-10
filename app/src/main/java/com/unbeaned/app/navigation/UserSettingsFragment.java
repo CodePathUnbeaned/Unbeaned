@@ -26,6 +26,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseFile;
@@ -159,7 +160,7 @@ public class UserSettingsFragment extends UserFragment {
     private void setProfilePicture(byte[] imgBytes) {
         ParseFile imgFile = new ParseFile(imgBytes);
         ParseUser.getCurrentUser().put(User.KEY_PHOTO, imgFile);
-        binding.ivProfilePicture.setImageBitmap(getBitmap(imgBytes));
+        Glide.with(getContext()).load(imgBytes).circleCrop().into(binding.ivProfilePicture);
     }
 
     @Override
@@ -189,11 +190,6 @@ public class UserSettingsFragment extends UserFragment {
             byteBuffer.write(buffer, 0, len);
         }
         return byteBuffer.toByteArray();
-    }
-
-    public Bitmap getBitmap(byte[] byteArray) {
-        Bitmap bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
-        return bmp;
     }
 
     private void deleteReview(Review review) {
@@ -233,11 +229,9 @@ public class UserSettingsFragment extends UserFragment {
 
     private void saveSettings() {
         String userName = binding.etUserName.getText().toString().toUpperCase();
-        String userHandle = binding.etUserHandle.getText().toString();
         String userBio = binding.etUserBio.getText().toString();
 
         ParseUser.getCurrentUser().put(User.KEY_NAME, userName);
-        ParseUser.getCurrentUser().put(User.KEY_USERNAME, userHandle);
         ParseUser.getCurrentUser().put(User.KEY_BIO, userBio);
 
         InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
