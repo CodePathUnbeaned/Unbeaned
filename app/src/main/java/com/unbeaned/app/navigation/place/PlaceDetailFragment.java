@@ -86,13 +86,6 @@ public class PlaceDetailFragment extends Fragment {
             }
         });
 
-        btnBackPlaceDetail.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                btnBackPlaceDetail.setActivated(true);
-            }
-        });
-
         binding.setPlace(place);
 
     }
