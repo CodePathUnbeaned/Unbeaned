@@ -229,11 +229,9 @@ public class UserSettingsFragment extends UserFragment {
 
     private void saveSettings() {
         String userName = binding.etUserName.getText().toString().toUpperCase();
-        String userHandle = binding.etUserHandle.getText().toString();
         String userBio = binding.etUserBio.getText().toString();
 
         ParseUser.getCurrentUser().put(User.KEY_NAME, userName);
-        ParseUser.getCurrentUser().put(User.KEY_USERNAME, userHandle);
         ParseUser.getCurrentUser().put(User.KEY_BIO, userBio);
 
         InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
