@@ -1,7 +1,6 @@
 package com.unbeaned.app.adapters;
 
 import android.content.Context;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,15 +10,16 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.unbeaned.app.R;
 import com.unbeaned.app.databinding.PlaceItemBinding;
-import com.unbeaned.app.models.Place;
 import com.unbeaned.app.models.PlaceReg;
 import com.unbeaned.app.navigation.FeedFragment;
 import com.unbeaned.app.navigation.FeedFragmentDirections;
+import com.unbeaned.app.navigation.SearchFragment;
 
 import java.util.List;
 
@@ -27,10 +27,10 @@ public class PlaceRegFeedAdapter extends RecyclerView.Adapter<PlaceRegFeedAdapte
 
     Context context;
     List<PlaceReg> places;
-    FeedFragment fragmentContext;
+    Fragment fragmentContext;
 
 
-    public PlaceRegFeedAdapter(Context context, List<PlaceReg> places, FeedFragment fragmentContext) {
+    public PlaceRegFeedAdapter(Context context, List<PlaceReg> places, Fragment fragmentContext) {
         this.context = context;
         this.places = places;
         this.fragmentContext = fragmentContext;
@@ -102,8 +102,14 @@ public class PlaceRegFeedAdapter extends RecyclerView.Adapter<PlaceRegFeedAdapte
             placeItemLinearContainer.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    FeedFragmentDirections.ActionFeedFragmentToPlaceDetailFragment action = FeedFragmentDirections.actionFeedFragmentToPlaceDetailFragment(place);
-                    NavHostFragment.findNavController(fragmentContext).navigate(action);
+                    if(fragmentContext.getClass()==FeedFragment.class){
+                        FeedFragmentDirections.ActionFeedFragmentToPlaceDetailFragment action = FeedFragmentDirections.actionFeedFragmentToPlaceDetailFragment(place);
+                        NavHostFragment.findNavController(fragmentContext).navigate(action);
+                    }
+                    if(fragmentContext.getClass()== SearchFragment.class){
+
+                    }
+
 //                    Intent i = new Intent(context, DetailsActivity.class);
 //                    i.putExtra("place", Parcels.wrap(place));
 //                    context.startActivity(i);

@@ -82,8 +82,8 @@
             android:layout_marginTop="5dp"
             android:ems="10"
             android:fontFamily="@font/roboto"
-            android:inputType="textLongMessage|textMultiLine"
-            tools:text="Tell us about your brew." />
+            android:hint="Tell us about your brew."
+            android:inputType="textLongMessage|textMultiLine" />
 
         <Button
             android:id="@+id/btnCamera"
@@ -131,9 +131,23 @@
             android:layout_marginTop="0dp"
             android:layout_toEndOf="@+id/reviewTitle"
             android:ems="10"
+            android:hint="Review Title"
             android:inputType="text"
-            android:text="Review Title"
             android:textSize="18sp" />
+
+        <com.synnapps.carouselview.CarouselView
+            android:id="@+id/carouselView"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_below="@+id/btnCamera"
+            android:layout_marginTop="5dp"
+            android:visibility="invisible"
+            app:fillColor="#FFFFFFFF"
+            app:pageColor="#00000000"
+            app:radius="6dp"
+            app:slideInterval="3000"
+            app:strokeColor="#FF777777"
+            app:strokeWidth="1dp" />
 
     </RelativeLayout>
 </layout>

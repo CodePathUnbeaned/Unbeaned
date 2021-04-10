@@ -1,6 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvPlaces"
+            android:layout_width="match_parent"
+            android:layout_height="601dp"
+            android:layout_below="@+id/etSearch"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="0dp"
+            tools:layout_editor_absoluteX="178dp"
+            tools:layout_editor_absoluteY="217dp" />
+
+        <EditText
+            android:id="@+id/etSearch"
+            android:layout_width="272dp"
+            android:layout_height="57dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="0dp"
+            android:ems="10"
+            android:fontFamily="@font/roboto_medium"
+            android:hint="@string/search_hint"
+            android:includeFontPadding="false"
+            android:paddingStart="5dp"
+            android:paddingLeft="0dp"
+            android:paddingTop="10dp"
+            android:paddingEnd="5dp"
+            android:paddingRight="0dp"
+            android:paddingBottom="8dp"
+            android:textColor="@color/soft_grey"
+            app:backgroundTint="@android:color/transparent" />
+
+        <Button
+            android:id="@+id/btnSearch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="6dp"
+            android:layout_marginEnd="12dp"
+            android:layout_toEndOf="@+id/etSearch"
+            android:text="Search" />
+
+    </RelativeLayout>
+</layout>

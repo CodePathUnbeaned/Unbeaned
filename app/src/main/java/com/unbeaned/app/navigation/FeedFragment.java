@@ -1,6 +1,10 @@
 package com.unbeaned.app.navigation;
 
-import android.app.Activity;
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,6 +15,7 @@ import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
@@ -20,11 +25,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.unbeaned.app.R;
-import com.unbeaned.app.adapters.PlaceFeedAdapter;
 import com.unbeaned.app.adapters.PlaceRegFeedAdapter;
-import com.unbeaned.app.databinding.ActivityLoginBinding;
 import com.unbeaned.app.databinding.FeedFragmentBinding;
-import com.unbeaned.app.models.Place;
 import com.unbeaned.app.models.PlaceReg;
 import com.unbeaned.app.utils.YelpClient;
 
@@ -35,29 +37,29 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import okhttp3.Call;
 import okhttp3.Callback;
-import okhttp3.Headers;
-import okhttp3.OkHttp;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 
+import static android.content.Context.LOCATION_SERVICE;
+
 public class FeedFragment extends Fragment {
     public static final String TAG = "FeedFragment";
     FeedFragmentBinding binding;
+    private double longitude, latitude;
     private RecyclerView rvPlaces;
     private EditText etSearch;
     private Button btnSearch;
     private PlaceRegFeedAdapter adapter;
     private List<PlaceReg> allPlaces;
+
     //Grab from twitter app
     //EndlessRecyclerViewScrollListener scrollListener;
 
@@ -78,11 +80,29 @@ public class FeedFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        final LocationListener mLocationListener = new LocationListener() {
+            @Override
+            public void onLocationChanged(final Location location) {
+                Log.i(TAG, "Location: " + location);
+                longitude = location.getLongitude();
+                latitude = location.getLatitude();
+                searchBusinesses();
+            }
+        };
         rvPlaces = binding.rvPlaces;
         etSearch = binding.etSearch;
         btnSearch = binding.btnSearch;
         allPlaces = new ArrayList<>();
         adapter = new PlaceRegFeedAdapter(getContext(), allPlaces, this);
+
+        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 100);
+        }
+        LocationManager mLocationManager = (LocationManager) getActivity().getSystemService(LOCATION_SERVICE);
+
+        mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 100,
+                30, mLocationListener);
+
 
         rvPlaces.setAdapter(adapter);
         rvPlaces.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -90,7 +110,7 @@ public class FeedFragment extends Fragment {
         btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                searchBusinesses(etSearch.getText().toString());
+                searchBusinesses();
             }
         });
 
@@ -103,9 +123,13 @@ public class FeedFragment extends Fragment {
 
     }
 
-    private void searchBusinesses(String location) {
+
+
+    private void searchBusinesses() {
         Map<String, String> searchParameters = new HashMap<>();
-        searchParameters.put("location", location);
+        
+        searchParameters.put("longitude", String.valueOf(longitude));
+        searchParameters.put("latitude", String.valueOf(latitude));
         Request request = YelpClient.getBusinessBySearch(searchParameters);
 
         OkHttpClient client = new OkHttpClient();
@@ -121,7 +145,7 @@ public class FeedFragment extends Fragment {
                 Log.i(TAG, "Success");
                 try (ResponseBody responseBody = response.body()) {
                     if (!response.isSuccessful())
-                        throw new IOException("Unexpected code " + response);
+                        throw new IOException("Unexpected code " + response + " " + response.message());
 
                     String jsonData = responseBody.string();
                     JSONObject jsonObject = new JSONObject(jsonData);
