@@ -5,7 +5,9 @@ import android.util.Log;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.parse.ParseQuery;
+import com.unbeaned.app.adapters.CommentFeedAdapter;
 import com.unbeaned.app.adapters.ReviewFeedAdapter;
+import com.unbeaned.app.models.Comment;
 import com.unbeaned.app.models.Review;
 
 import org.json.JSONException;
@@ -63,6 +65,7 @@ public class Requests {
         query.include(Review.KEY_USER);
         query.whereEqualTo(Review.KEY_PLACE_ID, placeId);
         query.addDescendingOrder(Review.KEY_CREATED);
+        query.setLimit(3);
         query.findInBackground((reviews, e) -> {
             if (e != null) {
                 Log.e(TAG, "Issue with getting posts", e);
@@ -81,6 +84,80 @@ public class Requests {
         });
 
     }
+
+    public static void getAllComments(List<Comment> allComments, CommentFeedAdapter adapter, String TAG, Review currentReview) {
+        ParseQuery<Comment> query = ParseQuery.getQuery(Comment.class);
+
+        query.include(Comment.KEY_USER);
+        query.whereEqualTo(Comment.KEY_REVIEW, currentReview);
+        query.addDescendingOrder(Comment.KEY_CREATED_AT);
+        query.setLimit(6);
+        query.findInBackground(new FindCallback<Comment>() {
+            @Override
+            public void done(List<Comment> comments, ParseException e) {
+                if (e!=null){
+                    Log.e(TAG, "Issue with getting comments", e);
+                    return;
+                }
+                adapter.clear();
+                adapter.addAll(comments);
+            }
+        });
+
+    }
+
+    public static void getNextPageOfComments(List<Comment> allComments, CommentFeedAdapter adapter, String TAG, Review currentReview, int page) {
+        ParseQuery<Comment> query = ParseQuery.getQuery(Comment.class);
+
+        query.include(Comment.KEY_USER);
+        query.whereEqualTo(Comment.KEY_REVIEW, currentReview);
+        query.addDescendingOrder(Comment.KEY_CREATED_AT);
+        query.setLimit(6);
+        query.setSkip(page*6);
+        query.findInBackground(new FindCallback<Comment>() {
+            @Override
+            public void done(List<Comment> comments, ParseException e) {
+                if (e!=null){
+                    Log.e(TAG, "Issue with getting comments", e);
+                    return;
+                }
+
+                adapter.clear();
+                adapter.addAll(comments);
+            }
+
+        });
+
+    }
+
+    public static void getNextPageOfReviews(List<Review> allReviews, String placeId, RecyclerView.Adapter<?> adapter, String TAG, int page) {
+        ParseQuery<Review> query = ParseQuery.getQuery(Review.class);
+
+        query.include(Review.KEY_USER);
+        query.whereEqualTo(Review.KEY_PLACE_ID, placeId);
+        query.addDescendingOrder(Review.KEY_CREATED);
+        query.setLimit(5);
+        query.setSkip(page * 5);
+        Log.i(TAG,"skip: "+page*5);
+        query.findInBackground((reviews, e) -> {
+            if (e != null) {
+                Log.e(TAG, "Issue with getting posts", e);
+                return;
+            }
+            Log.i(TAG, "Querying Reviews: " + reviews);
+            for (Review review : reviews) {
+                Log.i("Requests", "Review Set Image: " + review.getPlaceName());
+                review.setImages();
+            }
+
+            if (adapter.getClass() == ReviewFeedAdapter.class) {
+                ((ReviewFeedAdapter) adapter).addAll(reviews);
+            }
+        });
+
+    }
+
+
 
 
 }
