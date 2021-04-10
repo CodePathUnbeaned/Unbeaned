@@ -16,7 +16,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -35,6 +34,7 @@ import com.unbeaned.app.R;
 import com.unbeaned.app.adapters.PlaceFeedAdapter;
 import com.unbeaned.app.databinding.FeedFragmentBinding;
 import com.unbeaned.app.models.Place;
+import com.unbeaned.app.utils.EndlessRecyclerViewScrollListener;
 import com.unbeaned.app.utils.YelpClient;
 
 import org.jetbrains.annotations.NotNull;
@@ -69,9 +69,8 @@ public class FeedFragment extends Fragment {
     private LocationManager locationManager;
     private Snackbar snackbarEnableLocation;
     private RelativeLayout feedLayoutContainer;
-
-    //Grab from twitter app
-    //EndlessRecyclerViewScrollListener scrollListener;
+    private String searchLocation;
+    EndlessRecyclerViewScrollListener scrollListener;
 
     public FeedFragment() {
         //required empty public constructor
@@ -112,22 +111,32 @@ public class FeedFragment extends Fragment {
         adapter = new PlaceFeedAdapter(getContext(), allPlaces, this);
 
         if (TextUtils.isEmpty(etSearch.getText())) getLocation();
-
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         rvPlaces.setAdapter(adapter);
         rvPlaces.setLayoutManager(new LinearLayoutManager(getContext()));
+        scrollListener= new EndlessRecyclerViewScrollListener(layoutManager) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                Log.i(TAG, "onLoadMore "+page);
+                loadMoreData(searchLocation, page*5);
+            }
+        };
+        rvPlaces.addOnScrollListener(scrollListener);
+
         //query API for places in yelp when search button is pressed
         btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(feedLayoutContainer.getWindowToken(), 0);
-
+                searchLocation = etSearch.getText().toString();
                 if (TextUtils.isEmpty(etSearch.getText())) {
+                    searchLocation = "current";
                     getLocation();
                     searchBusinesses("current");
                 }
                 else {
-                    searchBusinesses(etSearch.getText().toString());
+                    searchBusinesses(searchLocation);
                 }
             }
         });
@@ -139,6 +148,56 @@ public class FeedFragment extends Fragment {
             }
         });
 
+    }
+
+    private void loadMoreData(String location, int skip) {
+        Map<String, String> searchParameters = new HashMap<>();
+
+        if (location.equals("current")) {
+            searchParameters.put("longitude", String.valueOf(longitude));
+            searchParameters.put("latitude", String.valueOf(latitude));
+        } else {
+            searchParameters.put("location", location);
+        }
+
+        Request request = YelpClient.getNextPageOfBusinesses(searchParameters, skip);
+
+        OkHttpClient client = new OkHttpClient();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                Log.e(TAG, "Could not fetch data", e);
+            }
+
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                Log.i(TAG, "Success");
+                try (ResponseBody responseBody = response.body()) {
+                    if (!response.isSuccessful())
+                        throw new IOException("Unexpected code " + response + " " + response.message());
+
+                    String jsonData = responseBody.string();
+                    JSONObject jsonObject = new JSONObject(jsonData);
+                    JSONArray businessJsonArray = jsonObject.getJSONArray("businesses");
+                    Log.i(TAG, "JSONArray: " + businessJsonArray.toString());
+
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            adapter.clear();
+                            try {
+                                adapter.addAll(Place.fromJsonArray(businessJsonArray));
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+                } catch (JSONException e) {
+                    Log.e(TAG, "JSON exception", e);
+                }
+            }
+        });
     }
 
     private void searchBusinesses(String location) {

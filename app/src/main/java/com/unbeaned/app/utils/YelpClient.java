@@ -25,7 +25,26 @@ public class YelpClient {
         for (String s : pathSegments) {
             url.addPathSegment(s);
         }
+        url.addQueryParameter("limit", "10");
+        // Loop through key-value pair and assign as query parameters
+        for (Map.Entry<String, String> entry : params.entrySet()) {
+            url.addQueryParameter(entry.getKey(), entry.getValue());
+        }
 
+        // Return built url
+        return url.build();
+    }
+
+    private static HttpUrl buildUrl(String baseUrl, String[] pathSegments, Map<String, String> params, int skip) {
+        // Initialize url builder with "https" scheme and host as baseUrl
+        HttpUrl.Builder url = new HttpUrl.Builder().scheme("https")
+                .host(baseUrl);
+
+        for (String s : pathSegments) {
+            url.addPathSegment(s);
+        }
+        url.addQueryParameter("limit", "10");
+        url.addQueryParameter("skip", String.valueOf(skip));
         // Loop through key-value pair and assign as query parameters
         for (Map.Entry<String, String> entry : params.entrySet()) {
             url.addQueryParameter(entry.getKey(), entry.getValue());
@@ -66,6 +85,16 @@ public class YelpClient {
         params.put("categories", "coffee");
 
         Request request = getRequest(buildUrl(BUSINESS_URL, new String[]{"v3", "businesses", "search"}, params));
+        Log.i("LoginActivity", String.valueOf(request));
+        return request;
+    }
+
+    public static Request getNextPageOfBusinesses(Map<String,String> params, int skip) {
+        // Gets all Businesses around a longitude, latitude or location supplied in the params Map
+        // Build request using authorization and url
+        params.put("categories", "coffee");
+
+        Request request = getRequest(buildUrl(BUSINESS_URL, new String[]{"v3", "businesses", "search"}, params, skip));
         Log.i("LoginActivity", String.valueOf(request));
         return request;
     }

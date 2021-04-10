@@ -1,10 +1,5 @@
 package com.unbeaned.app.navigation;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -13,6 +8,11 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.parse.FindCallback;
@@ -24,10 +24,11 @@ import com.synnapps.carouselview.CarouselView;
 import com.synnapps.carouselview.ImageListener;
 import com.unbeaned.app.R;
 import com.unbeaned.app.adapters.CommentFeedAdapter;
-import com.unbeaned.app.adapters.ReviewFeedAdapter;
 import com.unbeaned.app.databinding.ActivityReviewDetailsBinding;
 import com.unbeaned.app.models.Comment;
 import com.unbeaned.app.models.Review;
+import com.unbeaned.app.utils.EndlessRecyclerViewScrollListener;
+import com.unbeaned.app.utils.Requests;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,6 +52,7 @@ public class ReviewDetailsActivity extends AppCompatActivity {
     private RecyclerView rvComments;
     private RelativeLayout reviewItemLinearContainer;
     private CommentFeedAdapter adapter;
+    EndlessRecyclerViewScrollListener scrollListener;
     private List<Comment> allComments;
 
     @Override
@@ -89,8 +91,18 @@ public class ReviewDetailsActivity extends AppCompatActivity {
         allComments= new ArrayList<>();
         adapter = new CommentFeedAdapter(this, allComments);
         rvComments.setAdapter(adapter);
-        rvComments.setLayoutManager(new LinearLayoutManager(this));
-        queryComments();
+        LinearLayoutManager layoutManager =new LinearLayoutManager(this);
+        rvComments.setLayoutManager(layoutManager);
+        Requests.getAllComments(allComments,adapter, TAG, currentReview);
+
+        scrollListener= new EndlessRecyclerViewScrollListener(layoutManager) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                Log.i(TAG, "onLoadMore "+page);
+                loadMoreData();
+            }
+        };
+        rvComments.addOnScrollListener(scrollListener);
         //TODO: Populate the Carousel View with images
         currentReview.setImages();
         if(currentReview.images.size()!=0){
@@ -118,9 +130,13 @@ public class ReviewDetailsActivity extends AppCompatActivity {
                 }
                 ParseUser currentUser = ParseUser.getCurrentUser();
                 saveComment(comment, currentUser, currentReview);
-                queryComments();
+                Requests.getAllComments(allComments, adapter,TAG, currentReview);
             }
         });
+    }
+
+    private void loadMoreData() {
+        Requests.getNextPageOfComments(allComments, adapter, TAG, currentReview, scrollListener.getCurrentPage());
     }
 
     private void saveComment(String comment, ParseUser currentUser, Review currentReview) {

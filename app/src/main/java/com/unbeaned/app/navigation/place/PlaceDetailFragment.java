@@ -6,6 +6,13 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
@@ -20,26 +27,14 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.os.Parcel;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
-
 import com.google.android.material.appbar.AppBarLayout;
 import com.unbeaned.app.R;
 import com.unbeaned.app.adapters.ReviewFeedAdapter;
 import com.unbeaned.app.databinding.FragmentPlaceDetailBinding;
 import com.unbeaned.app.models.Place;
-import com.unbeaned.app.models.PlaceReg;
 import com.unbeaned.app.models.Review;
-import com.unbeaned.app.navigation.DetailsActivity;
+import com.unbeaned.app.utils.EndlessRecyclerViewScrollListener;
 import com.unbeaned.app.utils.Requests;
-
-import org.parceler.Parcels;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,6 +57,7 @@ public class PlaceDetailFragment extends Fragment {
     List<Review> allReviews;
     ReviewFeedAdapter adapter;
     RecyclerView rvPlaceDetailsReview;
+    EndlessRecyclerViewScrollListener scrollListener;
     private Place place;
 
     @Override
@@ -96,8 +92,19 @@ public class PlaceDetailFragment extends Fragment {
         allReviews = new ArrayList<>();
         adapter = new ReviewFeedAdapter(getContext(), allReviews, place);
         rvPlaceDetailsReview.setAdapter(adapter);
-        rvPlaceDetailsReview.setLayoutManager(new LinearLayoutManager(getContext()));
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        rvPlaceDetailsReview.setLayoutManager(layoutManager);
         rvPlaceDetailsReview.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
+
+        scrollListener= new EndlessRecyclerViewScrollListener(layoutManager) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                Log.i(TAG, "onLoadMore "+page);
+                loadMoreData();
+            }
+        };
+        rvPlaceDetailsReview.addOnScrollListener(scrollListener);
+
 
         Requests.getAllReviews(allReviews, place.getPlaceId(), adapter, TAG);
 
@@ -178,6 +185,10 @@ public class PlaceDetailFragment extends Fragment {
 
         binding.setPlace(place);
 
+    }
+
+    private void loadMoreData() {
+        Requests.getNextPageOfReviews(allReviews, place.getPlaceId(), adapter, TAG, scrollListener.getCurrentPage());
     }
 
     @Override
