@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -31,6 +32,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.snackbar.Snackbar;
+import com.parse.ParseUser;
 import com.unbeaned.app.R;
 import com.unbeaned.app.adapters.PlaceFeedAdapter;
 import com.unbeaned.app.databinding.FeedFragmentBinding;
@@ -77,10 +79,22 @@ public class FeedFragment extends Fragment {
         //required empty public constructor
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+//        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         //inflate the layout for this view
+        if (ParseUser.getCurrentUser() == null) {
+            NavHostFragment.findNavController(this).navigate(R.id.loginFragment);
+        }
+
+
         binding = DataBindingUtil.inflate(inflater, R.layout.feed_fragment, container, false);
 
         CoordinatorLayout mainCoordinatorLayout = getActivity().findViewById(R.id.mainCoordinatorLayout);

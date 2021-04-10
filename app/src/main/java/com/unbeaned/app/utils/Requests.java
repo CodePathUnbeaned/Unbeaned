@@ -4,31 +4,23 @@ import android.util.Log;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.parse.FindCallback;
-import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.unbeaned.app.adapters.ReviewFeedAdapter;
-import com.unbeaned.app.models.Images;
 import com.unbeaned.app.models.Review;
 
-import org.jetbrains.annotations.NotNull;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.util.List;
 
 import okhttp3.Call;
-import okhttp3.Callback;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import okhttp3.Response;
 
 public class Requests {
 
-    private static final String reviewsURL = "unbeand.herokuapp.com";
+    private static final String baseURL = "unbeand.herokuapp.com";
 
     public static Call getAverageReviewRating(String placeId) {
         JSONObject matchObject = new JSONObject(),
@@ -45,7 +37,7 @@ public class Requests {
         }
 
         HttpUrl url = new HttpUrl.Builder().scheme("https")
-                .host(reviewsURL)
+                .host(baseURL)
                 .addPathSegment("parse")
                 .addPathSegment("aggregate")
                 .addPathSegment("Reviews")

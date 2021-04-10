@@ -10,4 +10,10 @@
     <dimen name="link_width">24dp</dimen>
     <dimen name="ufi_white_height">20dp</dimen>
     <dimen name="ufi_white_width">15dp</dimen>
+    <dimen name="camera_width">20dp</dimen>
+    <dimen name="camera_height">17dp</dimen>
+    <dimen name="compose_width">20dp</dimen>
+    <dimen name="compose_height">20dp</dimen>
+    <dimen name="cancel_width">20dp</dimen>
+    <dimen name="cancel_height">20dp</dimen>
 </resources>

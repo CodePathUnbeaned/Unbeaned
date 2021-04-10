@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
         navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
             @Override
             public void onDestinationChanged(@NonNull NavController controller, @NonNull NavDestination destination, @Nullable Bundle arguments) {
-                if (destination.getId() == R.id.splashFragment || destination.getId() == R.id.fragment_login || destination.getId() == R.id.fragment_register) {
+                if (destination.getId() == R.id.splashFragment || destination.getId() == R.id.fragment_login || destination.getId() == R.id.fragment_register || destination.getId() == R.id.composeReviewFragment) {
                     bottomNavigationView.setVisibility(View.GONE);
                 }
                 else {
@@ -49,12 +49,12 @@ public class MainActivity extends AppCompatActivity {
 
 //        navController.navigate(R.id.userFragment);
 
-        if (ParseUser.getCurrentUser() != null) {
-            navController.navigate(R.id.feedFragment);
-        }
-        else {
-            navController.navigate(R.id.splashFragment);
-        }
+//        if (ParseUser.getCurrentUser() != null) {
+//            navController.navigate(R.id.feedFragment);
+//        }
+//        else {
+//            navController.navigate(R.id.splashFragment);
+//        }
 
     }
 }

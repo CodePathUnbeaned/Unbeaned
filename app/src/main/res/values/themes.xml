@@ -19,6 +19,18 @@
         </item>
     </style>
 
+    <style name="Widget.App.OutlinedButton.Dotted" parent="Widget.MaterialComponents.Button.OutlinedButton">
+<!--        <item name="shapeAppearanceOverlay">@style/ShapeOverlay.App.OutlinedButton.Dotted</item>-->
+        <item name="strokeColor">#c3c3c3</item>
+        <item name="strokeWidth">2dp</item>
+        <item name="android:dashWidth">20dp</item>
+
+    </style>
+
+    <style name="ShapeOverlay.App.OutlinedButton.Dotted" parent="">
+        <item name="background">@drawable/dotted_container</item>
+    </style>
+
     <style name="Widget.App.OutlinedButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
         <item name="materialThemeOverlay">@style/ThemeOverlay.App.Button</item>
         <item name="android:textAppearance">@style/TextAppearance.App.Button</item>

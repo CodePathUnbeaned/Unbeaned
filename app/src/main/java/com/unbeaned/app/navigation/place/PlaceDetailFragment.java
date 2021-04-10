@@ -25,11 +25,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.material.appbar.AppBarLayout;
+import com.google.android.material.slider.Slider;
 import com.unbeaned.app.R;
 import com.unbeaned.app.adapters.ReviewFeedAdapter;
 import com.unbeaned.app.databinding.FragmentPlaceDetailBinding;
@@ -58,11 +60,21 @@ public class PlaceDetailFragment extends Fragment {
     Button btnCallIcon;
     Button btnMapIcon;
     Button btnLinkIcon;
+    Button btnStartReviewAddPhoto;
+    Button btnStartReviewWrite;
     String backPath;
     List<Review> allReviews;
     ReviewFeedAdapter adapter;
     RecyclerView rvPlaceDetailsReview;
+    Slider placeReviewDetailSlider;
     private Place place;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -92,14 +104,15 @@ public class PlaceDetailFragment extends Fragment {
         btnMapIcon = binding.btnMapIcon;
         btnLinkIcon = binding.btnLinkIcon;
         rvPlaceDetailsReview = binding.rvPlaceDetailsReview;
+        placeReviewDetailSlider = binding.placeReviewDetailSlider;
+        btnStartReviewAddPhoto = binding.btnStartReviewAddPhoto;
+        btnStartReviewWrite = binding.btnStartReviewWrite;
 
         allReviews = new ArrayList<>();
         adapter = new ReviewFeedAdapter(getContext(), allReviews, place);
         rvPlaceDetailsReview.setAdapter(adapter);
         rvPlaceDetailsReview.setLayoutManager(new LinearLayoutManager(getContext()));
         rvPlaceDetailsReview.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
-
-        Requests.getAllReviews(allReviews, place.getPlaceId(), adapter, TAG);
 
         btnPlaceSavedIcon.setEnabled(false);
         btnPlaceSavedIcon.setActivated(false);
@@ -135,7 +148,7 @@ public class PlaceDetailFragment extends Fragment {
                     Log.i(TAG, "NO phone permissions");
                     ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CALL_PHONE}, 100);
                 }
-                else{
+                else {
                     startActivity(callIntent);
                 }
             }
@@ -160,6 +173,30 @@ public class PlaceDetailFragment extends Fragment {
             }
         });
 
+        placeReviewDetailSlider.addOnSliderTouchListener(new Slider.OnSliderTouchListener() {
+            @Override
+            public void onStartTrackingTouch(@NonNull Slider slider) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(@NonNull Slider slider) {
+                PlaceDetailFragmentDirections.ActionPlaceDetailFragmentToComposeReviewFragment action = PlaceDetailFragmentDirections.actionPlaceDetailFragmentToComposeReviewFragment(place, new Review());
+                action.setRating(slider.getValue());
+
+                NavHostFragment.findNavController(PlaceDetailFragment.this).navigate(action);
+            }
+        });
+
+        btnStartReviewWrite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PlaceDetailFragmentDirections.ActionPlaceDetailFragmentToComposeReviewFragment action = PlaceDetailFragmentDirections.actionPlaceDetailFragmentToComposeReviewFragment(place, new Review());
+
+                NavHostFragment.findNavController(PlaceDetailFragment.this).navigate(action);
+            }
+        });
+
         btnBackPlaceDetail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -170,11 +207,13 @@ public class PlaceDetailFragment extends Fragment {
         OnBackPressedCallback callback = new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
-                resolveBackPath();
+                NavHostFragment.findNavController(PlaceDetailFragment.this).navigateUp();
             }
         };
 
         requireActivity().getOnBackPressedDispatcher().addCallback(callback);
+
+        Requests.getAllReviews(allReviews, place.getPlaceId(), adapter, TAG);
 
         binding.setPlace(place);
 

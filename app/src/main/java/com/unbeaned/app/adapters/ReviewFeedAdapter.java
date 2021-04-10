@@ -20,12 +20,14 @@ import com.parse.ParseQuery;
 import com.synnapps.carouselview.CarouselView;
 import com.synnapps.carouselview.ImageListener;
 import com.unbeaned.app.R;
+import com.unbeaned.app.databinding.PlaceDetailReviewItemBinding;
 import com.unbeaned.app.databinding.ReviewItemBinding;
 import com.unbeaned.app.models.Images;
 import com.unbeaned.app.models.Place;
 import com.unbeaned.app.models.Review;
 import com.unbeaned.app.navigation.DetailsActivity;
 import com.unbeaned.app.navigation.ReviewDetailsActivity;
+import com.unbeaned.app.navigation.place.PlaceDetailFragmentDirections;
 
 
 import org.parceler.Parcels;
@@ -42,7 +44,7 @@ public class ReviewFeedAdapter extends RecyclerView.Adapter<ReviewFeedAdapter.Vi
     public ReviewFeedAdapter(Context context, List<Review> reviews, Place place) {
         this.context = context;
         this.reviews = reviews;
-        this.place=place;
+        this.place = place;
     }
 
     @NonNull
@@ -50,7 +52,7 @@ public class ReviewFeedAdapter extends RecyclerView.Adapter<ReviewFeedAdapter.Vi
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
 
-        ReviewItemBinding binding = DataBindingUtil.inflate(inflater, R.layout.review_item, parent, false);
+        PlaceDetailReviewItemBinding binding = DataBindingUtil.inflate(inflater, R.layout.place_detail_review_item, parent, false);
         binding.setPlace(place);
         return new ViewHolder(binding);
     }
@@ -81,29 +83,27 @@ public class ReviewFeedAdapter extends RecyclerView.Adapter<ReviewFeedAdapter.Vi
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        private final ReviewItemBinding binding;
-        ImageView ivProfileImage;
-        TextView tvUsername;
-        TextView tvName;
-        TextView tvRating;
-        TextView tvReviewTitle;
-        TextView tvReview;
-        CarouselView carouselView;
-        RelativeLayout reviewItemLinearContainer;
+        private final PlaceDetailReviewItemBinding binding;
+        ImageView ivPlaceDetailReviewItemProfile;
+        TextView tvReadMorePlaceDetailReviewItem;
+        TextView tvPlaceDetailReviewProfileName;
+        TextView tvPlaceDetailReviewRating;
+//        TextView tvReviewTitle;
+        TextView tvPlaceDetailReviewItemContent;
+        CarouselView carouselPlaceDetailReviewItem;
+        RelativeLayout placeDetailReviewContainer;
 
-        public ViewHolder(@NonNull ReviewItemBinding binding) {
+        public ViewHolder(@NonNull PlaceDetailReviewItemBinding binding) {
             super(binding.getRoot());
 
             this.binding = binding;
-            ivProfileImage = binding.ivProfileImage;
-            tvUsername = binding.tvUsername;
-            tvName = binding.tvName;
-            tvReviewTitle = binding.tvReviewTitle;
-            tvRating = binding.tvRating;
-            tvReview = binding.tvReview;
-            carouselView = binding.carouselView;
-            reviewItemLinearContainer = binding.reviewItemLinearContainer;
-
+            ivPlaceDetailReviewItemProfile = binding.ivPlaceDetailReviewItemProfile;
+            tvPlaceDetailReviewProfileName = binding.tvPlaceDetailReviewProfileName;
+            tvPlaceDetailReviewRating = binding.tvPlaceDetailReviewRating;
+            carouselPlaceDetailReviewItem = binding.carouselPlaceDetailReviewItem;
+            placeDetailReviewContainer = binding.placeDetailReviewContainer;
+            tvPlaceDetailReviewItemContent = binding.tvPlaceDetailReviewItemContent;
+            tvReadMorePlaceDetailReviewItem = binding.tvReadMorePlaceDetailReviewItem;
         }
 
         public void bind(final Review review) {
@@ -115,9 +115,9 @@ public class ReviewFeedAdapter extends RecyclerView.Adapter<ReviewFeedAdapter.Vi
             Log.i("Review", "Review images: "+review.images);
 
             if(review.images.size()!=0){
-                carouselView.setPageCount(review.images.size());
+                carouselPlaceDetailReviewItem.setPageCount(review.images.size());
 
-                carouselView.setImageListener(new ImageListener() {
+                carouselPlaceDetailReviewItem.setImageListener(new ImageListener() {
                     @Override
                     public void setImageForPosition(int position, ImageView imageView) {
                         Glide.with(context)
@@ -128,15 +128,22 @@ public class ReviewFeedAdapter extends RecyclerView.Adapter<ReviewFeedAdapter.Vi
             }
             else{
                 //hide carousel view if no images
-                reviewItemLinearContainer.removeView(carouselView);
+                placeDetailReviewContainer.removeView(carouselPlaceDetailReviewItem);
             }
-            //TODO: Onclick listener for the container
-            reviewItemLinearContainer.setOnClickListener(new View.OnClickListener() {
+//            //TODO: Onclick listener for the container
+//            placeDetailReviewContainer.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    Intent i = new Intent(context, ReviewDetailsActivity.class);
+//                    i.putExtra("review", review.getObjectId());
+//                    context.startActivity(i);
+//                }
+//            });
+
+            tvReadMorePlaceDetailReviewItem.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent i = new Intent(context, ReviewDetailsActivity.class);
-                    i.putExtra("review", review.getObjectId());
-                    context.startActivity(i);
+
                 }
             });
         }

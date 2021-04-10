@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable name="place" type="com.unbeaned.app.models.Place" />
+        <variable name="review" type="com.unbeaned.app.models.Review" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="20dp"
+        android:orientation="vertical"
+        tools:context=".navigation.review.ComposeReviewFragment">
+
+        <RelativeLayout
+            android:id="@+id/headerComposeReviewLayoutContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tvReviewComposePlaceName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="0dp"
+                android:layout_toStartOf="@+id/btnCancelComposeReview"
+                android:fontFamily="@font/montserrat_bold"
+                android:includeFontPadding="false"
+                android:text="@{place.name}"
+                android:textColor="@color/black"
+                android:textSize="22sp"
+                tools:text="Place Name" />
+
+            <Button
+                android:id="@+id/btnCancelComposeReview"
+                style="@style/Widget.AppCompat.Button"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="0dp"
+                android:background="@android:color/transparent"
+                android:drawableLeft="@drawable/cancel_icn"
+                android:includeFontPadding="false"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:paddingLeft="0dp"
+                android:paddingTop="0dp"
+                android:paddingRight="0dp"
+                android:paddingBottom="0dp"
+                app:iconPadding="0dp" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/ratingComposeReviewContainer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/headerComposeReviewLayoutContainer"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvRatingComposeReview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0dp"
+                android:fontFamily="@font/roboto_bold"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                tools:text="2.75" />
+
+            <com.google.android.material.slider.Slider
+                android:id="@+id/sliderComposeReview"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:valueFrom="0.0"
+                android:valueTo="5.0" />
+
+
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/etComposeReviewContent"
+            android:layout_width="match_parent"
+            android:layout_height="230dp"
+            android:layout_above="@+id/imageGridComposeReview"
+            android:layout_below="@+id/ratingComposeReviewContainer"
+            android:layout_marginTop="0dp"
+            android:layout_marginBottom="5dp"
+            android:background="@null"
+            android:gravity="top"
+            android:hint="@string/compose_review_hint"
+            android:includeFontPadding="false"
+            android:paddingStart="5dp"
+            android:paddingTop="15dp" />
+
+        <Button
+            android:id="@+id/btnComposeReviewCamera"
+            style="@style/Widget.App.ButtonRoundIcon"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_above="@+id/tvComposeReview"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/dotted_container"
+            app:backgroundTint="#B1B1B1"
+            app:icon="@drawable/add_photo_compose_icon"
+            app:iconGravity="textStart"
+            app:iconPadding="0dp"
+            app:iconSize="0dp" />
+
+        <GridView
+            android:id="@+id/imageGridComposeReview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/btnComposeReviewCamera"
+            android:layout_marginBottom="5dp"
+            android:columnWidth="90dp"
+            android:numColumns="auto_fit" />
+
+        <TextView
+            android:id="@+id/tvComposeReview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="0dp"
+            android:layout_marginBottom="0dp"
+            android:fontFamily="@font/montserrat_bold"
+            android:text="Post Review"
+            android:textColor="@color/pink_red_accent"
+            android:textSize="16sp" />
+
+    </RelativeLayout>
+</layout>

@@ -13,16 +13,16 @@
     <RelativeLayout
         android:id="@+id/placeDetailReviewContainer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:paddingStart="20dp"
         android:paddingTop="20dp"
         android:paddingEnd="20dp"
-        android:paddingBottom="15dp">
+        android:paddingBottom="20dp">
 
         <ImageView
             android:id="@+id/ivPlaceDetailReviewItemProfile"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             app:profileImage="@{review.user.getParseFile(user.KEY_PHOTO)}"
             tools:srcCompat="@tools:sample/avatars" />
 
@@ -31,14 +31,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:layout_marginStart="15dp"
+            android:layout_marginStart="10dp"
             android:layout_marginTop="0dp"
             android:layout_toEndOf="@+id/ivPlaceDetailReviewItemProfile"
             android:fontFamily="@font/montserrat_bold"
             android:includeFontPadding="true"
-            android:textColor="@color/black"
-            android:textSize="18sp"
             android:text="@{review.user.getString(user.KEY_NAME)}"
+            android:textColor="@color/black"
+            android:textSize="16sp"
             tools:text="User Name" />
 
         <LinearLayout
@@ -46,7 +46,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvPlaceDetailReviewProfileName"
-            android:layout_marginStart="15dp"
+            android:layout_marginStart="10dp"
             android:layout_marginTop="0dp"
             android:layout_toEndOf="@+id/ivPlaceDetailReviewItemProfile"
             android:gravity="center_vertical"
@@ -54,8 +54,8 @@
 
             <ImageView
                 android:id="@+id/ivPlaceDetailReviewStar"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:layout_weight="1"
                 app:srcCompat="@drawable/ic_star" />
 
@@ -67,10 +67,10 @@
                 android:layout_weight="1"
                 android:fontFamily="@font/montserrat_bold"
                 android:includeFontPadding="false"
-                app:averageRating="@{review.rating}"
                 android:textColor="@color/black"
-                android:textSize="18sp"
-                tools:text="4.7"/>
+                android:textSize="14sp"
+                app:averageRating="@{review.rating}"
+                tools:text="4.7" />
         </LinearLayout>
 
         <TextView
@@ -86,9 +86,9 @@
             android:ellipsize="end"
             android:fontFamily="@font/roboto"
             android:maxLines="7"
+            android:text="@{review.review}"
             android:textColor="@color/black"
             android:textSize="14sp"
-            android:text="@{review.review}"
             app:lineHeight="19sp"
             tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." />
 
@@ -107,15 +107,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="0dp"
-                android:fontFamily="@font/montserrat_bold"
+                android:fontFamily="@font/roboto_bold"
                 android:includeFontPadding="false"
                 android:text="Read More"
                 android:textColor="@color/pink_red_accent"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="4dp"
+                android:layout_height="3dp"
                 android:background="@color/accent_purple" />
 
         </LinearLayout>
@@ -128,12 +128,12 @@
             android:layout_marginTop="10dp"
             android:layout_marginBottom="20dp"
             app:autoPlay="false"
-            app:fillColor="@color/pink_red_accent"
+            app:strokeColor="@color/pink_red_accent"
             app:indicatorGravity="bottom|center_horizontal"
             app:indicatorOrientation="horizontal"
             app:radius="6dp"
             app:snap="true"
-            app:strokeColor="@color/accent_purple" />
+            app:fillColor="@color/white" />
 
     </RelativeLayout>
 </layout>

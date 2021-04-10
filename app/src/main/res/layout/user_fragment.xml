@@ -121,21 +121,21 @@
                     android:text="@string/profile_favorites_header"
                     android:textAllCaps="true"
                     android:textColor="@color/accent_purple"
-                    android:textSize="28sp" />
+                    android:textSize="22sp" />
 
                 <com.synnapps.carouselview.CarouselView
                     android:id="@+id/carouselProfileReviews"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="15dp"
                     android:layout_marginBottom="20dp"
                     app:autoPlay="false"
                     app:fillColor="@color/pink_red_accent"
                     app:indicatorGravity="bottom|center_horizontal"
                     app:indicatorOrientation="horizontal"
                     app:radius="6dp"
-                    app:strokeColor="@color/accent_purple"
-                    app:snap="true" />
+                    app:snap="true"
+                    app:strokeColor="@color/accent_purple" />
 
             </LinearLayout>
         </LinearLayout>

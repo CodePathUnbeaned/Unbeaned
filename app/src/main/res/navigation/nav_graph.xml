@@ -92,6 +92,12 @@
             app:destination="@id/feedFragment"
             app:enterAnim="@anim/from_left"
             app:exitAnim="@anim/to_right" />
+        <action
+            android:id="@+id/action_placeDetailFragment_to_composeReviewFragment"
+            app:destination="@id/composeReviewFragment"
+            app:enterAnim="@anim/from_bottom"
+            app:popEnterAnim="@anim/fragment_open_enter"
+            app:popExitAnim="@anim/fragment_fade_exit" />
     </fragment>
     <fragment
         android:id="@+id/userSettingsFragment"
@@ -101,4 +107,20 @@
         android:id="@+id/searchFragment2"
         android:name="com.unbeaned.app.navigation.SearchFragment"
         android:label="SearchFragment" />
+    <fragment
+        android:id="@+id/composeReviewFragment"
+        android:name="com.unbeaned.app.navigation.review.ComposeReviewFragment"
+        android:label="ComposeReviewFragment"
+        tool:layout="@layout/fragment_compose_review">
+        <argument
+            android:name="rating"
+            app:argType="float"
+            android:defaultValue="0.0" />
+        <argument
+            android:name="place"
+            app:argType="com.unbeaned.app.models.Place" />
+        <argument
+            android:name="review"
+            app:argType="com.unbeaned.app.models.Review" />
+    </fragment>
 </navigation>

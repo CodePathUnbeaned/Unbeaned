@@ -7,6 +7,7 @@ import android.widget.TextView;
 import androidx.databinding.BindingAdapter;
 
 import com.bumptech.glide.Glide;
+import com.google.android.material.slider.Slider;
 import com.parse.ParseFile;
 import com.unbeaned.app.R;
 
@@ -110,7 +111,7 @@ public class BindingAdapterUtils {
             view.setText(String.valueOf(round));
         }
         if (rating==0){
-            view.setText("N/A");
+            view.setText("0");
         }
 
     }
