@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -156,7 +157,9 @@ public class UserSettingsFragment extends UserFragment {
     }
 
     private void setProfilePicture(byte[] imgBytes) {
-        ParseUser.getCurrentUser().put(User.KEY_PHOTO, imgBytes);
+        ParseFile imgFile = new ParseFile(imgBytes);
+        ParseUser.getCurrentUser().put(User.KEY_PHOTO, imgFile);
+        binding.ivProfilePicture.setImageBitmap(getBitmap(imgBytes));
     }
 
     @Override
@@ -186,6 +189,11 @@ public class UserSettingsFragment extends UserFragment {
             byteBuffer.write(buffer, 0, len);
         }
         return byteBuffer.toByteArray();
+    }
+
+    public Bitmap getBitmap(byte[] byteArray) {
+        Bitmap bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
+        return bmp;
     }
 
     private void deleteReview(Review review) {
