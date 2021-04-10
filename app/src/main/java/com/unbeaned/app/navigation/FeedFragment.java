@@ -185,7 +185,6 @@ public class FeedFragment extends Fragment {
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            adapter.clear();
                             try {
                                 adapter.addAll(Place.fromJsonArray(businessJsonArray));
                             } catch (JSONException e) {
