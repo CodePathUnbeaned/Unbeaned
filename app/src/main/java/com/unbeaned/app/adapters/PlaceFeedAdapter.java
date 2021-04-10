@@ -116,11 +116,6 @@ public class PlaceFeedAdapter extends RecyclerView.Adapter<PlaceFeedAdapter.View
                     else if (fragmentContext.getClass() == SearchFragment.class) {
 
                     }
-//                    bundle.putParcelable("place", Parcels.wrap(place));
-//                    NavHostFragment.findNavController(fragmentContext).navigate(action);
-//                    Intent i = new Intent(context, DetailsActivity.class);
-//                    i.putExtra("place", Parcels.wrap(place));
-//                    context.startActivity(i);
                 }
             });
         }

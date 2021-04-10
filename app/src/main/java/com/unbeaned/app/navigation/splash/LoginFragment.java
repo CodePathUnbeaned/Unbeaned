@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavDirections;
@@ -19,6 +20,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
@@ -34,12 +36,18 @@ public class LoginFragment extends Fragment {
     EditText etUsernameLogin;
     EditText etPasswordLogin;
     LinearLayout linearLayoutLoginContainer;
+    Snackbar snackbarLoginError;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_login, container, false);
+
+        CoordinatorLayout mainCoordinatorLayout = getActivity().findViewById(R.id.mainCoordinatorLayout);
+
+        snackbarLoginError = Snackbar.make(mainCoordinatorLayout, "Incorrect username and/or password", Snackbar.LENGTH_SHORT);
+
         return binding.getRoot();
     }
 
@@ -67,8 +75,13 @@ public class LoginFragment extends Fragment {
                 ParseUser.logInInBackground(username, password, new LogInCallback() {
                     @Override
                     public void done(ParseUser user, ParseException e) {
-                        NavDirections action = LoginFragmentDirections.actionFragmentLoginToFeedFragment();
-                        NavHostFragment.findNavController(LoginFragment.this).navigate(action);
+                        if (e != null) {
+                            snackbarLoginError.show();
+                        }
+                        else {
+                            NavDirections action = LoginFragmentDirections.actionFragmentLoginToFeedFragment();
+                            NavHostFragment.findNavController(LoginFragment.this).navigate(action);
+                        }
                     }
                 });
             }
