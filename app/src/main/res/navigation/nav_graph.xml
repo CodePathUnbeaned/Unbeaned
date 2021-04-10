@@ -88,4 +88,8 @@
         android:id="@+id/userSettingsFragment"
         android:name="com.unbeaned.app.navigation.UserSettingsFragment"
         android:label="UserSettingsFragment" />
+    <fragment
+        android:id="@+id/searchFragment2"
+        android:name="com.unbeaned.app.navigation.SearchFragment"
+        android:label="SearchFragment" />
 </navigation>
