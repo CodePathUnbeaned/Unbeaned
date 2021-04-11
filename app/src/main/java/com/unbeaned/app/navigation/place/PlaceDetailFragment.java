@@ -23,6 +23,7 @@ import androidx.core.widget.NestedScrollView;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
+import androidx.navigation.NavDirections;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -236,6 +237,14 @@ public class PlaceDetailFragment extends Fragment {
                 PlaceDetailFragmentDirections.ActionPlaceDetailFragmentToComposeReviewFragment action = PlaceDetailFragmentDirections.actionPlaceDetailFragmentToComposeReviewFragment(place, new Review());
                 action.setRating(slider.getValue());
 
+                NavHostFragment.findNavController(PlaceDetailFragment.this).navigate(action);
+            }
+        });
+
+        btnStartReviewAddPhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavDirections action = PlaceDetailFragmentDirections.actionPlaceDetailFragmentToCameraFragment();
                 NavHostFragment.findNavController(PlaceDetailFragment.this).navigate(action);
             }
         });

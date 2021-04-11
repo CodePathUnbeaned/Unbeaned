@@ -98,6 +98,9 @@
             app:enterAnim="@anim/from_bottom"
             app:popEnterAnim="@anim/fragment_open_enter"
             app:popExitAnim="@anim/fragment_fade_exit" />
+        <action
+            android:id="@+id/action_placeDetailFragment_to_cameraFragment"
+            app:destination="@id/cameraFragment" />
     </fragment>
     <fragment
         android:id="@+id/userSettingsFragment"
@@ -122,5 +125,14 @@
         <argument
             android:name="review"
             app:argType="com.unbeaned.app.models.Review" />
+    </fragment>
+    <fragment
+        android:id="@+id/cameraFragment"
+        android:name="com.unbeaned.app.navigation.review.CameraFragment"
+        android:label="CameraFragment"
+        tool:layout="@layout/fragment_camera">
+        <action
+            android:id="@+id/action_cameraFragment_to_composeReviewFragment"
+            app:destination="@id/composeReviewFragment" />
     </fragment>
 </navigation>

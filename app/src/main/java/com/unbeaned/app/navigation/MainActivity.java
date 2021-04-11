@@ -18,15 +18,22 @@ import com.parse.ParseUser;
 import com.unbeaned.app.R;
 import com.unbeaned.app.databinding.ActivityMainBinding;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
 
     public static final String TAG = "MainActivity";
     ActivityMainBinding binding;
+    List<Integer> destinationId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+
+        destinationId = new ArrayList<>(Arrays.asList(R.id.splashFragment, R.id.fragment_login, R.id.fragment_register, R.id.fragment_register, R.id.composeReviewFragment, R.id.cameraFragment));
 
         BottomNavigationView bottomNavigationView = binding.bottomNavigation;
         NavController navController = Navigation.findNavController(this, R.id.navHostContainer);
@@ -34,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
         navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
             @Override
             public void onDestinationChanged(@NonNull NavController controller, @NonNull NavDestination destination, @Nullable Bundle arguments) {
-                if (destination.getId() == R.id.splashFragment || destination.getId() == R.id.fragment_login || destination.getId() == R.id.fragment_register || destination.getId() == R.id.composeReviewFragment) {
+                if (destinationId.contains(destination.getId())) {
                     bottomNavigationView.setVisibility(View.GONE);
                 }
                 else {

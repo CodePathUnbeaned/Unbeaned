@@ -1,8 +1,5 @@
 package com.unbeaned.app.utils;
 
-import android.content.Context;
-
-import androidx.annotation.NonNull;
 import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
