@@ -71,7 +71,8 @@ public class FeedFragment extends Fragment {
     private LocationManager locationManager;
     private Snackbar snackbarEnableLocation;
     private RelativeLayout feedLayoutContainer;
-    private String searchLocation;
+    private String searchLocation = "current";
+    private final int limit = 5;
     EndlessRecyclerViewScrollListener scrollListener;
 
     public FeedFragment() {
@@ -93,7 +94,6 @@ public class FeedFragment extends Fragment {
             NavHostFragment.findNavController(this).navigate(R.id.loginFragment);
         }
 
-
         binding = DataBindingUtil.inflate(inflater, R.layout.feed_fragment, container, false);
 
         CoordinatorLayout mainCoordinatorLayout = getActivity().findViewById(R.id.mainCoordinatorLayout);
@@ -107,15 +107,6 @@ public class FeedFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        final LocationListener mLocationListener = new LocationListener() {
-            @Override
-            public void onLocationChanged(final Location location) {
-                Log.i(TAG, "Location: " + location);
-                longitude = location.getLongitude();
-                latitude = location.getLatitude();
-                searchBusinesses("current");
-            }
-        };
         rvPlaces = binding.rvPlaces;
         etSearch = binding.etSearch;
         btnSearch = binding.btnSearch;
@@ -125,14 +116,17 @@ public class FeedFragment extends Fragment {
         adapter = new PlaceFeedAdapter(getContext(), allPlaces, this);
 
         if (TextUtils.isEmpty(etSearch.getText())) getLocation();
+
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+
         rvPlaces.setAdapter(adapter);
-        rvPlaces.setLayoutManager(new LinearLayoutManager(getContext()));
+        rvPlaces.setLayoutManager(layoutManager);
+
         scrollListener= new EndlessRecyclerViewScrollListener(layoutManager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
                 Log.i(TAG, "onLoadMore "+page);
-                loadMoreData(searchLocation, page*5);
+                loadMoreData(searchLocation, page);
             }
         };
         rvPlaces.addOnScrollListener(scrollListener);
@@ -147,11 +141,9 @@ public class FeedFragment extends Fragment {
                 if (TextUtils.isEmpty(etSearch.getText())) {
                     searchLocation = "current";
                     getLocation();
-                    searchBusinesses("current");
+//                    searchBusinesses("current");
                 }
-                else {
-                    searchBusinesses(searchLocation);
-                }
+                searchBusinesses(searchLocation);
             }
         });
 
@@ -164,7 +156,7 @@ public class FeedFragment extends Fragment {
 
     }
 
-    private void loadMoreData(String location, int skip) {
+    private void loadMoreData(String location, int page) {
         Map<String, String> searchParameters = new HashMap<>();
 
         if (location.equals("current")) {
@@ -174,7 +166,10 @@ public class FeedFragment extends Fragment {
             searchParameters.put("location", location);
         }
 
-        Request request = YelpClient.getNextPageOfBusinesses(searchParameters, skip);
+        searchParameters.put("limit", String.valueOf(limit));
+        searchParameters.put("offset", String.valueOf(limit * page));
+
+        Request request = YelpClient.getBusinessBySearch(searchParameters);
 
         OkHttpClient client = new OkHttpClient();
 
@@ -195,6 +190,7 @@ public class FeedFragment extends Fragment {
                     JSONObject jsonObject = new JSONObject(jsonData);
                     JSONArray businessJsonArray = jsonObject.getJSONArray("businesses");
                     Log.i(TAG, "JSONArray: " + businessJsonArray.toString());
+                    Log.i(TAG, "Size: " + businessJsonArray.length());
 
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
@@ -244,7 +240,7 @@ public class FeedFragment extends Fragment {
                     JSONObject jsonObject = new JSONObject(jsonData);
                     JSONArray businessJsonArray = jsonObject.getJSONArray("businesses");
                     Log.i(TAG, "JSONArray: " + businessJsonArray.toString());
-
+                    Log.i(TAG, "Size: " + businessJsonArray.length());
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -268,7 +264,7 @@ public class FeedFragment extends Fragment {
         public void onLocationChanged(@NonNull Location location) {
             latitude = location.getLatitude();
             longitude = location.getLongitude();
-            searchBusinesses("current");
+            loadMoreData("current", 0);
         }
 
         @Override

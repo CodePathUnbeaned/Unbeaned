@@ -25,7 +25,7 @@ public class YelpClient {
         for (String s : pathSegments) {
             url.addPathSegment(s);
         }
-        url.addQueryParameter("limit", "10");
+//        url.addQueryParameter("limit", "10");
         // Loop through key-value pair and assign as query parameters
         for (Map.Entry<String, String> entry : params.entrySet()) {
             url.addQueryParameter(entry.getKey(), entry.getValue());
@@ -44,7 +44,7 @@ public class YelpClient {
             url.addPathSegment(s);
         }
         url.addQueryParameter("limit", "10");
-        url.addQueryParameter("skip", String.valueOf(skip));
+        url.addQueryParameter("offset", String.valueOf(skip));
         // Loop through key-value pair and assign as query parameters
         for (Map.Entry<String, String> entry : params.entrySet()) {
             url.addQueryParameter(entry.getKey(), entry.getValue());

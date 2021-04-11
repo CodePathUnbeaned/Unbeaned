@@ -1,6 +1,7 @@
 package com.unbeaned.app.utils;
 
 import android.util.Log;
+import android.util.Pair;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -11,10 +12,15 @@ import com.unbeaned.app.adapters.CommentFeedAdapter;
 import com.unbeaned.app.adapters.ReviewFeedAdapter;
 import com.unbeaned.app.models.Comment;
 import com.unbeaned.app.models.Review;
+import com.unbeaned.app.models.User;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 import okhttp3.Call;
@@ -25,6 +31,8 @@ import okhttp3.Request;
 public class Requests {
 
     private static final String baseURL = "unbeand.herokuapp.com";
+    private static final HashMap<String, Integer> countMap = new HashMap<>();
+    private static final int limit = 4;
 
     public static Call getAverageReviewRating(String placeId) {
         JSONObject matchObject = new JSONObject(),
@@ -132,15 +140,53 @@ public class Requests {
 
     }
 
-    public static void getNextPageOfReviews(List<Review> allReviews, String placeId, RecyclerView.Adapter<?> adapter, String TAG, int page) {
+    public static void refreshCount(String target, ArrayList<?> filter) {
+        ParseQuery<?> query;
+
+        switch (target) {
+            case "Reviews":
+                query = ParseQuery.getQuery(Review.class);
+                if (filter != null) {
+                    query.whereEqualTo(Review.KEY_PLACE_ID, filter.get(0));
+                }
+                break;
+            case "Comments":
+                query = ParseQuery.getQuery(Comment.class);
+                if (filter != null) {
+                    query.whereEqualTo(Comment.KEY_REVIEW, filter.get(0));
+                }
+                break;
+            default:
+                query = ParseQuery.getQuery(User.class);
+                break;
+        }
+
+        try {
+            countMap.put(target.toUpperCase(), query.count());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public static void getNextPageOfReviews(List<Review> allReviews, String placeId, RecyclerView.Adapter<?> adapter, String TAG, int page, boolean refresh) {
         ParseQuery<Review> query = ParseQuery.getQuery(Review.class);
+
+//        if (refresh) {
+//            refreshCount("Reviews", new ArrayList<>(Collections.singletonList(placeId)));
+//        }
+//
+//        if (countMap.containsKey("REVIEWS") && page * limit >= countMap.get("REVIEWS")) {
+//            return;
+//        }
 
         query.include(Review.KEY_USER);
         query.whereEqualTo(Review.KEY_PLACE_ID, placeId);
         query.addDescendingOrder(Review.KEY_CREATED);
-        query.setLimit(5);
-        query.setSkip(page * 5);
-        Log.i(TAG,"skip: "+page*5);
+        query.setLimit(limit);
+        query.setSkip(page * limit);
+
+        Log.i(TAG,"skip: "+page * limit);
         query.findInBackground((reviews, e) -> {
             if (e != null) {
                 Log.e(TAG, "Issue with getting posts", e);

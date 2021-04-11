@@ -110,9 +110,9 @@ public class ReviewFeedAdapter extends RecyclerView.Adapter<ReviewFeedAdapter.Vi
             binding.setReview(review);
             binding.executePendingBindings();
 
-            Log.i("Review", "Review ID: "+review.getObjectId());
+            Log.i("ReviewFeedAdapter", "Binding Review ID: "+review.getObjectId());
 
-            Log.i("Review", "Review images: "+review.images);
+//            Log.i("Review", "Review images: "+review.images);
 
             if(review.images.size()!=0){
                 carouselPlaceDetailReviewItem.setPageCount(review.images.size());

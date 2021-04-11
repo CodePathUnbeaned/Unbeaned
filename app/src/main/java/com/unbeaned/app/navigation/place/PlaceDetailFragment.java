@@ -35,6 +35,7 @@ import com.unbeaned.app.adapters.ReviewFeedAdapter;
 import com.unbeaned.app.databinding.FragmentPlaceDetailBinding;
 import com.unbeaned.app.models.Place;
 import com.unbeaned.app.models.Review;
+import com.unbeaned.app.utils.EndlessNestedScrollView;
 import com.unbeaned.app.utils.EndlessRecyclerViewScrollListener;
 import com.unbeaned.app.utils.Requests;
 
@@ -64,6 +65,7 @@ public class PlaceDetailFragment extends Fragment {
     Slider placeReviewDetailSlider;
     EndlessRecyclerViewScrollListener scrollListener;
     private Place place;
+    private boolean loadData;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -104,31 +106,66 @@ public class PlaceDetailFragment extends Fragment {
         btnStartReviewAddPhoto = binding.btnStartReviewAddPhoto;
         btnStartReviewWrite = binding.btnStartReviewWrite;
 
+//        loadData = false;
         allReviews = new ArrayList<>();
         adapter = new ReviewFeedAdapter(getContext(), allReviews, place);
         rvPlaceDetailsReview.setAdapter(adapter);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+
         rvPlaceDetailsReview.setLayoutManager(layoutManager);
         rvPlaceDetailsReview.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
 
-        scrollListener= new EndlessRecyclerViewScrollListener(layoutManager) {
-            @Override
-            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
-                Log.i(TAG, "onLoadMore "+page);
-                loadMoreData();
-            }
-        };
-        rvPlaceDetailsReview.addOnScrollListener(scrollListener);
+//        scrollListener= new EndlessRecyclerViewScrollListener(layoutManager) {
+//            @Override
+//            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+//                Log.i(TAG, "onLoadMore "+page);
+//                loadMoreData(false);
+//            }
+//        };
+//        rvPlaceDetailsReview.addOnScrollListener(scrollListener);
 
 
-        Requests.getAllReviews(allReviews, place.getPlaceId(), adapter, TAG);
+//        Requests.getAllReviews(allReviews, place.getPlaceId(), adapter, TAG);
 
         btnPlaceSavedIcon.setEnabled(false);
         btnPlaceSavedIcon.setActivated(false);
+        loadMoreData(true, 0);
 
-        nestedScrollViewDetails.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+
+//        nestedScrollViewDetails.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+//            @Override
+//            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+//                if (v.getScrollY() >= ivPlaceDisplayImage.getBottom()) {
+//                    btnBackPlaceDetail.setActivated(true);
+//                    btnBackPlaceDetail.setTextColor(Color.BLACK);
+//                    tvPlaceNameToolbar.setVisibility(View.VISIBLE);
+//                    appBarLayoutPlaceDetail.setBackgroundColor(Color.WHITE);
+//                    toolbarBottomBorder.setVisibility(View.VISIBLE);
+//                }
+//                else {
+//                    btnBackPlaceDetail.setActivated(false);
+//                    btnBackPlaceDetail.setTextColor(Color.WHITE);
+//                    tvPlaceNameToolbar.setVisibility(View.INVISIBLE);
+//                    appBarLayoutPlaceDetail.setBackgroundColor(Color.TRANSPARENT);
+//                    toolbarBottomBorder.setVisibility(View.INVISIBLE);
+//                }
+//
+//                if (v.getScrollY() + v.getHeight() >= rvPlaceDetailsReview.getBottom()) {
+//                    if (!loadData) {
+//                        loadData = true;
+//                        loadMoreData(true);
+//                    }
+//                    else {
+//                        loadMoreData(false);
+//                    }
+//                    page++;
+//                }
+//            }
+//        });
+
+        nestedScrollViewDetails.setOnScrollChangeListener(new EndlessNestedScrollView(rvPlaceDetailsReview, layoutManager) {
             @Override
-            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+            public void onUIChange(NestedScrollView v) {
                 if (v.getScrollY() >= ivPlaceDisplayImage.getBottom()) {
                     btnBackPlaceDetail.setActivated(true);
                     btnBackPlaceDetail.setTextColor(Color.BLACK);
@@ -143,6 +180,12 @@ public class PlaceDetailFragment extends Fragment {
                     appBarLayoutPlaceDetail.setBackgroundColor(Color.TRANSPARENT);
                     toolbarBottomBorder.setVisibility(View.INVISIBLE);
                 }
+            }
+
+            @Override
+            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                Log.i(TAG, "Loading: " + page);
+                loadMoreData(false, page);
             }
         });
 
@@ -222,14 +265,14 @@ public class PlaceDetailFragment extends Fragment {
 
         requireActivity().getOnBackPressedDispatcher().addCallback(callback);
 
-        Requests.getAllReviews(allReviews, place.getPlaceId(), adapter, TAG);
+//        Requests.getAllReviews(allReviews, place.getPlaceId(), adapter, TAG);
 
         binding.setPlace(place);
 
     }
 
-    private void loadMoreData() {
-        Requests.getNextPageOfReviews(allReviews, place.getPlaceId(), adapter, TAG, scrollListener.getCurrentPage());
+    private void loadMoreData(boolean refresh, int page) {
+        Requests.getNextPageOfReviews(allReviews, place.getPlaceId(), adapter, TAG, page, refresh);
     }
 
     @Override

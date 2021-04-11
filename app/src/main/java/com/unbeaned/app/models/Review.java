@@ -72,7 +72,7 @@ public class Review extends ParseObject {
         query.whereEqualTo(Images.KEY_REVIEW_ID, this);
         try {
             List<Images> imageList = query.find();
-            Log.i("Review", "Images: "+imageList);
+//            Log.i("Review", "Images: "+imageList);
             images.clear();
             images.addAll(query.find());
         }catch (ParseException e) {
