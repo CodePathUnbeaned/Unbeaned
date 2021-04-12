@@ -67,7 +67,6 @@ public class FeedFragment extends Fragment {
     private Button btnSearch;
     private PlaceFeedAdapter adapter;
     private List<Place> allPlaces;
-    private LocationManager locationManager;
     private Snackbar snackbarEnableLocation;
     private RelativeLayout feedLayoutContainer;
     private String searchLocation = "current";
