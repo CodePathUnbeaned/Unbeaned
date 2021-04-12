@@ -1,7 +1,6 @@
 package com.unbeaned.app.adapters;
 
 import android.content.Context;
-import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,24 +14,13 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.parse.ParseException;
-import com.parse.ParseQuery;
 import com.synnapps.carouselview.CarouselView;
 import com.synnapps.carouselview.ImageListener;
 import com.unbeaned.app.R;
 import com.unbeaned.app.databinding.PlaceDetailReviewItemBinding;
-import com.unbeaned.app.databinding.ReviewItemBinding;
-import com.unbeaned.app.models.Images;
 import com.unbeaned.app.models.Place;
 import com.unbeaned.app.models.Review;
-import com.unbeaned.app.navigation.DetailsActivity;
-import com.unbeaned.app.navigation.ReviewDetailsActivity;
-import com.unbeaned.app.navigation.place.PlaceDetailFragmentDirections;
 
-
-import org.parceler.Parcels;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class ReviewFeedAdapter extends RecyclerView.Adapter<ReviewFeedAdapter.ViewHolder> {
@@ -130,6 +118,15 @@ public class ReviewFeedAdapter extends RecyclerView.Adapter<ReviewFeedAdapter.Vi
                 //hide carousel view if no images
                 placeDetailReviewContainer.removeView(carouselPlaceDetailReviewItem);
             }
+
+            ivPlaceDetailReviewItemProfile.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String userID = review.getUser().getObjectId();
+
+                }
+            });
+
 //            //TODO: Onclick listener for the container
 //            placeDetailReviewContainer.setOnClickListener(new View.OnClickListener() {
 //                @Override

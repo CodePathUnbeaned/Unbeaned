@@ -1,8 +1,6 @@
 package com.unbeaned.app.adapters;
 
 import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,12 +17,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.unbeaned.app.R;
 import com.unbeaned.app.databinding.PlaceItemBinding;
 import com.unbeaned.app.models.Place;
-import com.unbeaned.app.navigation.DetailsActivity;
 import com.unbeaned.app.navigation.FeedFragment;
 import com.unbeaned.app.navigation.FeedFragmentDirections;
 import com.unbeaned.app.navigation.SearchFragment;
-
-import org.parceler.Parcels;
+import com.unbeaned.app.navigation.SearchFragmentDirections;
 
 import java.util.List;
 
@@ -114,6 +110,9 @@ public class PlaceFeedAdapter extends RecyclerView.Adapter<PlaceFeedAdapter.View
                         NavHostFragment.findNavController(fragmentContext).navigate(action);
                     }
                     else if (fragmentContext.getClass() == SearchFragment.class) {
+                        SearchFragmentDirections.ActionSearchFragment2ToPlaceDetailFragment action = SearchFragmentDirections.actionSearchFragment2ToPlaceDetailFragment(place);
+                        action.setBackPath("search");
+                        NavHostFragment.findNavController(fragmentContext).navigate(action);
 
                     }
                 }

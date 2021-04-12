@@ -74,6 +74,9 @@
             app:exitAnim="@anim/to_left"
             app:popUpTo="@id/splashFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_fragment_register_to_splashFragment"
+            app:destination="@id/splashFragment" />
     </fragment>
     <fragment
         android:id="@+id/placeDetailFragment"
@@ -109,7 +112,13 @@
     <fragment
         android:id="@+id/searchFragment2"
         android:name="com.unbeaned.app.navigation.SearchFragment"
-        android:label="SearchFragment" />
+        android:label="SearchFragment" >
+        <action
+            android:id="@+id/action_searchFragment2_to_placeDetailFragment"
+            app:destination="@id/placeDetailFragment"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit" />
+    </fragment>
     <fragment
         android:id="@+id/composeReviewFragment"
         android:name="com.unbeaned.app.navigation.review.ComposeReviewFragment"

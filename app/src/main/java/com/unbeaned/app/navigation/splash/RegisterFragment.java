@@ -2,14 +2,6 @@ package com.unbeaned.app.navigation.splash;
 
 import android.content.Context;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.Fragment;
-import androidx.navigation.NavDirections;
-import androidx.navigation.fragment.NavHostFragment;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,14 +10,19 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
+import androidx.navigation.NavDirections;
+import androidx.navigation.fragment.NavHostFragment;
 
 import com.parse.ParseException;
 import com.parse.SignUpCallback;
 import com.unbeaned.app.R;
 import com.unbeaned.app.databinding.FragmentRegisterBinding;
 import com.unbeaned.app.models.User;
-import com.unbeaned.app.staticActivity.LoginActivity;
 
 public class RegisterFragment extends Fragment {
 
@@ -51,6 +48,7 @@ public class RegisterFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+
         btnSplashRegisterEnter = binding.btnSplashRegisterEnter;
         btnSplashRegisterBack = binding.btnSplashRegisterBack;
 
@@ -60,6 +58,14 @@ public class RegisterFragment extends Fragment {
         etPasswordRegister = binding.etPasswordRegister;
 
         linearLayoutRegisterContainer = binding.linearLayoutRegisterContainer;
+
+        btnSplashRegisterBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavDirections action = RegisterFragmentDirections.actionFragmentRegisterToSplashFragment();
+                NavHostFragment.findNavController(RegisterFragment.this).navigate(action);
+            }
+        });
 
 
         btnSplashRegisterEnter.setOnClickListener(new View.OnClickListener() {
