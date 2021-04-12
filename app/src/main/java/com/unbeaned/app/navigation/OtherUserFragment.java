@@ -20,7 +20,7 @@ import com.synnapps.carouselview.CarouselView;
 import com.synnapps.carouselview.ViewListener;
 import com.unbeaned.app.R;
 import com.unbeaned.app.databinding.ReviewProfileItemBinding;
-import com.unbeaned.app.databinding.UserFragmentBinding;
+import com.unbeaned.app.databinding.FragmentOtherUserBinding;
 import com.unbeaned.app.databinding.UserReviewPlaceholderBinding;
 import com.unbeaned.app.models.Review;
 import com.unbeaned.app.models.User;
@@ -28,18 +28,18 @@ import com.unbeaned.app.models.User;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserFragment extends Fragment {
+public class OtherUserFragment extends Fragment {
 
-    public static final String TAG = "UserFragment";
+    public static final String TAG = "OtherUserFragment";
 
-    UserFragmentBinding binding;
+    FragmentOtherUserBinding binding;
     CarouselView carouselProfileReview;
     List<Review> allReviews;
     NavController navController;
     private ParseUser user;
     String backPath;
 
-    public UserFragment () {
+    public OtherUserFragment () {
         // Constructor
     }
 
@@ -47,18 +47,18 @@ public class UserFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         //inflate the layout for this view
-        binding = DataBindingUtil.inflate(inflater, R.layout.user_fragment, container, false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_other_user, container, false);
         navController = Navigation.findNavController(getActivity(), R.id.navHostContainer);
 
-        try {
-            ParseUser.getCurrentUser().fetch();
-        } catch (ParseException e) {
-            e.printStackTrace();
+        if (getArguments() != null) {
+            user = getArguments().getParcelable("user");
+            backPath = getArguments().getString("backPath");
         }
-        user = ParseUser.getCurrentUser();
+
 
         binding.setUser(user);
         binding.setUserData(new User());
+
 
         carouselProfileReview = binding.carouselProfileReviews;
         allReviews = new ArrayList<>();
@@ -71,12 +71,6 @@ public class UserFragment extends Fragment {
             carouselProfileReview.setPageCount(1);
         }
 
-        binding.btnSettings.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openUserSettings();
-            }
-        });
 
         carouselProfileReview.setViewListener(new ViewListener() {
             @Override
@@ -108,7 +102,7 @@ public class UserFragment extends Fragment {
         ParseQuery<Review> query = ParseQuery.getQuery(Review.class);
 
         query.include(Review.KEY_USER);
-        query.whereEqualTo(Review.KEY_USER, ParseUser.getCurrentUser());
+        query.whereEqualTo(Review.KEY_USER, user);
         query.addDescendingOrder(Review.KEY_RATING);
         query.setLimit(5);
 
@@ -121,12 +115,4 @@ public class UserFragment extends Fragment {
         Log.i(TAG, "Setting custom view");
     }
 
-    protected void updateUserReviews(List<Review> reviewList) {
-        reviewList.clear();
-        getUserReviews(reviewList);
-    }
-
-    private void openUserSettings() {
-        navController.navigate(R.id.userSettingsFragment);
-    }
 }

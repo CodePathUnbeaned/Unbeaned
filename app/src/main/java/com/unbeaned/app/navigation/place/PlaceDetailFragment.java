@@ -109,7 +109,7 @@ public class PlaceDetailFragment extends Fragment {
 
 //        loadData = false;
         allReviews = new ArrayList<>();
-        adapter = new ReviewFeedAdapter(getContext(), allReviews, place);
+        adapter = new ReviewFeedAdapter(getContext(), allReviews, place, this);
         rvPlaceDetailsReview.setAdapter(adapter);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
 

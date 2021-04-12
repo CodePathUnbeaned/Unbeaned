@@ -1,53 +1,36 @@
 package com.unbeaned.app.navigation;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.databinding.DataBindingUtil;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
-import com.unbeaned.app.BR;
 import com.unbeaned.app.R;
-import com.unbeaned.app.adapters.PlaceFeedAdapter;
 import com.unbeaned.app.adapters.ReviewFeedAdapter;
 import com.unbeaned.app.databinding.ActivityDetailsBinding;
 import com.unbeaned.app.models.Place;
 import com.unbeaned.app.models.Review;
-import com.unbeaned.app.models.User;
-import com.unbeaned.app.utils.Requests;
 
-import org.jetbrains.annotations.NotNull;
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.parceler.Parcels;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.Response;
 
 public class DetailsActivity extends AppCompatActivity {
     public static final String TAG = "DetailsActivity";
@@ -81,7 +64,7 @@ public class DetailsActivity extends AppCompatActivity {
         btnCompose = binding.btnCompose;
         rvReviews = binding.rvReviews;
         allReviews= new ArrayList<>();
-        adapter = new ReviewFeedAdapter(this, allReviews, place);
+        //adapter = new ReviewFeedAdapter(this, allReviews, place, this);
         rvReviews.setAdapter(adapter);
         rvReviews.setLayoutManager(new LinearLayoutManager(this));
         queryReviews();

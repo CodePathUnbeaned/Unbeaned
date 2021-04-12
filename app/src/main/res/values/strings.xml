@@ -7,6 +7,7 @@
     <string name="usernameFormat">\@%1$s</string>
     <string name="place_detail_price">\u2022 %1$s</string>
     <string name="profile_favorites_header">Your Favorites</string>
+    <string name="other_profile_favorites_header">Their Favorites</string>
     <string name="title_activity_main1">MainActivity1</string>
     <!-- Strings used for fragments for navigation -->
     <string name="next">Next</string>

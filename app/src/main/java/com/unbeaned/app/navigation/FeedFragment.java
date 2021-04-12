@@ -12,7 +12,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -218,6 +217,9 @@ public class FeedFragment extends Fragment {
         } else {
             searchParameters.put("location", location);
         }
+
+        searchParameters.put("limit", String.valueOf(limit));
+        searchParameters.put("offset", "0");
 
         Request request = YelpClient.getBusinessBySearch(searchParameters);
 

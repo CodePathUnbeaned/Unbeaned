@@ -19,7 +19,8 @@
         android:id="@+id/userFragment"
         android:name="com.unbeaned.app.navigation.UserFragment"
         android:label="UserFragment"
-        tool:layout="@layout/user_fragment" />
+        tool:layout="@layout/user_fragment" >
+    </fragment>
     <fragment
         android:id="@+id/splashFragment"
         android:name="com.unbeaned.app.navigation.SplashFragment"
@@ -104,6 +105,9 @@
         <action
             android:id="@+id/action_placeDetailFragment_to_cameraFragment"
             app:destination="@id/cameraFragment" />
+        <action
+            android:id="@+id/action_placeDetailFragment_to_otherUserFragment"
+            app:destination="@id/otherUserFragment" />
     </fragment>
     <fragment
         android:id="@+id/userSettingsFragment"
@@ -143,5 +147,17 @@
         <action
             android:id="@+id/action_cameraFragment_to_composeReviewFragment"
             app:destination="@id/composeReviewFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/otherUserFragment"
+        android:name="com.unbeaned.app.navigation.OtherUserFragment"
+        android:label="OtherUserFragment" >
+        <argument
+            android:name="user"
+            app:argType="com.parse.ParseUser" />
+        <argument
+            android:name="backPath"
+            app:argType="string"
+            android:defaultValue="null" />
     </fragment>
 </navigation>

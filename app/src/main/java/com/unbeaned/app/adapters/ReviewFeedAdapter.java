@@ -11,15 +11,19 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.parse.ParseUser;
 import com.synnapps.carouselview.CarouselView;
 import com.synnapps.carouselview.ImageListener;
 import com.unbeaned.app.R;
 import com.unbeaned.app.databinding.PlaceDetailReviewItemBinding;
 import com.unbeaned.app.models.Place;
 import com.unbeaned.app.models.Review;
+import com.unbeaned.app.navigation.place.PlaceDetailFragmentDirections;
 
 import java.util.List;
 
@@ -28,11 +32,13 @@ public class ReviewFeedAdapter extends RecyclerView.Adapter<ReviewFeedAdapter.Vi
     Context context;
     List<Review> reviews;
     Place place;
+    Fragment fragmentContext;
 
-    public ReviewFeedAdapter(Context context, List<Review> reviews, Place place) {
+    public ReviewFeedAdapter(Context context, List<Review> reviews, Place place, Fragment fragmentContext) {
         this.context = context;
         this.reviews = reviews;
         this.place = place;
+        this.fragmentContext = fragmentContext;
     }
 
     @NonNull
@@ -122,7 +128,10 @@ public class ReviewFeedAdapter extends RecyclerView.Adapter<ReviewFeedAdapter.Vi
             ivPlaceDetailReviewItemProfile.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    String userID = review.getUser().getObjectId();
+                    ParseUser user = review.getUser();
+                    PlaceDetailFragmentDirections.ActionPlaceDetailFragmentToOtherUserFragment action = PlaceDetailFragmentDirections.actionPlaceDetailFragmentToOtherUserFragment(user);
+                    action.setBackPath("placeDetails");
+                    NavHostFragment.findNavController(fragmentContext).navigate(action);
 
                 }
             });
