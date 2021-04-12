@@ -91,7 +91,7 @@ public class FeedFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         //inflate the layout for this view
         if (ParseUser.getCurrentUser() == null) {
-            NavHostFragment.findNavController(this).navigate(R.id.loginFragment);
+            NavHostFragment.findNavController(this).navigate(R.id.splashFragment);
         }
 
         binding = DataBindingUtil.inflate(inflater, R.layout.feed_fragment, container, false);
