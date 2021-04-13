@@ -105,7 +105,7 @@ public class SearchFragment extends Fragment {
         searchLayoutContainer = binding.searchLayoutContainer;
         adapter = new PlaceFeedAdapter(getContext(), allPlaces, this);
 
-        
+
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
 

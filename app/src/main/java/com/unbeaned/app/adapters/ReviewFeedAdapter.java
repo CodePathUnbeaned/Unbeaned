@@ -136,19 +136,14 @@ public class ReviewFeedAdapter extends RecyclerView.Adapter<ReviewFeedAdapter.Vi
                 }
             });
 
-//            //TODO: Onclick listener for the container
-//            placeDetailReviewContainer.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    Intent i = new Intent(context, ReviewDetailsActivity.class);
-//                    i.putExtra("review", review.getObjectId());
-//                    context.startActivity(i);
-//                }
-//            });
+
 
             tvReadMorePlaceDetailReviewItem.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    PlaceDetailFragmentDirections.ActionPlaceDetailFragmentToReviewDetailFragment action = PlaceDetailFragmentDirections.actionPlaceDetailFragmentToReviewDetailFragment(review);
+                    action.setBackPath("placeDetails");
+                    NavHostFragment.findNavController(fragmentContext).navigate(action);
 
                 }
             });
