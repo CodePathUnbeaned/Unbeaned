@@ -5,20 +5,9 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-
 import android.provider.MediaStore;
-import android.text.Editable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,27 +15,30 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.databinding.DataBindingUtil;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+
 import com.bumptech.glide.Glide;
-import com.parse.Parse;
+import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
-import com.synnapps.carouselview.CarouselView;
 import com.synnapps.carouselview.ViewListener;
 import com.unbeaned.app.R;
 import com.unbeaned.app.databinding.EditReviewItemBinding;
-import com.unbeaned.app.databinding.ReviewProfileItemBinding;
-import com.unbeaned.app.databinding.UserFragmentBinding;
 import com.unbeaned.app.databinding.UserReviewPlaceholderBinding;
 import com.unbeaned.app.databinding.UserSettingsFragmentBinding;
-import com.unbeaned.app.databinding.UserSettingsFragmentBindingImpl;
+import com.unbeaned.app.models.Comment;
+import com.unbeaned.app.models.Images;
 import com.unbeaned.app.models.Review;
 import com.unbeaned.app.models.User;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -195,6 +187,10 @@ public class UserSettingsFragment extends UserFragment {
     private void deleteReview(Review review) {
         try {
             review.delete();
+            int currentReviewCount = ParseUser.getCurrentUser().getInt(User.KEY_REVIEW_COUNT);
+            ParseUser.getCurrentUser().put(User.KEY_REVIEW_COUNT, currentReviewCount-1);
+            deletePhotos(review);
+            deleteComments(review);
             Toast.makeText(getContext(), "Review Deleted!", Toast.LENGTH_LONG).show();
         } catch (ParseException e) {
             e.printStackTrace();
@@ -202,6 +198,52 @@ public class UserSettingsFragment extends UserFragment {
         }
         updateUserReviews(userReviews);
         binding.caroselEditReviews.setPageCount(userReviews.size());
+    }
+
+    private void deleteComments(Review review) {
+        ParseQuery<Comment> query = ParseQuery.getQuery(Comment.class);
+
+        query.include(Comment.KEY_USER);
+        query.whereEqualTo(Comment.KEY_REVIEW, review);
+        query.findInBackground(new FindCallback<Comment>() {
+            @Override
+            public void done(List<Comment> comments, ParseException e) {
+                if (e!=null){
+                    Log.e(TAG, "Issue with getting comments", e);
+                    return;
+                }
+                for (Comment comment: comments){
+                    try {
+                        comment.delete();
+                    } catch (ParseException parseException) {
+                        parseException.printStackTrace();
+                    }
+                }
+            }
+        });
+    }
+
+    private void deletePhotos(Review review) {
+        ParseQuery<Images> query = ParseQuery.getQuery(Images.class);
+
+        query.whereEqualTo(Images.KEY_REVIEW_ID, review);
+        query.findInBackground(new FindCallback<Images>() {
+            @Override
+            public void done(List<Images> photos, ParseException e) {
+                if (e!=null){
+                    Log.e(TAG, "Issue with getting comments", e);
+                    return;
+                }
+                for (Images image: photos){
+                    try {
+                        image.delete();
+                    } catch (ParseException parseException) {
+                        parseException.printStackTrace();
+                    }
+                }
+            }
+        });
+
     }
 
     @Override

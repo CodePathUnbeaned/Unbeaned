@@ -1,14 +1,10 @@
 package com.unbeaned.app.models;
 
-import android.util.Log;
-
 import com.parse.ParseClassName;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
-
-import org.parceler.Parcel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +13,6 @@ import java.util.List;
 @ParseClassName("Reviews")
 public class Review extends ParseObject {
     public List<Images> images= new ArrayList<>();
-    public static final String KEY_TITLE = "title";
     public static final String KEY_PLACE_ID = "placeId";
     public static final String KEY_REVIEW_ID = "objectId";
     public static final String KEY_RATING = "rating";
@@ -28,10 +23,6 @@ public class Review extends ParseObject {
     private boolean HAS_REVIEW = false;
     private String reviewContent;
     private float reviewRating;
-
-    public String getTitle(){ return getString(KEY_TITLE);}
-
-    public void setTitle(String title){ put(KEY_TITLE,title);}
 
     public String getPlaceName(){return getString(KEY_PLACE_NAME);}
 

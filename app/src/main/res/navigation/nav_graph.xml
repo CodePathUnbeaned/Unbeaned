@@ -111,6 +111,14 @@
         <action
             android:id="@+id/action_placeDetailFragment_to_otherUserFragment"
             app:destination="@id/otherUserFragment" />
+        <action
+            android:id="@+id/action_placeDetailFragment_to_reviewDetailFragment"
+            app:destination="@id/reviewDetailFragment"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit" />
+        <action
+            android:id="@+id/action_placeDetailFragment_to_searchFragment2"
+            app:destination="@id/searchFragment2" />
     </fragment>
     <fragment
         android:id="@+id/userSettingsFragment"
@@ -184,5 +192,23 @@
             android:name="backPath"
             app:argType="string"
             android:defaultValue="null" />
+    </fragment>
+    <fragment
+        android:id="@+id/reviewDetailFragment"
+        android:name="com.unbeaned.app.navigation.ReviewDetailFragment"
+        android:label="ReviewDetailFragment" >
+        <argument
+            android:name="review"
+            app:argType="com.unbeaned.app.models.Review" />
+        <argument
+            android:name="backPath"
+            app:argType="string"
+            android:defaultValue="null" />
+        <action
+            android:id="@+id/action_reviewDetailFragment_to_otherUserFragment"
+            app:destination="@id/otherUserFragment"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit" />
+
     </fragment>
 </navigation>

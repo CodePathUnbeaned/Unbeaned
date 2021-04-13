@@ -22,6 +22,7 @@
     <string name="save">save</string>
     <string name="empty_reviewList_placeholder_text">Make a review to see your contributions here!</string>
     <string name="place_details_reviews_header">Recommended Reviews</string>
+    <string name="review_details_comments_header">Comments</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="compose_review_hint">Write a review about the place</string>

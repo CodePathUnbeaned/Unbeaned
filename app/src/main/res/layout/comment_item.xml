@@ -29,36 +29,26 @@
             tools:srcCompat="@tools:sample/avatars" />
 
         <TextView
-            android:id="@+id/tvUsername"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="2dp"
-            android:layout_toEndOf="@+id/ivProfileImage"
-            android:fontFamily="@font/roboto"
-            android:text="@{comment.user.username}"
-            tools:text="\@username" />
-
-        <TextView
             android:id="@+id/tvName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvUsername"
             android:layout_marginStart="5dp"
-            android:layout_marginTop="0dp"
+            android:layout_marginTop="7dp"
             android:layout_toEndOf="@+id/ivProfileImage"
-            android:fontFamily="@font/roboto_bold"
+            android:fontFamily="@font/montserrat_bold"
+            android:includeFontPadding="true"
             android:text="@{comment.user.getString(user.KEY_NAME)}"
-            android:textSize="18sp"
-            tools:text="First Last" />
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            tools:text="User Name" />
 
         <TextView
             android:id="@+id/tvComment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvName"
-            android:layout_marginTop="3dp"
+            android:layout_marginTop="10dp"
             android:text="@{comment.comment}"
             tools:text="Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. " />
 

@@ -38,7 +38,6 @@ import com.unbeaned.app.models.BitmapList;
 import com.unbeaned.app.models.Place;
 import com.unbeaned.app.models.Review;
 import com.unbeaned.app.utils.EndlessNestedScrollView;
-import com.unbeaned.app.utils.EndlessRecyclerViewScrollListener;
 import com.unbeaned.app.utils.Requests;
 
 import java.util.ArrayList;
@@ -65,7 +64,6 @@ public class PlaceDetailFragment extends Fragment {
     ReviewFeedAdapter adapter;
     RecyclerView rvPlaceDetailsReview;
     Slider placeReviewDetailSlider;
-    EndlessRecyclerViewScrollListener scrollListener;
     private Place place;
     private boolean loadData;
     private Review review;
@@ -263,6 +261,8 @@ public class PlaceDetailFragment extends Fragment {
             case "feed":
                 navController.navigate(PlaceDetailFragmentDirections.actionPlaceDetailFragmentToFeedFragment());
                 break;
+            case "search":
+                navController.navigate(PlaceDetailFragmentDirections.actionPlaceDetailFragmentToSearchFragment2());
             default:
                 navController.navigateUp();
                 break;

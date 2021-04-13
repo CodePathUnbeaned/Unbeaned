@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable name="review" type="com.unbeaned.app.models.Review" />
+        <variable name="user" type="com.unbeaned.app.models.User" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/nestedScrollViewDetails"
+            android:layout_width="match_parent"
+            android:layout_height="570dp">
+
+            <LinearLayout
+                android:id="@+id/reviewDetailContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:id="@+id/reviewContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="20dp"
+                    android:paddingTop="20dp"
+                    android:paddingEnd="20dp"
+                    android:paddingBottom="20dp">
+
+                    <ImageView
+                        android:id="@+id/ivReviewItemProfile"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        app:profileImage="@{review.user.getParseFile(user.KEY_PHOTO)}"
+                        tools:srcCompat="@tools:sample/avatars" />
+
+                    <TextView
+                        android:id="@+id/tvReviewProfileName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="0dp"
+                        android:layout_toEndOf="@+id/ivReviewItemProfile"
+                        android:fontFamily="@font/montserrat_bold"
+                        android:includeFontPadding="true"
+                        android:text="@{review.user.getString(user.KEY_NAME)}"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        tools:text="User Name" />
+
+                    <TextView
+                        android:id="@+id/tvReviewPlaceName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/ivReviewItemProfile"
+                        android:layout_marginStart="0dp"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="@font/montserrat_bold"
+                        android:includeFontPadding="true"
+                        android:text="@{review.placeName}"
+                        android:textColor="@color/black"
+                        android:textSize="20sp"
+                        tools:text="Place Name" />
+
+                    <LinearLayout
+                        android:id="@+id/ratingGroupContainer"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tvReviewProfileName"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="0dp"
+                        android:layout_toEndOf="@+id/ivReviewItemProfile"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/ivReviewStar"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_weight="1"
+                            app:srcCompat="@drawable/ic_star" />
+
+                        <TextView
+                            android:id="@+id/tvReviewRating"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="6dp"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/montserrat_bold"
+                            android:includeFontPadding="false"
+                            android:textColor="@color/black"
+                            android:textSize="14sp"
+                            app:averageRating="@{review.rating}"
+                            tools:text="4.7" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/tvReviewItemContent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tvReviewPlaceName"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginStart="0dp"
+                        android:layout_marginTop="0dp"
+                        android:layout_marginEnd="0dp"
+                        android:ellipsize="end"
+                        android:fontFamily="@font/roboto"
+                        android:maxLines="7"
+                        android:text="@{review.review}"
+                        android:textColor="@color/black"
+                        android:textSize="14sp"
+                        app:lineHeight="19sp"
+                        tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." />
+
+                    <com.synnapps.carouselview.CarouselView
+                        android:id="@+id/carouselReviewItem"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:layout_below="@+id/tvReviewItemContent"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="20dp"
+                        app:autoPlay="false"
+                        app:fillColor="@color/white"
+                        app:indicatorGravity="bottom|center_horizontal"
+                        app:indicatorOrientation="horizontal"
+                        app:radius="6dp"
+                        app:snap="true"
+                        app:strokeColor="@color/pink_red_accent" />
+
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/tvReviewDetailComments"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/montserrat_bold"
+                    android:includeFontPadding="false"
+                    android:paddingLeft="20dp"
+                    android:text="@string/review_details_comments_header"
+                    android:textColor="@color/black"
+                    android:textSize="22sp" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvReviewDetailsComments"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:padding="10dp" />
+
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+        <RelativeLayout
+            android:id="@+id/commentLinearContainer"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="5dp"
+            android:background="#FDFCFC"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/etComment"
+                android:layout_width="246dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="5dp"
+                android:layout_marginBottom="7dp"
+                android:ems="10"
+                android:inputType="text"
+                tools:text="Comment" />
+
+            <Button
+                android:id="@+id/btnComment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="10dp"
+                android:text="comment" />
+        </RelativeLayout>
+    </LinearLayout>
+
+</layout>
