@@ -35,10 +35,10 @@ public class ImageUtils {
         return new ParseFile(dateFormat.format(new Date()) + ".png", bytes);
     }
 
-    public static Bitmap rotateBitmap(Bitmap source, float angle) {
+    public static Bitmap transformBitmap(Bitmap source, int factor, float angle) {
         Matrix matrix = new Matrix();
         matrix.postRotate(angle);
-        Bitmap bitmap = Bitmap.createScaledBitmap(source, source.getWidth() / 3, source.getHeight() / 3, false);
+        Bitmap bitmap = Bitmap.createScaledBitmap(source, source.getWidth() / factor, source.getHeight() / factor, false);
         return Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
     }
 

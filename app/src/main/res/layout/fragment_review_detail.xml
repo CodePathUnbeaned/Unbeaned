@@ -9,12 +9,12 @@
         <variable name="user" type="com.unbeaned.app.models.User" />
     </data>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <androidx.core.widget.NestedScrollView
+        <ScrollView
             android:id="@+id/nestedScrollViewDetails"
             android:layout_width="match_parent"
             android:layout_height="570dp">
@@ -157,13 +157,14 @@
                     android:padding="10dp" />
 
             </LinearLayout>
-        </androidx.core.widget.NestedScrollView>
+        </ScrollView>
+
         <RelativeLayout
             android:id="@+id/commentLinearContainer"
             android:layout_width="match_parent"
             android:layout_height="70dp"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="5dp"
+            android:layout_marginBottom="0dp"
             android:background="#FDFCFC"
             android:orientation="vertical">
 
@@ -189,6 +190,7 @@
                 android:layout_marginBottom="10dp"
                 android:text="comment" />
         </RelativeLayout>
-    </LinearLayout>
+
+    </RelativeLayout>
 
 </layout>

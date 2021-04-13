@@ -1,5 +1,6 @@
 package com.unbeaned.app.navigation;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,11 +11,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.core.widget.NestedScrollView;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
@@ -35,6 +38,7 @@ import com.unbeaned.app.databinding.FragmentReviewDetailBinding;
 import com.unbeaned.app.models.Comment;
 import com.unbeaned.app.models.Review;
 import com.unbeaned.app.utils.EndlessNestedScrollView;
+import com.unbeaned.app.utils.EndlessScrollView;
 import com.unbeaned.app.utils.Requests;
 
 import java.util.ArrayList;
@@ -47,7 +51,7 @@ public class ReviewDetailFragment extends Fragment {
     FragmentReviewDetailBinding binding;
     private Review review;
     private String backPath;
-    NestedScrollView nestedScrollViewDetails;
+    ScrollView nestedScrollViewDetails;
     ImageView ivReviewItemProfile;
     TextView tvReviewProfileName;
     TextView tvReviewRating;
@@ -60,10 +64,8 @@ public class ReviewDetailFragment extends Fragment {
     RelativeLayout reviewContainer;
     List<Comment> allComments;
     CommentFeedAdapter adapter;
-    EndlessNestedScrollView endlessNestedScrollView;
-
-
-
+    EndlessScrollView endlessNestedScrollView;
+    
 
     public ReviewDetailFragment() {
         // Required empty public constructor
@@ -74,7 +76,7 @@ public class ReviewDetailFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 
     }
 
@@ -86,6 +88,7 @@ public class ReviewDetailFragment extends Fragment {
         return binding.getRoot();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -131,17 +134,11 @@ public class ReviewDetailFragment extends Fragment {
         }
 
         loadMoreData(true, 0);
-        endlessNestedScrollView = new EndlessNestedScrollView(rvReviewDetailsComments, layoutManager){
-
+        endlessNestedScrollView = new EndlessScrollView(rvReviewDetailsComments, layoutManager){
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
                 Log.i(TAG, "Loading: " + page);
                 loadMoreData(false, page);
-            }
-
-            @Override
-            public void onUIChange(NestedScrollView v) {
-
             }
         };
 

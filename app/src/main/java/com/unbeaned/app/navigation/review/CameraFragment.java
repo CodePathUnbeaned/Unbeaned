@@ -218,7 +218,10 @@ public class CameraFragment extends Fragment {
         OnBackPressedCallback callback = new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
-                NavHostFragment.findNavController(CameraFragment.this).navigateUp();
+                CameraFragmentDirections.ActionCameraFragmentToPlaceDetailFragment action = CameraFragmentDirections.actionCameraFragmentToPlaceDetailFragment(place);
+                action.setBackPath("feed");
+
+                NavHostFragment.findNavController(CameraFragment.this).navigate(action);
             }
         };
 

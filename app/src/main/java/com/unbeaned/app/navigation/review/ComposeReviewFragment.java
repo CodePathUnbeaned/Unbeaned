@@ -174,7 +174,7 @@ public class ComposeReviewFragment extends Fragment {
     private void postImages() {
         for (Bitmap image : bitmapList.getImages()) {
             Images parseImage = new Images();
-            parseImage.setImage(ImageUtils.convertBitmapParseFile(image));
+            parseImage.setImage(ImageUtils.convertBitmapParseFile(ImageUtils.transformBitmap(image, 2, -90)));
             parseImage.setReview(review);
             try {
                 parseImage.save();

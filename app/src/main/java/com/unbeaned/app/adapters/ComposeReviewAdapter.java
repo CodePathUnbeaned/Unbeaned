@@ -69,7 +69,7 @@ public class ComposeReviewAdapter extends BaseAdapter {
 //        }
 
         ImageView ivComposeReviewImage = convertView.findViewById(R.id.ivComposeReviewImage);
-        ivComposeReviewImage.setImageBitmap(ImageUtils.rotateBitmap(images.get(position), -90));
+        ivComposeReviewImage.setImageBitmap(ImageUtils.transformBitmap(images.get(position), 3, -90));
 
 
 //        viewHolder.ivComposeReviewImage.setImageBitmap(images.get(position));
