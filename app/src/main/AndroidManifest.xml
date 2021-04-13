@@ -33,12 +33,6 @@
         android:supportsRtl="true"
         android:usesCleartextTraffic="true"
         android:theme="@style/Theme.Unbeaned">
-        <activity android:name=".navigation.CameraActivity" />
-        <activity android:name=".navigation.ReviewDetailsActivity" android:windowSoftInputMode="adjustResize">
-        </activity>
-        <activity android:name=".navigation.ComposeActivity" />
-        <activity android:name=".navigation.DetailsActivity" />
-        <activity android:name=".staticActivity.LoginActivity" />
         <activity
             android:name=".navigation.MainActivity"
             android:windowSoftInputMode="adjustPan">
