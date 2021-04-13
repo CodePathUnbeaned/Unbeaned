@@ -101,10 +101,13 @@
             app:destination="@id/composeReviewFragment"
             app:enterAnim="@anim/from_bottom"
             app:popEnterAnim="@anim/fragment_open_enter"
-            app:popExitAnim="@anim/fragment_fade_exit" />
+            app:popExitAnim="@anim/fragment_fade_exit"
+            app:popUpTo="@id/placeDetailFragment"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_placeDetailFragment_to_cameraFragment"
-            app:destination="@id/cameraFragment" />
+            app:destination="@id/cameraFragment"
+            app:enterAnim="@anim/from_bottom" />
         <action
             android:id="@+id/action_placeDetailFragment_to_otherUserFragment"
             app:destination="@id/otherUserFragment" />
@@ -129,15 +132,26 @@
         android:label="ComposeReviewFragment"
         tool:layout="@layout/fragment_compose_review">
         <argument
-            android:name="rating"
-            app:argType="float"
-            android:defaultValue="0.0" />
-        <argument
             android:name="place"
             app:argType="com.unbeaned.app.models.Place" />
         <argument
             android:name="review"
             app:argType="com.unbeaned.app.models.Review" />
+        <action
+            android:id="@+id/action_composeReviewFragment_to_cameraFragment"
+            app:destination="@id/cameraFragment"
+            app:popUpTo="@id/composeReviewFragment"
+            app:popUpToInclusive="true" />
+        <argument
+            android:name="images"
+            app:argType="com.unbeaned.app.models.BitmapList" />
+        <action
+            android:id="@+id/action_composeReviewFragment_to_placeDetailFragment"
+            app:destination="@id/placeDetailFragment"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_fade_exit"
+            app:popUpTo="@id/composeReviewFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/cameraFragment"
@@ -146,7 +160,18 @@
         tool:layout="@layout/fragment_camera">
         <action
             android:id="@+id/action_cameraFragment_to_composeReviewFragment"
-            app:destination="@id/composeReviewFragment" />
+            app:destination="@id/composeReviewFragment"
+            app:popUpTo="@id/placeDetailFragment"
+            app:popUpToInclusive="true" />
+        <argument
+            android:name="place"
+            app:argType="com.unbeaned.app.models.Place" />
+        <argument
+            android:name="review"
+            app:argType="com.unbeaned.app.models.Review" />
+        <argument
+            android:name="images"
+            app:argType="com.unbeaned.app.models.BitmapList" />
     </fragment>
     <fragment
         android:id="@+id/otherUserFragment"

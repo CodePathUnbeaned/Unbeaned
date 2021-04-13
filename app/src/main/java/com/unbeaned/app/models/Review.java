@@ -25,6 +25,9 @@ public class Review extends ParseObject {
     public static final String KEY_USER= "user";
     public static final String KEY_CREATED= "createdAt";
     public static final String KEY_PLACE_NAME = "placeDisplayName";
+    private boolean HAS_REVIEW = false;
+    private String reviewContent;
+    private float reviewRating;
 
     public String getTitle(){ return getString(KEY_TITLE);}
 
@@ -78,5 +81,30 @@ public class Review extends ParseObject {
         }catch (ParseException e) {
             e.printStackTrace();
         }
+    }
+
+    /* Temporary Data Class */
+    public void setReviewRating(float rating) {
+        reviewRating = rating;
+    }
+
+    public float getReviewRating() {
+        return reviewRating;
+    }
+
+    public void setReviewContent(String content) {
+        this.reviewContent = content;
+    }
+
+    public String getReviewContent() {
+        return reviewContent;
+    }
+
+    public void setReviewState(boolean has_review) {
+        this.HAS_REVIEW = has_review;
+    }
+
+    public boolean getReviewState() {
+        return HAS_REVIEW;
     }
 }

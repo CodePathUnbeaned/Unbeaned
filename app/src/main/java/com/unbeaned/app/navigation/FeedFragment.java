@@ -125,7 +125,7 @@ public class FeedFragment extends Fragment {
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
                 Log.i(TAG, "onLoadMore "+page);
-                loadMoreData(searchLocation, page);
+                searchBusinesses(searchLocation, page);
             }
         };
         rvPlaces.addOnScrollListener(scrollListener);
@@ -142,7 +142,7 @@ public class FeedFragment extends Fragment {
                     getLocation();
 //                    searchBusinesses("current");
                 }
-                searchBusinesses(searchLocation);
+                searchBusinesses(searchLocation, 0);
             }
         });
 
@@ -155,7 +155,60 @@ public class FeedFragment extends Fragment {
 
     }
 
-    private void loadMoreData(String location, int page) {
+//    private void loadMoreData(String location, int page) {
+//        Map<String, String> searchParameters = new HashMap<>();
+//
+//        if (location.equals("current")) {
+//            searchParameters.put("longitude", String.valueOf(longitude));
+//            searchParameters.put("latitude", String.valueOf(latitude));
+//        } else {
+//            searchParameters.put("location", location);
+//        }
+//
+//        searchParameters.put("limit", String.valueOf(limit));
+//        searchParameters.put("offset", String.valueOf(limit * page));
+//
+//        Request request = YelpClient.getBusinessBySearch(searchParameters);
+//
+//        OkHttpClient client = new OkHttpClient();
+//
+//        client.newCall(request).enqueue(new Callback() {
+//            @Override
+//            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+//                Log.e(TAG, "Could not fetch data", e);
+//            }
+//
+//            @Override
+//            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+//                Log.i(TAG, "Success");
+//                try (ResponseBody responseBody = response.body()) {
+//                    if (!response.isSuccessful())
+//                        throw new IOException("Unexpected code " + response + " " + response.message());
+//
+//                    String jsonData = responseBody.string();
+//                    JSONObject jsonObject = new JSONObject(jsonData);
+//                    JSONArray businessJsonArray = jsonObject.getJSONArray("businesses");
+//                    Log.i(TAG, "JSONArray: " + businessJsonArray.toString());
+//                    Log.i(TAG, "Size: " + businessJsonArray.length());
+//
+//                    getActivity().runOnUiThread(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            try {
+//                                adapter.addAll(Place.fromJsonArray(businessJsonArray));
+//                            } catch (JSONException e) {
+//                                e.printStackTrace();
+//                            }
+//                        }
+//                    });
+//                } catch (JSONException e) {
+//                    Log.e(TAG, "JSON exception", e);
+//                }
+//            }
+//        });
+//    }
+
+    private void searchBusinesses(String location, int page) {
         Map<String, String> searchParameters = new HashMap<>();
 
         if (location.equals("current")) {
@@ -166,7 +219,7 @@ public class FeedFragment extends Fragment {
         }
 
         searchParameters.put("limit", String.valueOf(limit));
-        searchParameters.put("offset", String.valueOf(limit * page));
+        searchParameters.put("offset", String.valueOf(page * limit));
 
         Request request = YelpClient.getBusinessBySearch(searchParameters);
 
@@ -186,67 +239,19 @@ public class FeedFragment extends Fragment {
                         throw new IOException("Unexpected code " + response + " " + response.message());
 
                     String jsonData = responseBody.string();
+
                     JSONObject jsonObject = new JSONObject(jsonData);
                     JSONArray businessJsonArray = jsonObject.getJSONArray("businesses");
+
                     Log.i(TAG, "JSONArray: " + businessJsonArray.toString());
                     Log.i(TAG, "Size: " + businessJsonArray.length());
 
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            try {
-                                adapter.addAll(Place.fromJsonArray(businessJsonArray));
-                            } catch (JSONException e) {
-                                e.printStackTrace();
+                            if (page == 0) {
+                                adapter.clear();
                             }
-                        }
-                    });
-                } catch (JSONException e) {
-                    Log.e(TAG, "JSON exception", e);
-                }
-            }
-        });
-    }
-
-    private void searchBusinesses(String location) {
-        Map<String, String> searchParameters = new HashMap<>();
-
-        if (location.equals("current")) {
-            searchParameters.put("longitude", String.valueOf(longitude));
-            searchParameters.put("latitude", String.valueOf(latitude));
-        } else {
-            searchParameters.put("location", location);
-        }
-
-        searchParameters.put("limit", String.valueOf(limit));
-        searchParameters.put("offset", "0");
-
-        Request request = YelpClient.getBusinessBySearch(searchParameters);
-
-        OkHttpClient client = new OkHttpClient();
-
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                Log.e(TAG, "Could not fetch data", e);
-            }
-
-            @Override
-            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                Log.i(TAG, "Success");
-                try (ResponseBody responseBody = response.body()) {
-                    if (!response.isSuccessful())
-                        throw new IOException("Unexpected code " + response + " " + response.message());
-
-                    String jsonData = responseBody.string();
-                    JSONObject jsonObject = new JSONObject(jsonData);
-                    JSONArray businessJsonArray = jsonObject.getJSONArray("businesses");
-                    Log.i(TAG, "JSONArray: " + businessJsonArray.toString());
-                    Log.i(TAG, "Size: " + businessJsonArray.length());
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            adapter.clear();
                             try {
                                 adapter.addAll(Place.fromJsonArray(businessJsonArray));
                             } catch (JSONException e) {
@@ -266,7 +271,7 @@ public class FeedFragment extends Fragment {
         public void onLocationChanged(@NonNull Location location) {
             latitude = location.getLatitude();
             longitude = location.getLongitude();
-            loadMoreData("current", 0);
+            searchBusinesses("current", 0);
         }
 
         @Override

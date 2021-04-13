@@ -1,7 +1,6 @@
 package com.unbeaned.app.navigation.review;
 
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 
 import androidx.activity.OnBackPressedCallback;
@@ -10,7 +9,6 @@ import androidx.annotation.Nullable;
 import androidx.camera.core.Camera;
 import androidx.camera.core.CameraInfoUnavailableException;
 import androidx.camera.core.CameraSelector;
-import androidx.camera.core.CameraX;
 import androidx.camera.core.ImageCapture;
 import androidx.camera.core.ImageCaptureException;
 import androidx.camera.core.ImageProxy;
@@ -31,15 +29,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.unbeaned.app.R;
 import com.unbeaned.app.databinding.FragmentCameraBinding;
+import com.unbeaned.app.models.BitmapList;
+import com.unbeaned.app.models.Place;
+import com.unbeaned.app.models.Review;
 import com.unbeaned.app.utils.ImageUtils;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
@@ -50,11 +50,14 @@ public class CameraFragment extends Fragment {
     private static final String TAG = "CameraFragment";
     Button btnCameraCapture;
     PreviewView cameraPreviewView;
+    TextView tvDoneCapture;
     private final int REQUEST_CODE_PERMISSIONS = 1001;
     private final String[] REQUIRED_PERMISSIONS = new String[] {"android.permission.CAMERA", "android.permission.WRITE_EXTERNAL_STORAGE"};
     Snackbar snackbarPermissionDenied;
     private Executor executor;
-    private List<Bitmap> images;
+    private BitmapList bitmapList;
+    private Place place;
+    private Review review;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -75,8 +78,15 @@ public class CameraFragment extends Fragment {
 
         btnCameraCapture = binding.btnCameraCapture;
         cameraPreviewView = binding.cameraPreviewView;
+        tvDoneCapture = binding.tvDoneCapture;
+
+        if (getArguments() != null) {
+            bitmapList = getArguments().getParcelable("images");
+            place = getArguments().getParcelable("place");
+            review = getArguments().getParcelable("review");
+        }
+
         executor = Executors.newSingleThreadExecutor();
-        images = new ArrayList<>();
 
         if (allPermissionsGranted()) {
             startCamera();
@@ -156,7 +166,7 @@ public class CameraFragment extends Fragment {
         }
 
         final ImageCapture imageCapture = builder
-                .setTargetRotation(getActivity().getWindowManager().getDefaultDisplay().getRotation())
+                .setTargetRotation(preview.getTargetRotation())
                 .build();
 
         Preview.SurfaceProvider surfaceProvider = cameraPreviewView.createSurfaceProvider();
@@ -167,15 +177,26 @@ public class CameraFragment extends Fragment {
 
         Camera camera = cameraProvider.bindToLifecycle((LifecycleOwner)getActivity(), cameraSelector, preview, imageCapture);
 
+        Log.i(TAG, "BitmapList: " + bitmapList);
+
         btnCameraCapture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 imageCapture.takePicture(executor, new ImageCapture.OnImageCapturedCallback() {
                     @Override
                     public void onCaptureSuccess(@NonNull ImageProxy image) {
-                        images.add(ImageUtils.getBitmap(image));
-                        Log.i(TAG, "Capture Success: " + images);
+                        bitmapList.addImage(ImageUtils.getBitmap(image));
+                        Log.i(TAG, "Capture Success: " + bitmapList.getImages());
                         image.close();
+
+                        if (bitmapList.getImages().size() > 0) {
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    tvDoneCapture.setVisibility(View.VISIBLE);
+                                }
+                            });
+                        }
                     }
 
                     @Override
@@ -183,6 +204,14 @@ public class CameraFragment extends Fragment {
                         super.onError(exception);
                     }
                 });
+            }
+        });
+
+        tvDoneCapture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CameraFragmentDirections.ActionCameraFragmentToComposeReviewFragment action = CameraFragmentDirections.actionCameraFragmentToComposeReviewFragment(place, review, bitmapList);
+                NavHostFragment.findNavController(CameraFragment.this).navigate(action);
             }
         });
 

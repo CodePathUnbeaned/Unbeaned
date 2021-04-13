@@ -24,10 +24,27 @@
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="60dp"
-            android:background="@drawable/round_icon_shape"
+            android:background="@drawable/capture_button_shape"
             android:shadowColor="#50000000"
             android:shadowRadius="5.0"
             app:backgroundTint="#FFFFFF" />
+
+        <TextView
+            android:id="@+id/tvDoneCapture"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="30dp"
+            android:layout_marginBottom="75dp"
+            android:layout_toEndOf="@+id/btnCameraCapture"
+            android:background="@color/pink_red_accent"
+            android:fontFamily="@font/montserrat_bold"
+            android:includeFontPadding="false"
+            android:padding="10dp"
+            android:text="DONE"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:visibility="invisible" />
 
     </RelativeLayout>
 </layout>

@@ -34,6 +34,7 @@ import com.google.android.material.slider.Slider;
 import com.unbeaned.app.R;
 import com.unbeaned.app.adapters.ReviewFeedAdapter;
 import com.unbeaned.app.databinding.FragmentPlaceDetailBinding;
+import com.unbeaned.app.models.BitmapList;
 import com.unbeaned.app.models.Place;
 import com.unbeaned.app.models.Review;
 import com.unbeaned.app.utils.EndlessNestedScrollView;
@@ -67,6 +68,7 @@ public class PlaceDetailFragment extends Fragment {
     EndlessRecyclerViewScrollListener scrollListener;
     private Place place;
     private boolean loadData;
+    private Review review;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -107,8 +109,8 @@ public class PlaceDetailFragment extends Fragment {
         btnStartReviewAddPhoto = binding.btnStartReviewAddPhoto;
         btnStartReviewWrite = binding.btnStartReviewWrite;
 
-//        loadData = false;
         allReviews = new ArrayList<>();
+        review = new Review();
         adapter = new ReviewFeedAdapter(getContext(), allReviews, place, this);
         rvPlaceDetailsReview.setAdapter(adapter);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
@@ -116,53 +118,10 @@ public class PlaceDetailFragment extends Fragment {
         rvPlaceDetailsReview.setLayoutManager(layoutManager);
         rvPlaceDetailsReview.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
 
-//        scrollListener= new EndlessRecyclerViewScrollListener(layoutManager) {
-//            @Override
-//            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
-//                Log.i(TAG, "onLoadMore "+page);
-//                loadMoreData(false);
-//            }
-//        };
-//        rvPlaceDetailsReview.addOnScrollListener(scrollListener);
-
-
-//        Requests.getAllReviews(allReviews, place.getPlaceId(), adapter, TAG);
-
         btnPlaceSavedIcon.setEnabled(false);
         btnPlaceSavedIcon.setActivated(false);
-        loadMoreData(true, 0);
-
-
-//        nestedScrollViewDetails.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
-//            @Override
-//            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-//                if (v.getScrollY() >= ivPlaceDisplayImage.getBottom()) {
-//                    btnBackPlaceDetail.setActivated(true);
-//                    btnBackPlaceDetail.setTextColor(Color.BLACK);
-//                    tvPlaceNameToolbar.setVisibility(View.VISIBLE);
-//                    appBarLayoutPlaceDetail.setBackgroundColor(Color.WHITE);
-//                    toolbarBottomBorder.setVisibility(View.VISIBLE);
-//                }
-//                else {
-//                    btnBackPlaceDetail.setActivated(false);
-//                    btnBackPlaceDetail.setTextColor(Color.WHITE);
-//                    tvPlaceNameToolbar.setVisibility(View.INVISIBLE);
-//                    appBarLayoutPlaceDetail.setBackgroundColor(Color.TRANSPARENT);
-//                    toolbarBottomBorder.setVisibility(View.INVISIBLE);
-//                }
-//
-//                if (v.getScrollY() + v.getHeight() >= rvPlaceDetailsReview.getBottom()) {
-//                    if (!loadData) {
-//                        loadData = true;
-//                        loadMoreData(true);
-//                    }
-//                    else {
-//                        loadMoreData(false);
-//                    }
-//                    page++;
-//                }
-//            }
-//        });
+        review.setReviewRating(0);
+        loadMoreData(0);
 
         nestedScrollViewDetails.setOnScrollChangeListener(new EndlessNestedScrollView(rvPlaceDetailsReview, layoutManager) {
             @Override
@@ -186,7 +145,7 @@ public class PlaceDetailFragment extends Fragment {
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
                 Log.i(TAG, "Loading: " + page);
-                loadMoreData(false, page);
+                loadMoreData(page);
             }
         });
 
@@ -234,8 +193,10 @@ public class PlaceDetailFragment extends Fragment {
 
             @Override
             public void onStopTrackingTouch(@NonNull Slider slider) {
-                PlaceDetailFragmentDirections.ActionPlaceDetailFragmentToComposeReviewFragment action = PlaceDetailFragmentDirections.actionPlaceDetailFragmentToComposeReviewFragment(place, new Review());
-                action.setRating(slider.getValue());
+                review.setReviewRating(slider.getValue());
+
+                PlaceDetailFragmentDirections.ActionPlaceDetailFragmentToComposeReviewFragment action = PlaceDetailFragmentDirections.actionPlaceDetailFragmentToComposeReviewFragment(place, review, new BitmapList());
+//                action.setRating(slider.getValue());
 
                 NavHostFragment.findNavController(PlaceDetailFragment.this).navigate(action);
             }
@@ -244,7 +205,7 @@ public class PlaceDetailFragment extends Fragment {
         btnStartReviewAddPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                NavDirections action = PlaceDetailFragmentDirections.actionPlaceDetailFragmentToCameraFragment();
+                PlaceDetailFragmentDirections.ActionPlaceDetailFragmentToCameraFragment action = PlaceDetailFragmentDirections.actionPlaceDetailFragmentToCameraFragment(place, review, new BitmapList());
                 NavHostFragment.findNavController(PlaceDetailFragment.this).navigate(action);
             }
         });
@@ -252,7 +213,7 @@ public class PlaceDetailFragment extends Fragment {
         btnStartReviewWrite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                PlaceDetailFragmentDirections.ActionPlaceDetailFragmentToComposeReviewFragment action = PlaceDetailFragmentDirections.actionPlaceDetailFragmentToComposeReviewFragment(place, new Review());
+                PlaceDetailFragmentDirections.ActionPlaceDetailFragmentToComposeReviewFragment action = PlaceDetailFragmentDirections.actionPlaceDetailFragmentToComposeReviewFragment(place, review, new BitmapList());
 
                 NavHostFragment.findNavController(PlaceDetailFragment.this).navigate(action);
             }
@@ -274,14 +235,12 @@ public class PlaceDetailFragment extends Fragment {
 
         requireActivity().getOnBackPressedDispatcher().addCallback(callback);
 
-//        Requests.getAllReviews(allReviews, place.getPlaceId(), adapter, TAG);
-
         binding.setPlace(place);
 
     }
 
-    private void loadMoreData(boolean refresh, int page) {
-        Requests.getNextPageOfReviews(allReviews, place.getPlaceId(), adapter, TAG, page, refresh);
+    private void loadMoreData(int page) {
+        Requests.getNextPageOfReviews(allReviews, place.getPlaceId(), adapter, TAG, page);
     }
 
     @Override

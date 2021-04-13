@@ -140,68 +140,55 @@ public class Requests {
 
     }
 
-    public static void refreshCount(String target, ArrayList<?> filter) {
-        ParseQuery<?> query;
+    public static void getNextPageOfReviews(List<Review> allReviews, String placeId, RecyclerView.Adapter<?> adapter, String TAG, int page) {
+        ParseQuery<Review> countReviews = ParseQuery.getQuery(Review.class);
 
-        switch (target) {
-            case "Reviews":
-                query = ParseQuery.getQuery(Review.class);
-                if (filter != null) {
-                    query.whereEqualTo(Review.KEY_PLACE_ID, filter.get(0));
-                }
-                break;
-            case "Comments":
-                query = ParseQuery.getQuery(Comment.class);
-                if (filter != null) {
-                    query.whereEqualTo(Comment.KEY_REVIEW, filter.get(0));
-                }
-                break;
-            default:
-                query = ParseQuery.getQuery(User.class);
-                break;
-        }
+        countReviews.whereEqualTo(Review.KEY_PLACE_ID, placeId);
+
+        int reviewCount = 0;
 
         try {
-            countMap.put(target.toUpperCase(), query.count());
+            reviewCount = countReviews.count();
         } catch (ParseException e) {
             e.printStackTrace();
         }
 
-    }
-
-    public static void getNextPageOfReviews(List<Review> allReviews, String placeId, RecyclerView.Adapter<?> adapter, String TAG, int page, boolean refresh) {
-        ParseQuery<Review> query = ParseQuery.getQuery(Review.class);
-
-//        if (refresh) {
-//            refreshCount("Reviews", new ArrayList<>(Collections.singletonList(placeId)));
-//        }
-//
-//        if (countMap.containsKey("REVIEWS") && page * limit >= countMap.get("REVIEWS")) {
-//            return;
-//        }
-
-        query.include(Review.KEY_USER);
-        query.whereEqualTo(Review.KEY_PLACE_ID, placeId);
-        query.addDescendingOrder(Review.KEY_CREATED);
-        query.setLimit(limit);
-        query.setSkip(page * limit);
-
-        Log.i(TAG,"skip: "+page * limit);
-        query.findInBackground((reviews, e) -> {
-            if (e != null) {
-                Log.e(TAG, "Issue with getting posts", e);
-                return;
-            }
-            Log.i(TAG, "Querying Reviews: " + reviews);
-            for (Review review : reviews) {
-                Log.i("Requests", "Review Set Image: " + review.getPlaceName());
-                review.setImages();
-            }
+        if (reviewCount == 0) {
+            Review review = new Review();
+            review.setReviewState(false);
 
             if (adapter.getClass() == ReviewFeedAdapter.class) {
-                ((ReviewFeedAdapter) adapter).addAll(reviews);
+                ((ReviewFeedAdapter)adapter).clear();
+                ((ReviewFeedAdapter) adapter).addAll(new ArrayList<>(Collections.singletonList(review)));
             }
-        });
+        }
+        else {
+            ParseQuery<Review> query = ParseQuery.getQuery(Review.class);
+
+            query.include(Review.KEY_USER);
+            query.whereEqualTo(Review.KEY_PLACE_ID, placeId);
+            query.addDescendingOrder(Review.KEY_CREATED);
+            query.setLimit(limit);
+            query.setSkip(page * limit);
+
+            Log.i(TAG, "skip: " + page * limit);
+            query.findInBackground((reviews, e) -> {
+                if (e != null) {
+                    Log.e(TAG, "Issue with getting posts", e);
+                    return;
+                }
+                Log.i(TAG, "Querying Reviews: " + reviews);
+                for (Review review : reviews) {
+                    Log.i("Requests", "Review Set Image: " + review.getPlaceName());
+                    review.setReviewState(true);
+                    review.setImages();
+                }
+
+                if (adapter.getClass() == ReviewFeedAdapter.class) {
+                    ((ReviewFeedAdapter) adapter).addAll(reviews);
+                }
+            });
+        }
 
     }
 

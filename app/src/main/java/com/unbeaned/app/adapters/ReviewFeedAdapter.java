@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -47,7 +48,7 @@ public class ReviewFeedAdapter extends RecyclerView.Adapter<ReviewFeedAdapter.Vi
         LayoutInflater inflater = LayoutInflater.from(context);
 
         PlaceDetailReviewItemBinding binding = DataBindingUtil.inflate(inflater, R.layout.place_detail_review_item, parent, false);
-        binding.setPlace(place);
+//        binding.setPlace(place);
         return new ViewHolder(binding);
     }
 
@@ -86,6 +87,8 @@ public class ReviewFeedAdapter extends RecyclerView.Adapter<ReviewFeedAdapter.Vi
         TextView tvPlaceDetailReviewItemContent;
         CarouselView carouselPlaceDetailReviewItem;
         RelativeLayout placeDetailReviewContainer;
+        LinearLayout placeDetailFirstReviewContainer;
+        TextView tvFirstReviewPlaceholder;
 
         public ViewHolder(@NonNull PlaceDetailReviewItemBinding binding) {
             super(binding.getRoot());
@@ -98,17 +101,28 @@ public class ReviewFeedAdapter extends RecyclerView.Adapter<ReviewFeedAdapter.Vi
             placeDetailReviewContainer = binding.placeDetailReviewContainer;
             tvPlaceDetailReviewItemContent = binding.tvPlaceDetailReviewItemContent;
             tvReadMorePlaceDetailReviewItem = binding.tvReadMorePlaceDetailReviewItem;
+            placeDetailFirstReviewContainer = binding.placeDetailFirstReviewContainer;
+            tvFirstReviewPlaceholder = binding.tvFirstReviewPlaceholder;
         }
 
         public void bind(final Review review) {
             binding.setReview(review);
             binding.executePendingBindings();
 
+            if (!review.getReviewState()) {  // false if no reviews
+                placeDetailReviewContainer.setVisibility(View.GONE);
+                placeDetailFirstReviewContainer.setVisibility(View.VISIBLE);
+            }
+            else {
+                placeDetailReviewContainer.setVisibility(View.VISIBLE);
+                placeDetailFirstReviewContainer.setVisibility(View.GONE);
+            }
+
             Log.i("ReviewFeedAdapter", "Binding Review ID: "+review.getObjectId());
 
 //            Log.i("Review", "Review images: "+review.images);
 
-            if(review.images.size()!=0){
+            if(review.images.size() != 0){
                 carouselPlaceDetailReviewItem.setPageCount(review.images.size());
 
                 carouselPlaceDetailReviewItem.setImageListener(new ImageListener() {
