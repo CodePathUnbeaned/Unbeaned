@@ -106,7 +106,7 @@ public class ReviewDetailFragment extends Fragment {
         reviewContainer = binding.reviewContainer;
         allComments = new ArrayList<>();
 
-        adapter = new CommentFeedAdapter(getContext(), allComments);
+        adapter = new CommentFeedAdapter(getContext(), allComments, ReviewDetailFragment.this);
         rvReviewDetailsComments.setAdapter(adapter);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
 

@@ -89,7 +89,7 @@ public class ReviewDetailsActivity extends AppCompatActivity {
         rvComments = binding.rvComments;
         etComment = binding.etComment;
         allComments= new ArrayList<>();
-        adapter = new CommentFeedAdapter(this, allComments);
+        //adapter = new CommentFeedAdapter(this, allComments);
         rvComments.setAdapter(adapter);
         LinearLayoutManager layoutManager =new LinearLayoutManager(this);
         rvComments.setLayoutManager(layoutManager);
