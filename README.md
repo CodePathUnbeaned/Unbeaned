@@ -24,21 +24,22 @@ Our app is a coffee review, similar to a social media app. Users are able to lik
 
 **Required Must-have Stories**
 
-- [x] Show a list of cafes based off search
-- [x] Obtain reviews and comments based off place
+- [x] Show a list of cafes based off current location
+- [x] Obtain reviews and comments based off cafe selected
 - [x] Display review images in Carousel view
-- [ ] Obtain geographical information from user
+- [x] Obtain geographical information from user
+- [x] Use phone to call cafes and Google Maps to give directions 
 - [x] Show user profile with user info and their favorite places
-- [ ] Show a map of the place with places to visit being displayed
 - [x] Connect to Foursquare/Yelp API and query based on keywords
-- [x] Ability for user to create an account
-- [ ] Ability for users to save favorite places
-- [x] Ability compose write reviews
-- [ ] Show nearby places in a search view
+- [x] Ability for user to create an account and edit profile information
+- [x] Ability compose write reviews and delete reviews on their profile
+- [x] Uses in-app camera through CameraX API to take photos for reviews
+- [x] Show nearby cafes with searched name in a search view
 
 **Optional Nice-to-have Stories**
 
-- [x] Award users badges based off review count
+- [x] Award users badges based off review count (Coffee bean on profile page fills with review count)
+- [ ] Show a map of the place with places to visit being displayed
 - [ ] Ability to have recommendations based on previously liked or recommended places.
 - [ ] Recommender system that learns from previous choices
 - [ ] Cache common requests reduce API calls
@@ -53,6 +54,10 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 
 <img src='unbeaned2.gif' width=250><br>
+
+GIF created with [LiceCap](http://www.cockos.com/licecap/).
+
+<img src='unbeaned3.gif' width=250><br>
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
