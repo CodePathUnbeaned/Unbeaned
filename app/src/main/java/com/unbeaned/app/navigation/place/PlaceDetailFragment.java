@@ -23,7 +23,6 @@ import androidx.core.widget.NestedScrollView;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
-import androidx.navigation.NavDirections;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -261,8 +260,8 @@ public class PlaceDetailFragment extends Fragment {
             case "feed":
                 navController.navigate(PlaceDetailFragmentDirections.actionPlaceDetailFragmentToFeedFragment());
                 break;
-            case "search":
-                navController.navigate(PlaceDetailFragmentDirections.actionPlaceDetailFragmentToSearchFragment2());
+//            case "search":
+//                navController.navigate(PlaceDetailFragmentDirections.actionPlaceDetailFragmentToSearchFragment2());
             default:
                 navController.navigateUp();
                 break;

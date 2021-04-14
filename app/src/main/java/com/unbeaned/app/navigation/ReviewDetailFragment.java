@@ -18,7 +18,6 @@ import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
-import androidx.core.widget.NestedScrollView;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
@@ -37,7 +36,6 @@ import com.unbeaned.app.adapters.CommentFeedAdapter;
 import com.unbeaned.app.databinding.FragmentReviewDetailBinding;
 import com.unbeaned.app.models.Comment;
 import com.unbeaned.app.models.Review;
-import com.unbeaned.app.utils.EndlessNestedScrollView;
 import com.unbeaned.app.utils.EndlessScrollView;
 import com.unbeaned.app.utils.Requests;
 
@@ -162,6 +160,7 @@ public class ReviewDetailFragment extends Fragment {
                 }
                 ParseUser currentUser = ParseUser.getCurrentUser();
                 saveComment(comment, currentUser, review);
+                adapter.clear();
                 Requests.getNextPageOfComments(allComments, adapter,TAG, review, 0);
                 endlessNestedScrollView.resetState();
             }

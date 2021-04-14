@@ -1,7 +1,6 @@
 package com.unbeaned.app.utils;
 
 import android.util.Log;
-import android.util.Pair;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -12,13 +11,11 @@ import com.unbeaned.app.adapters.CommentFeedAdapter;
 import com.unbeaned.app.adapters.ReviewFeedAdapter;
 import com.unbeaned.app.models.Comment;
 import com.unbeaned.app.models.Review;
-import com.unbeaned.app.models.User;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -131,8 +128,6 @@ public class Requests {
                     Log.e(TAG, "Issue with getting comments", e);
                     return;
                 }
-
-                adapter.clear();
                 adapter.addAll(comments);
             }
 
