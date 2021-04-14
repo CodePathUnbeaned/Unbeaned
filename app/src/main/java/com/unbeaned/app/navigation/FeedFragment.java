@@ -25,6 +25,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDestination;
+import androidx.navigation.NavDirections;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -71,6 +72,7 @@ public class FeedFragment extends Fragment {
     private RelativeLayout feedLayoutContainer;
     private String searchLocation = "current";
     private final int limit = 5;
+    private Button btnOpenSearch;
     EndlessRecyclerViewScrollListener scrollListener;
 
     public FeedFragment() {
@@ -106,14 +108,13 @@ public class FeedFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         rvPlaces = binding.rvPlaces;
-        etSearch = binding.etSearch;
-        btnSearch = binding.btnSearch;
+        btnOpenSearch = binding.btnOpenSearch;
         feedLayoutContainer = binding.feedLayoutContainer;
 
         allPlaces = new ArrayList<>();
         adapter = new PlaceFeedAdapter(getContext(), allPlaces, this);
 
-        if (TextUtils.isEmpty(etSearch.getText())) getLocation();
+//        if (TextUtils.isEmpty(etSearch.getText())) getLocation();
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
 
@@ -129,21 +130,43 @@ public class FeedFragment extends Fragment {
         };
         rvPlaces.addOnScrollListener(scrollListener);
 
-        //query API for places in yelp when search button is pressed
-        btnSearch.setOnClickListener(new View.OnClickListener() {
+        if (getArguments() != null) {
+            searchLocation = getArguments().getString("location");
+
+            if (searchLocation.equals("current")) {
+                getLocation();
+                btnOpenSearch.setText("current location");
+            }
+            else {
+                btnOpenSearch.setText(searchLocation);
+            }
+            searchBusinesses(searchLocation, 0);
+        }
+
+        btnOpenSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(feedLayoutContainer.getWindowToken(), 0);
-                searchLocation = etSearch.getText().toString();
-                if (TextUtils.isEmpty(etSearch.getText())) {
-                    searchLocation = "current";
-                    getLocation();
-//                    searchBusinesses("current");
-                }
-                searchBusinesses(searchLocation, 0);
+                NavDirections action = FeedFragmentDirections.actionFeedFragmentToSearchPlaceFragment();
+                NavHostFragment.findNavController(FeedFragment.this).navigate(action);
             }
         });
+
+
+//        //query API for places in yelp when search button is pressed
+//        btnSearch.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+//                imm.hideSoftInputFromWindow(feedLayoutContainer.getWindowToken(), 0);
+//                searchLocation = etSearch.getText().toString();
+//                if (TextUtils.isEmpty(etSearch.getText())) {
+//                    searchLocation = "current";
+//                    getLocation();
+////                    searchBusinesses("current");
+//                }
+//                searchBusinesses(searchLocation, 0);
+//            }
+//        });
 
         NavHostFragment.findNavController(this).addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
             @Override
@@ -151,61 +174,7 @@ public class FeedFragment extends Fragment {
                 Log.i(TAG, "Destination ID: " + allPlaces);
             }
         });
-
     }
-
-//    private void loadMoreData(String location, int page) {
-//        Map<String, String> searchParameters = new HashMap<>();
-//
-//        if (location.equals("current")) {
-//            searchParameters.put("longitude", String.valueOf(longitude));
-//            searchParameters.put("latitude", String.valueOf(latitude));
-//        } else {
-//            searchParameters.put("location", location);
-//        }
-//
-//        searchParameters.put("limit", String.valueOf(limit));
-//        searchParameters.put("offset", String.valueOf(limit * page));
-//
-//        Request request = YelpClient.getBusinessBySearch(searchParameters);
-//
-//        OkHttpClient client = new OkHttpClient();
-//
-//        client.newCall(request).enqueue(new Callback() {
-//            @Override
-//            public void onFailure(@NotNull Call call, @NotNull IOException e) {
-//                Log.e(TAG, "Could not fetch data", e);
-//            }
-//
-//            @Override
-//            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-//                Log.i(TAG, "Success");
-//                try (ResponseBody responseBody = response.body()) {
-//                    if (!response.isSuccessful())
-//                        throw new IOException("Unexpected code " + response + " " + response.message());
-//
-//                    String jsonData = responseBody.string();
-//                    JSONObject jsonObject = new JSONObject(jsonData);
-//                    JSONArray businessJsonArray = jsonObject.getJSONArray("businesses");
-//                    Log.i(TAG, "JSONArray: " + businessJsonArray.toString());
-//                    Log.i(TAG, "Size: " + businessJsonArray.length());
-//
-//                    getActivity().runOnUiThread(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            try {
-//                                adapter.addAll(Place.fromJsonArray(businessJsonArray));
-//                            } catch (JSONException e) {
-//                                e.printStackTrace();
-//                            }
-//                        }
-//                    });
-//                } catch (JSONException e) {
-//                    Log.e(TAG, "JSON exception", e);
-//                }
-//            }
-//        });
-//    }
 
     private void searchBusinesses(String location, int page) {
         Map<String, String> searchParameters = new HashMap<>();

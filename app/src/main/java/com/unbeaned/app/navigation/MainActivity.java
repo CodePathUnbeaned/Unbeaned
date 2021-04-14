@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
-        destinationId = new ArrayList<>(Arrays.asList(R.id.splashFragment, R.id.fragment_login, R.id.fragment_register, R.id.fragment_register, R.id.composeReviewFragment, R.id.cameraFragment, R.id.reviewDetailFragment));
+        destinationId = new ArrayList<>(Arrays.asList(R.id.splashFragment, R.id.fragment_login, R.id.fragment_register, R.id.fragment_register, R.id.composeReviewFragment, R.id.cameraFragment, R.id.reviewDetailFragment, R.id.searchPlaceFragment));
 
         BottomNavigationView bottomNavigationView = binding.bottomNavigation;
         NavController navController = Navigation.findNavController(this, R.id.navHostContainer);

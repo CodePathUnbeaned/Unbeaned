@@ -14,6 +14,14 @@
             app:destination="@id/placeDetailFragment"
             app:enterAnim="@anim/fragment_open_enter"
             app:exitAnim="@anim/fragment_open_exit" />
+        <action
+            android:id="@+id/action_feedFragment_to_searchPlaceFragment"
+            app:destination="@id/searchPlaceFragment"
+            app:enterAnim="@anim/from_top" />
+        <argument
+            android:name="location"
+            app:argType="string"
+            android:defaultValue="current" />
     </fragment>
     <fragment
         android:id="@+id/userFragment"
@@ -219,5 +227,19 @@
             app:enterAnim="@anim/fragment_open_enter"
             app:exitAnim="@anim/fragment_open_exit" />
 
+    </fragment>
+    <fragment
+        android:id="@+id/searchPlaceFragment"
+        android:name="com.unbeaned.app.navigation.SearchPlaceFragment"
+        android:label="SearchPlaceFragment"
+        tool:layout="@layout/fragment_search_place">
+        <action
+            android:id="@+id/action_searchPlaceFragment_to_feedFragment"
+            app:destination="@id/feedFragment"
+            app:exitAnim="@anim/to_top" />
+        <argument
+            android:name="location"
+            app:argType="string"
+            android:defaultValue="current" />
     </fragment>
 </navigation>

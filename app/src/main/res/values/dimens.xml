@@ -16,4 +16,6 @@
     <dimen name="compose_height">20dp</dimen>
     <dimen name="cancel_width">20dp</dimen>
     <dimen name="cancel_height">20dp</dimen>
+    <dimen name="open_search_width">25dp</dimen>
+    <dimen name="open_search_height">15dp</dimen>
 </resources>

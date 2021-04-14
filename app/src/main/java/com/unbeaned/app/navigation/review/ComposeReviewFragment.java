@@ -34,6 +34,7 @@ import com.unbeaned.app.models.BitmapList;
 import com.unbeaned.app.models.Images;
 import com.unbeaned.app.models.Place;
 import com.unbeaned.app.models.Review;
+import com.unbeaned.app.models.User;
 import com.unbeaned.app.utils.ImageUtils;
 
 import java.util.Locale;
@@ -140,6 +141,9 @@ public class ComposeReviewFragment extends Fragment {
                 // Save Images to Database
                 postImages();
 
+                // Update User Review Count
+                postUserReviews();
+
                 // Navigate Back to Place Detail Fragment
                 navigateToPlaceDetail();
             }
@@ -181,6 +185,16 @@ public class ComposeReviewFragment extends Fragment {
             } catch (ParseException e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+    private void postUserReviews() {
+        ParseUser currentUser = ParseUser.getCurrentUser();
+        currentUser.put(User.KEY_REVIEW_COUNT, currentUser.getInt(User.KEY_REVIEW_COUNT) + 1);
+        try {
+            currentUser.save();
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
     }
 
