@@ -20,8 +20,11 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 
 import com.google.android.material.snackbar.Snackbar;
+import com.parse.ParseException;
+import com.parse.ParseUser;
 import com.unbeaned.app.R;
 import com.unbeaned.app.databinding.FragmentSearchPlaceBinding;
+import com.unbeaned.app.models.User;
 
 public class SearchPlaceFragment extends Fragment {
 
@@ -66,6 +69,12 @@ public class SearchPlaceFragment extends Fragment {
                 SearchPlaceFragmentDirections.ActionSearchPlaceFragmentToFeedFragment action = SearchPlaceFragmentDirections.actionSearchPlaceFragmentToFeedFragment();
 
                 if (!TextUtils.isEmpty(etSearchPlace.getText().toString())) {
+                    ParseUser.getCurrentUser().put(User.KEY_LOCATION, etSearchPlace.getText().toString());
+                    try {
+                        ParseUser.getCurrentUser().save();
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
                     action.setLocation(etSearchPlace.getText().toString());
                 }
 
@@ -77,6 +86,12 @@ public class SearchPlaceFragment extends Fragment {
         btnCurrentLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ParseUser.getCurrentUser().put(User.KEY_LOCATION, "current");
+                try {
+                    ParseUser.getCurrentUser().save();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
                 SearchPlaceFragmentDirections.ActionSearchPlaceFragmentToFeedFragment action = SearchPlaceFragmentDirections.actionSearchPlaceFragmentToFeedFragment();
                 NavHostFragment.findNavController(SearchPlaceFragment.this).navigate(action);
             }

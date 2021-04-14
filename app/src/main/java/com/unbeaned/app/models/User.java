@@ -16,6 +16,7 @@ public class User extends ParseUser {
     public static final String KEY_NAME = "name";
     public static final String KEY_BIO = "bio";
     public static final String KEY_REVIEW_COUNT = "reviewCount";
+    public static final String KEY_LOCATION = "location";
 
     public User() {
 
@@ -76,6 +77,10 @@ public class User extends ParseUser {
     public void setPicture(ParseFile parseFile){
         put(KEY_PHOTO, parseFile);
     }
+
+    public void setLocation(String location) { put(KEY_LOCATION, location); }
+
+    public String getLocation() { return getString(KEY_LOCATION); }
 
     public ParseUser getUser() { return ParseUser.getCurrentUser(); }
 

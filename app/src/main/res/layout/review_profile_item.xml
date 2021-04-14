@@ -37,7 +37,7 @@
                 android:text="@{review.placeName}"
                 android:textColor="@color/black"
                 android:textSize="18sp"
-                tools:text="Review Header" />
+                tools:text="Place Name" />
 
             <TextView
                 android:id="@+id/tvProfileReviewRating"
@@ -65,22 +65,10 @@
                 app:srcCompat="@drawable/ic_star" />
 
             <TextView
-                android:id="@+id/tvProfileReviewPlace"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/tvProfileReviewHeader"
-                android:layout_marginTop="8dp"
-                android:fontFamily="@font/roboto_medium"
-                android:text="@{review.placeName}"
-                android:textColor="@color/black"
-                android:textSize="15sp"
-                tools:text="Place Name" />
-
-            <TextView
                 android:id="@+id/tvProfileReviewDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/tvProfileReviewPlace"
+                android:layout_below="@+id/tvProfileReviewHeader"
                 android:layout_marginTop="8dp"
                 android:fontFamily="@font/roboto"
                 android:includeFontPadding="false"

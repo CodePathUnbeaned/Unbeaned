@@ -31,11 +31,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.snackbar.Snackbar;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.unbeaned.app.R;
 import com.unbeaned.app.adapters.PlaceFeedAdapter;
 import com.unbeaned.app.databinding.FeedFragmentBinding;
 import com.unbeaned.app.models.Place;
+import com.unbeaned.app.models.User;
 import com.unbeaned.app.utils.EndlessRecyclerViewScrollListener;
 import com.unbeaned.app.utils.YelpClient;
 
@@ -130,18 +132,39 @@ public class FeedFragment extends Fragment {
         };
         rvPlaces.addOnScrollListener(scrollListener);
 
-        if (getArguments() != null) {
-            searchLocation = getArguments().getString("location");
+        searchLocation = ParseUser.getCurrentUser().getString(User.KEY_LOCATION);
 
+//        Log.i(TAG, "SearchLocation: " + user.getInt(User.KEY_REVIEW_COUNT));
+
+        if (searchLocation != null) {
             if (searchLocation.equals("current")) {
                 getLocation();
-                btnOpenSearch.setText("current location");
-            }
-            else {
+                searchBusinesses("current", 0);
+                btnOpenSearch.setText("Current Location");
+            } else {
+                searchBusinesses(searchLocation, 0);
                 btnOpenSearch.setText(searchLocation);
             }
-            searchBusinesses(searchLocation, 0);
         }
+        else {
+            getLocation();
+            searchBusinesses("current", 0);
+        }
+
+
+
+//        if (getArguments() != null) {
+//            searchLocation = getArguments().getString("location");
+//
+//            if (searchLocation.equals("current")) {
+//                getLocation();
+//                btnOpenSearch.setText("current location");
+//            }
+//            else {
+//                btnOpenSearch.setText(searchLocation);
+//            }
+//            searchBusinesses(searchLocation, 0);
+//        }
 
         btnOpenSearch.setOnClickListener(new View.OnClickListener() {
             @Override
