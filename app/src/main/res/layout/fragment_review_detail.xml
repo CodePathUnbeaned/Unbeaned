@@ -17,7 +17,7 @@
         <ScrollView
             android:id="@+id/nestedScrollViewDetails"
             android:layout_width="match_parent"
-            android:layout_height="570dp">
+            android:layout_height="wrap_content">
 
             <LinearLayout
                 android:id="@+id/reviewDetailContainer"
@@ -152,7 +152,7 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvReviewDetailsComments"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="500dp"
                     android:layout_marginTop="10dp"
                     android:padding="10dp" />
 
