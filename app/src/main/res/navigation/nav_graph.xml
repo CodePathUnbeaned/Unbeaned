@@ -133,11 +133,13 @@
     <fragment
         android:id="@+id/userSettingsFragment"
         android:name="com.unbeaned.app.navigation.UserSettingsFragment"
-        android:label="UserSettingsFragment" />
+        android:label="UserSettingsFragment"
+        tool:layout="@layout/user_settings_fragment"/>
     <fragment
         android:id="@+id/searchFragment2"
         android:name="com.unbeaned.app.navigation.SearchFragment"
-        android:label="SearchFragment" >
+        android:label="SearchFragment"
+        tool:layout="@layout/search_fragment">
         <action
             android:id="@+id/action_searchFragment2_to_placeDetailFragment"
             app:destination="@id/placeDetailFragment"
@@ -201,7 +203,8 @@
     <fragment
         android:id="@+id/otherUserFragment"
         android:name="com.unbeaned.app.navigation.OtherUserFragment"
-        android:label="OtherUserFragment" >
+        android:label="OtherUserFragment"
+        tool:layout="@layout/fragment_other_user">
         <argument
             android:name="user"
             app:argType="com.parse.ParseUser" />
@@ -213,7 +216,8 @@
     <fragment
         android:id="@+id/reviewDetailFragment"
         android:name="com.unbeaned.app.navigation.ReviewDetailFragment"
-        android:label="ReviewDetailFragment" >
+        android:label="ReviewDetailFragment"
+        tool:layout="@layout/fragment_review_detail">
         <argument
             android:name="review"
             app:argType="com.unbeaned.app.models.Review" />

@@ -17,11 +17,13 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.databinding.DataBindingUtil;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.bumptech.glide.Glide;
+import com.google.android.material.snackbar.Snackbar;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
@@ -52,15 +54,30 @@ public class UserSettingsFragment extends UserFragment {
     UserSettingsFragmentBinding binding;
     List<Review> userReviews;
     NavController navController;
+    Snackbar snackbarPicture;
+    Snackbar snackbarReviewDelete;
+    Snackbar snackbarErrorReviewDelete;
+    Snackbar snackbarChangesSaved;
+    Snackbar snackbarErrorSaveChanges;
 
     public UserSettingsFragment() {
         // Required empty public constructor
     }
 
+
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.user_settings_fragment, container, false);
         navController = Navigation.findNavController(getActivity(), R.id.navHostContainer);
+
+        CoordinatorLayout mainCoordinatorLayout = getActivity().findViewById(R.id.mainCoordinatorLayout);
+        snackbarPicture = Snackbar.make(mainCoordinatorLayout, "Profile picture saved", Snackbar.LENGTH_SHORT);
+        snackbarReviewDelete = Snackbar.make(mainCoordinatorLayout, "Review Deleted!", Snackbar.LENGTH_LONG);
+        snackbarErrorReviewDelete = Snackbar.make(mainCoordinatorLayout, "Error deleting review", Snackbar.LENGTH_LONG);
+        snackbarChangesSaved = Snackbar.make(mainCoordinatorLayout, "Changes saved!", Snackbar.LENGTH_LONG);
+        snackbarErrorSaveChanges = Snackbar.make(mainCoordinatorLayout, "Error saving changes", Snackbar.LENGTH_LONG);
+
         userReviews = new ArrayList<>();
 
         try {
@@ -145,8 +162,8 @@ public class UserSettingsFragment extends UserFragment {
     }
 
     private void editProfilePicture() {
-        Toast.makeText(getActivity(), "Change Profile Picture?!", Toast.LENGTH_LONG).show();
-        startActivityForResult(new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI), GET_FROM_GALLERY);
+//        Toast.makeText(getActivity(), "Change Profile Picture?!", Toast.LENGTH_LONG).show();
+        startActivityForResult(new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI), GET_FROM_GALLERY);
     }
 
     private void setProfilePicture(byte[] imgBytes) {
@@ -166,6 +183,7 @@ public class UserSettingsFragment extends UserFragment {
                 InputStream inputStream = getActivity().getContentResolver().openInputStream(uri);
                 byte[] imgBytes = getBytes(inputStream);
                 setProfilePicture(imgBytes);
+                snackbarPicture.show();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -191,10 +209,10 @@ public class UserSettingsFragment extends UserFragment {
             ParseUser.getCurrentUser().put(User.KEY_REVIEW_COUNT, currentReviewCount-1);
             deletePhotos(review);
             deleteComments(review);
-            Toast.makeText(getContext(), "Review Deleted!", Toast.LENGTH_LONG).show();
+            snackbarReviewDelete.show();
         } catch (ParseException e) {
             e.printStackTrace();
-            Toast.makeText(getContext(), "Error deleting review.", Toast.LENGTH_LONG).show();
+            snackbarErrorReviewDelete.show();
         }
         updateUserReviews(userReviews);
         binding.caroselEditReviews.setPageCount(userReviews.size());
@@ -284,11 +302,11 @@ public class UserSettingsFragment extends UserFragment {
             public void done(ParseException e) {
                 if (e != null) {
                     Log.e("UserSettings", "Error in user save", e);
-                    Toast.makeText(getContext(), "Save Failed!", Toast.LENGTH_LONG).show();
+                    snackbarErrorSaveChanges.show();
                     return;
                 }
                 Log.i("UserSettings", "Success in User Save");
-                Toast.makeText(getContext(), "Changes Saved!", Toast.LENGTH_LONG).show();
+                snackbarChangesSaved.show();
                 returnToUserFragment();
             }
         });
